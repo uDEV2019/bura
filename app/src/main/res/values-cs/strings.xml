@@ -58,7 +58,7 @@
     <string name="settings_screen_label_precip_unit_cm">Centimetry</string>
     <string name="settings_screen_label_precip_unit_in">Palce</string>
     <string name="settings_screen_title_pressure_unit">Tlak</string>
-    <string name="settings_screen_label_pressure_unit_hpa">Hektopascal</string>
+    <string name="settings_screen_label_pressure_unit_hpa">Hektopascaly</string>
     <string name="settings_screen_label_pressure_unit_inhg">Palce rtuťového sloupce</string>
     <string name="settings_screen_label_pressure_unit_mmhg">Milimetry rtuťového sloupce</string>
     <string name="settings_screen_title_vis_unit">Viditelnost</string>
@@ -184,7 +184,7 @@
     <string name="wind_bft_2">Slabý vítr</string>
     <string name="wind_bft_3">Mírný vítr</string>
     <string name="wind_bft_4">Dosti čerstvý vítr</string>
-    <string name="wind_bft_5">Čerstvý vítr</string>
+    <string name="wind_bft_5">Svěží vánek</string>
     <string name="wind_bft_6">Silný vítr</string>
     <string name="wind_bft_7">Prudký vítr</string>
     <string name="wind_bft_8">Bouřlivý vítr</string>
