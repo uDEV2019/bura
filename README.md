@@ -68,12 +68,8 @@ Issues requesting these features will be closed as not planned:
 - Other weather sources
 - OLED dark theme
 
-## Translate
-Translations will be managed with [Weblate](https://hosted.weblate.org/) if/when my libre hosting request is approved.
-
-## Contribute
-Open issues and/or pull requests targeting the `dev` branch. [Signed and verified commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) 
-are required.
+## Translate/contribute
+Open issues and/or pull requests targeting the `dev` branch.
 
 ## Donations
 I do not accept donations at the moment. I tried to accept them on Prognoza, but as soon as I received the first donation, PayPal shut down my account.
