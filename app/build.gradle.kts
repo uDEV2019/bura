@@ -42,7 +42,8 @@ android {
                 "sv",
                 "nl",
                 "ar",
-                "cs"
+                "zh-rTW",
+                "cs",
             )
         )
     }

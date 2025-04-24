@@ -38,8 +38,9 @@ private val supportedLocales = listOf(
     Locale.forLanguageTag("sv"),
     Locale.forLanguageTag("nl"),
     Locale.forLanguageTag("ar"),
+    Locale("zh", "TW"),
     Locale.forLanguageTag("cs"),
-    )
+)
 
 private fun appLocale(context: Context): Locale {
     val defaultLocale = context.resources.configuration.locales[0]
