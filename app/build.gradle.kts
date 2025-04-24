@@ -42,6 +42,7 @@ android {
                 "sv",
                 "nl",
                 "ar",
+                "zh-rTW",
             )
         )
     }
