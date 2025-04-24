@@ -43,6 +43,7 @@ android {
                 "nl",
                 "ar",
                 "zh-rTW",
+                "cs",
             )
         )
     }

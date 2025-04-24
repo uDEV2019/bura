@@ -1,0 +1,233 @@
+<!--
+  ~ Copyright 2024 David Takač
+  ~
+  ~ This file is part of Bura.
+  ~
+  ~ Bura is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+  ~
+  ~ Bura is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with Bura. If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="app_name">Bura</string>
+    <string name="general_error_failed_to_download">Nepodařilo se stáhnout předpověď. Připojte se k internetu a zkuste to znovu.</string>
+    <string name="general_error_outdated">Vaše data předpovědi vypršela. Připojte se k internetu a zkuste to znovu.</string>
+    <string name="general_error_no_selected_place">Není vybráno žádné místo.</string>
+    <string name="general_btn_try_again">Zkusit znovu</string>
+    <string name="general_btn_select_place">Vybrat místo</string>
+    <string name="general_btn_dialog_confirm">OK</string>
+    <string name="general_btn_dialog_cancel">Zrušit</string>
+
+    <string name="credit_weather">Meteorologická data od Open-Meteo.com</string>
+    <string name="credit_geocoding">Geokódovací data od Open-Meteo.com</string>
+
+    <string name="place_picker_hint_search">Hledat místa…</string>
+    <string name="place_picker_title_saved_places">Uložená místa</string>
+    <string name="place_picker_title_search_results">Výsledky vyhledávání</string>
+    <string name="place_picker_error_no_internet">Zdá se, že jste offline. Připojte se k internetu a zkuste to znovu.</string>
+    <string name="place_picker_error_value_no_results_for">Žádné výsledky pro \"%s\".</string>
+    <string name="place_picker_error_no_saved_places">Žádná uložená místa.</string>
+    <string name="delete_place_value">Smazat %s?</string>
+    <string name="delete_place_description">Tímto se smažou také uložená data předpovědi.</string>
+
+    <string name="cond_screen_title">Podmínky</string>
+    <string name="cond_screen_pop">Pravděpodobnost srážek</string>
+    <string name="cond_screen_precip">Úhrn srážek</string>
+    <string name="cond_screen_temp_unit_celsius">Celsius (°C)</string>
+    <string name="cond_screen_temp_unit_fahrenheit">Fahrenheit (°F)</string>
+    <string name="cond_screen_precip_value_in_last_hours">Posledních %s hodin</string>
+    <string name="cond_screen_precip_value_in_next_hours">Příštích %s hodin</string>
+
+    <string name="settings_screen_title">Nastavení</string>
+    <string name="settings_screen_title_units">Jednotky</string>
+    <string name="settings_screen_title_temp_unit">Teplota</string>
+    <string name="settings_screen_label_temp_unit_celsius">Stupně Celsia</string>
+    <string name="settings_screen_label_temp_unit_fahrenheit">Stupně Fahrenheita</string>
+    <string name="settings_screen_title_wind_unit">Vítr</string>
+    <string name="settings_screen_label_wind_unit_mps">Metry za sekundu</string>
+    <string name="settings_screen_label_wind_unit_kph">Kilometry za hodinu</string>
+    <string name="settings_screen_label_wind_unit_mph">Míle za hodinu</string>
+    <string name="settings_screen_label_wind_unit_kn">Uzly</string>
+    <string name="settings_screen_title_precip_unit">Srážky</string>
+    <string name="settings_screen_title_rain_unit">Déšť</string>
+    <string name="settings_screen_title_showers_unit">Přeháňky</string>
+    <string name="settings_screen_title_snow_unit">Sníh</string>
+    <string name="settings_screen_label_precip_unit_mm">Milimetry</string>
+    <string name="settings_screen_label_precip_unit_cm">Centimetry</string>
+    <string name="settings_screen_label_precip_unit_in">Palce</string>
+    <string name="settings_screen_title_pressure_unit">Tlak</string>
+    <string name="settings_screen_label_pressure_unit_hpa">Hektopascaly</string>
+    <string name="settings_screen_label_pressure_unit_inhg">Palce rtuťového sloupce</string>
+    <string name="settings_screen_label_pressure_unit_mmhg">Milimetry rtuťového sloupce</string>
+    <string name="settings_screen_title_vis_unit">Viditelnost</string>
+    <string name="settings_screen_label_vis_unit_km">Kilometry</string>
+    <string name="settings_screen_label_vis_unit_mi">Míle</string>
+    <string name="settings_screen_label_vis_unit_m">Metry</string>
+    <string name="settings_screen_label_vis_unit_ft">Stopy</string>
+    <string name="settings_screen_title_appearance">Vzhled</string>
+    <string name="settings_screen_title_theme">Motiv</string>
+    <string name="settings_screen_label_dark">Tmavý</string>
+    <string name="settings_screen_label_light">Světlý</string>
+    <string name="settings_screen_label_follow_system">Podle systému</string>
+
+    <string name="date_time_now">Nyní</string>
+    <string name="date_time_today">Dnes</string>
+    <string name="date_time_pattern_hour">HH</string>
+    <string name="date_time_pattern_hour_ampm">h\u2009a</string>
+    <string name="date_time_pattern_hour_minute">HH:mm</string>
+    <string name="date_time_pattern_hour_minute_ampm">h:mm\u2009a</string>
+    <string name="date_time_pattern_dow">E</string>
+    <string name="date_time_pattern_dow_hour_minute">E, HH:mm</string>
+    <string name="date_time_pattern_dow_hour_minute_ampm">E, h:mm\u2009a</string>
+
+    <string name="precip_mixed">Srážky</string>
+    <string name="precip_rain">Déšť</string>
+    <string name="precip_showers">Přeháňky</string>
+    <string name="precip_snow">Sníh</string>
+    <string name="precip_value_in_last_hours">Za posledních %sh</string>
+    <string name="precip_value_showers_in_next_hours">Očekávají se přeháňky %1$s v příštích %2$sh.</string>
+    <string name="precip_value_rain_in_next_hours">Očekává se déšť %1$s v příštích %2$sh.</string>
+    <string name="precip_value_snow_in_next_hours">Očekává se sníh %1$s v příštích %2$sh.</string>
+    <string name="precip_value_mixed_in_next_hours">Očekávají se srážky %1$s v příštích %2$sh.</string>
+    <string name="precip_value_showers_on_day">Další přeháňky budou %1$s v %2$s.</string>
+    <string name="precip_value_rain_on_day">Další déšť %1$s bude v %2$s.</string>
+    <string name="precip_value_snow_on_day">Další sněžení %1$s bude v %2$s.</string>
+    <string name="precip_value_mixed_on_day">Další srážky %1$s se ořekávají v %2$s.</string>
+    <string name="precip_value_none_in_next_days">V příštích %sd dnech se žádné srážky neočekávají.</string>
+    <string name="precip_unit_mm">mm</string>
+    <string name="precip_value_mm">%s mm</string>
+    <string name="precip_unit_cm">cm</string>
+    <string name="precip_value_cm">%s cm</string>
+    <string name="precip_unit_in">″</string>
+    <string name="precip_value_in">%s″</string>
+
+    <string name="pop_value_percent">%s%%</string>
+
+    <string name="pressure">Tlak</string>
+    <string name="pressure_trend_falling">Klesající</string>
+    <string name="pressure_trend_steady">Stabilní</string>
+    <string name="pressure_trend_rising">Stoupající</string>
+    <string name="pressure_value_average">Průměr: %s</string>
+    <string name="pressure_unit_hpa">hPa</string>
+    <string name="pressure_value_hpa">%s hPa</string>
+    <string name="pressure_unit_inhg">inHg</string>
+    <string name="pressure_value_inhg">%s inHg</string>
+    <string name="pressure_unit_mmhg">mmHg</string>
+    <string name="pressure_value_mmhg">%s mmHg</string>
+
+    <string name="humidity">Vlhkost</string>
+    <string name="humidity_value_percent">%s%%</string>
+
+    <string name="sunrise">Východ slunce</string>
+    <string name="sunset">Západ slunce</string>
+    <!--
+    sunrise_short a sunset_short se používají v hodinové předpovědi na obrazovce Shrnutí (Domů).
+    Pro zachování vizuální konzistence s řetězci hodin můžete tyto řetězce přepsat
+    kratšími variantami, pokud to dává smysl a zní přirozeně pro daný jazyk. Jinak
+    odkazujte na plné řetězce @string/sunrise a @string/sunset. Pro více informací viz #62.
+    -->
+    <string name="sunrise_short">Východ</string>
+    <string name="sunset_short">Západ</string>
+
+    <string name="sunrise_value">Východ slunce: %s</string>
+    <string name="sunset_value">Západ slunce: %s</string>
+    <string name="sunrise_not_today">Žádný východ slunce.</string>
+    <string name="sunset_not_today">Žádný západ slunce.</string>
+    <string name="sunrise_value_more_than_days_away">&gt; %sd</string>
+    <string name="sunrise_value_more_than_hours_away">&gt; %sh</string>
+    <string name="sunset_value_more_than_days_away">&gt; %sd</string>
+    <string name="sunset_value_more_than_hours_away">&gt; %sh</string>
+
+    <string name="temp_value_degree">%s°</string>
+    <string name="dew_point_value_right_now">Rosný bod je %s.</string>
+    <string name="feels_like">Pocitově</string>
+    <string name="feels_like_value">Pocitově %s</string>
+    <string name="feels_like_value_actual">Skutečná %s</string>
+    <string name="feels_like_cooler_than_actual">Kvůli větru je pocitově chladněji.</string>
+    <string name="feels_like_colder_than_actual">Kvůli větru je pocitově studeněji.</string>
+    <string name="feels_like_warmer_than_actual">Kvůli vlhkosti je pocitově tepleji.</string>
+    <string name="feels_like_hotter_than_actual">Kvůli vlhkosti je pocitově tepleji.</string>
+    <string name="feels_like_similar_to_actual">Podobná skutečné teplotě.</string>
+
+    <string name="uv_index">UV Index</string>
+    <string name="uv_index_risk_low">Nízký</string>
+    <string name="uv_index_risk_moderate">Mírný</string>
+    <string name="uv_index_risk_high">Vysoký</string>
+    <string name="uv_index_risk_very_high">Velmi vysoký</string>
+    <string name="uv_index_risk_extreme">Extrémní</string>
+    <string name="uv_index_protection_value_from_until">Používejte ochranu proti slunci %1$s-%2$s.</string>
+    <string name="uv_index_protection_value_from">Používejte ochranu proti slunci od %s.</string>
+    <string name="uv_index_protection_value_until">Používejte ochranu proti slunci do %s.</string>
+    <string name="uv_index_protection_value_until_end_of_day">Používejte ochranu proti slunci po zbytek dne.</string>
+    <string name="uv_index_protection_value_none">Po zbytek dne nízký.</string>
+
+    <string name="vis">Viditelnost</string>
+    <string name="vis_unit_m">m</string>
+    <string name="vis_value_m">%s m</string>
+    <string name="vis_unit_ft">ft</string>
+    <string name="vis_value_ft">%s ft</string>
+    <string name="vis_unit_km">km</string>
+    <string name="vis_value_km">%s km</string>
+    <string name="vis_unit_mi">mi</string>
+    <string name="vis_value_mi">%s mi</string>
+    <string name="vis_description_perfect">Dokonalý výhled.</string>
+    <string name="vis_description_clear">Jasný výhled.</string>
+    <string name="vis_description_fair">Poměrně dobrý výhled.</string>
+    <string name="vis_description_low">Omezený výhled.</string>
+    <string name="vis_description_very_low">Velmi omezený výhled.</string>
+
+    <string name="wind_label">Vítr</string>
+    <string name="wind_bft_0">Bezvětří</string>
+    <string name="wind_bft_1">Vánek</string>
+    <string name="wind_bft_2">Slabý vítr</string>
+    <string name="wind_bft_3">Mírný vítr</string>
+    <string name="wind_bft_4">Dosti čerstvý vítr</string>
+    <string name="wind_bft_5">Svěží vánek</string>
+    <string name="wind_bft_6">Silný vítr</string>
+    <string name="wind_bft_7">Prudký vítr</string>
+    <string name="wind_bft_8">Bouřlivý vítr</string>
+    <string name="wind_bft_9">Vichřice</string>
+    <string name="wind_bft_10">Silná vichřice</string>
+    <string name="wind_bft_11">Mohutná vichřice</string>
+    <string name="wind_bft_12">Orkán</string>
+    <string name="wind_value_gusts_at">Nárazy až %s.</string>
+    <string name="wind_unit_mps">m/s</string>
+    <string name="wind_value_mps">%s m/s</string>
+    <string name="wind_unit_kph">km/h</string>
+    <string name="wind_value_kph">%s km/h</string>
+    <string name="wind_unit_kn">kn</string>
+    <string name="wind_value_kn">%s kn</string>
+    <string name="wind_unit_mph">mi/h</string>
+    <string name="wind_value_mph">%s mi/h</string>
+
+    <string name="wmo_0">Jasno</string>
+    <string name="wmo_1">Skorojasno</string>
+    <string name="wmo_2">Polojasno</string>
+    <string name="wmo_3">Zataženo</string>
+    <string name="wmo_45">Mlha</string>
+    <string name="wmo_48">Námraza</string>
+    <string name="wmo_51">Slabé mrholení</string>
+    <string name="wmo_53">Mrholení</string>
+    <string name="wmo_55">Husté mrholení</string>
+    <string name="wmo_56">Slabé mrznoucí mrholení</string>
+    <string name="wmo_57">Husté mrznoucí mrholení</string>
+    <string name="wmo_61">Slabý déšť</string>
+    <string name="wmo_63">Déšť</string>
+    <string name="wmo_65">Silný déšť</string>
+    <string name="wmo_66">Slabý mrznoucí déšť</string>
+    <string name="wmo_67">Silný mrznoucí déšť</string>
+    <string name="wmo_71">Slabé sněžení</string>
+    <string name="wmo_73">Sněžení</string>
+    <string name="wmo_75">Husté sněžení</string>
+    <string name="wmo_77">Sněhová zrna</string>
+    <string name="wmo_80">Slabé přeháňky</string>
+    <string name="wmo_81">Přeháňky</string>
+    <string name="wmo_82">Silné přeháňky</string>
+    <string name="wmo_85">Slabé sněhové přeháňky</string>
+    <string name="wmo_86">Silné sněhové přeháňky</string>
+    <string name="wmo_95">Bouřka</string>
+    <string name="wmo_96">Bouřka se slabým krupobitím</string>
+    <string name="wmo_99">Bouřka se silným krupobitím</string>
+</resources>
