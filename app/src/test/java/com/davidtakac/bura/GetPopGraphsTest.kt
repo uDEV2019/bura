@@ -12,6 +12,9 @@
 
 package com.davidtakac.bura
 
+import com.davidtakac.bura.condition.Condition
+import com.davidtakac.bura.condition.ConditionMoment
+import com.davidtakac.bura.condition.ConditionPeriod
 import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.graphs.common.GraphTime
 import com.davidtakac.bura.graphs.pop.GraphPop
@@ -42,7 +45,14 @@ class GetPopGraphsTest {
                 PopMoment(hour = thirdMoment, pop = Pop(1.0))
             )
         )
-        val graphs = (getPopGraphs(now, popPeriod) as ForecastResult.Success).data
+        val conditionPeriod = ConditionPeriod(
+            listOf(
+                ConditionMoment(hour = firstMoment, condition = Condition(0, true)),
+                ConditionMoment(hour = secondMoment, condition = Condition(1, true)),
+                ConditionMoment(hour = thirdMoment, condition = Condition(2, true))
+            )
+        )
+        val graphs = (getPopGraphs(now, popPeriod, conditionPeriod) as ForecastResult.Success).data
         assertEquals(
             listOf(
                 PopGraph(
@@ -57,6 +67,7 @@ class GetPopGraphsTest {
                                 Pop(0.0),
                                 meta = GraphPop.Meta.Regular
                             ),
+                            condition = Condition(0, true)
                         ),
                         PopGraphPoint(
                             time = GraphTime(
@@ -67,6 +78,7 @@ class GetPopGraphsTest {
                                 Pop(0.0),
                                 meta = GraphPop.Meta.Regular
                             ),
+                            condition = Condition(1, true)
                         ),
                         PopGraphPoint(
                             time = GraphTime(
@@ -77,6 +89,7 @@ class GetPopGraphsTest {
                                 Pop(1.0),
                                 meta = GraphPop.Meta.Maximum
                             ),
+                            condition = Condition(2, true)
                         )
                     )
                 ),
@@ -92,6 +105,7 @@ class GetPopGraphsTest {
                                 Pop(1.0),
                                 meta = GraphPop.Meta.Maximum
                             ),
+                            condition = Condition(2, true)
                         )
                     )
                 )

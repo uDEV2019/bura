@@ -74,7 +74,7 @@ class EssentialGraphsViewModel(
             is ForecastResult.Success -> Unit
         }
 
-        val popGraphs = getPopGraphs(now, forecast.pop)
+        val popGraphs = getPopGraphs(now, forecast.pop, forecast.condition)
         when (popGraphs) {
             ForecastResult.FailedToDownload -> return EssentialGraphsState.FailedToDownload
             ForecastResult.Outdated -> return EssentialGraphsState.Outdated

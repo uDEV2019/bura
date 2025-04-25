@@ -13,6 +13,7 @@
 package com.davidtakac.bura.graphs.pop
 
 import android.content.Context
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
@@ -33,9 +35,14 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
 import com.davidtakac.bura.common.AppTheme
+import com.davidtakac.bura.condition.Condition
+import com.davidtakac.bura.condition.image
 import com.davidtakac.bura.graphs.common.GraphArgs
 import com.davidtakac.bura.graphs.common.GraphTime
 import com.davidtakac.bura.graphs.common.closePlotFillPath
@@ -49,6 +56,7 @@ import com.davidtakac.bura.pop.Pop
 import com.davidtakac.bura.pop.string
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.math.roundToInt
 
 @Composable
 fun PopGraph(state: PopGraph, args: GraphArgs, modifier: Modifier = Modifier) {
@@ -83,6 +91,11 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
     plotColor: Color,
     args: GraphArgs,
 ) {
+    val iconSize = 24.dp.toPx()
+    val iconSizeRound = iconSize.roundToInt()
+    val hasSpaceFor12Icons = (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
+    val iconY = ((args.topGutter / 2) - (iconSize / 2)).roundToInt()
+
     val plotPath = Path()
     val plotFillPath = Path()
     fun movePlot(x: Float, y: Float) {
@@ -110,6 +123,17 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         // Max and now indicator are drawn after the plot so it's on top of it
         if (point.pop.meta == GraphPop.Meta.Maximum) maxCenter = Offset(x, y) to point.pop.value
         if (point.time.meta == GraphTime.Meta.Present) nowCenter = Offset(x, y)
+
+        // Condition icons
+        if (i % (if (hasSpaceFor12Icons) 2 else 3) == 1) {
+            val iconX = x - (iconSize / 2)
+            val iconDrawable = AppCompatResources.getDrawable(context, point.condition.image(context, args.icons))!!
+            drawImage(
+                image = iconDrawable.toBitmap(width = iconSizeRound, height = iconSizeRound).asImageBitmap(),
+                dstOffset = IntOffset(iconX.roundToInt(), y = iconY),
+                dstSize = IntSize(width = iconSizeRound, height = iconSizeRound),
+            )
+        }
     }
 
     drawPlotLinePath(lastX, args) {
@@ -245,8 +269,9 @@ private val previewState = PopGraph(
             ),
             pop = GraphPop(
                 Pop(0.0),
-                meta = GraphPop.Meta.Regular
+                meta = GraphPop.Meta.Regular,
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -257,6 +282,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -267,6 +293,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -277,6 +304,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -287,6 +315,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -297,6 +326,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -307,6 +337,7 @@ private val previewState = PopGraph(
                 Pop(5.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -317,6 +348,7 @@ private val previewState = PopGraph(
                 Pop(5.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -327,6 +359,7 @@ private val previewState = PopGraph(
                 Pop(5.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -337,6 +370,7 @@ private val previewState = PopGraph(
                 Pop(10.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -347,6 +381,7 @@ private val previewState = PopGraph(
                 Pop(12.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -357,6 +392,7 @@ private val previewState = PopGraph(
                 Pop(12.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -367,6 +403,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -377,6 +414,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -387,6 +425,7 @@ private val previewState = PopGraph(
                 Pop(0.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -397,6 +436,7 @@ private val previewState = PopGraph(
                 Pop(50.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -407,6 +447,7 @@ private val previewState = PopGraph(
                 Pop(70.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -417,6 +458,7 @@ private val previewState = PopGraph(
                 Pop(100.0),
                 meta = GraphPop.Meta.Maximum
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -427,6 +469,7 @@ private val previewState = PopGraph(
                 Pop(100.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -437,6 +480,7 @@ private val previewState = PopGraph(
                 Pop(100.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -447,6 +491,7 @@ private val previewState = PopGraph(
                 Pop(100.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -457,6 +502,7 @@ private val previewState = PopGraph(
                 Pop(90.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -467,6 +513,7 @@ private val previewState = PopGraph(
                 Pop(90.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -477,6 +524,7 @@ private val previewState = PopGraph(
                 Pop(90.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
         PopGraphPoint(
             time = GraphTime(
@@ -487,6 +535,7 @@ private val previewState = PopGraph(
                 Pop(90.0),
                 meta = GraphPop.Meta.Regular
             ),
+            condition = Condition(wmoCode = 0, isDay = false)
         ),
     )
 )
