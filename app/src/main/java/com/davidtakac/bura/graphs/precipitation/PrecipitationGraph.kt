@@ -188,7 +188,8 @@ private fun DrawScope.drawPrecipAxis(
     val range = max.convertTo(Precipitation.Unit.Millimeters).value
     val steps = 7
     drawVerticalAxis(
-        steps = steps,
+        // todo: fix precip steps
+        steps = listOf(),
         args = args,
         measurer = measurer,
     ) { step ->

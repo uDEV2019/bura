@@ -19,19 +19,19 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.unit.LayoutDirection
 
 fun DrawScope.drawVerticalAxis(
-    steps: Int,
+    steps: List<Double>,
     args: GraphArgs,
     measurer: TextMeasurer,
-    stepFormatter: (step: Int) -> String?,
+    stepFormatter: (step: Double) -> String?,
 ) {
     val lineX =
         if (layoutDirection == LayoutDirection.Ltr) size.width - args.endGutter
         else args.endGutter
-    for (i in 0..steps) {
-        val stepFraction = i / steps.toFloat()
+    for (i in 0..steps.lastIndex) {
+        val stepFraction = i.toDouble() / steps.lastIndex
         val plotBottom = size.height - args.bottomGutter
         val plotHeight = size.height - args.topGutter - args.bottomGutter
-        val stepY = plotBottom - plotHeight * stepFraction
+        val stepY = (plotBottom - plotHeight * stepFraction).toFloat()
 
         val horizontalLineStartX =
             if (layoutDirection == LayoutDirection.Ltr) args.startGutter
@@ -43,7 +43,7 @@ fun DrawScope.drawVerticalAxis(
         )
 
         val measuredText = measurer.measure(
-            text = stepFormatter(i) ?: continue,
+            text = stepFormatter(steps[i]) ?: continue,
             style = args.axisTextStyle
         )
         val textTopLeftX =
@@ -58,4 +58,64 @@ fun DrawScope.drawVerticalAxis(
             )
         )
     }
+}
+
+/**
+ * Generates a list of vertical axis step values for graphing or charting purposes.
+ *
+ * This function calculates evenly spaced steps for a vertical axis based on a given
+ * minimum and maximum value and a desired number of steps. It returns a [VerticalAxisSteps]
+ * object containing the list of step values and the computed step size.
+ *
+ * - If [min] and [max] are equal, the function centers the steps around the single value.
+ * - If [min] and [max] differ, it calculates a suitable step size to cover the range
+ *   evenly and centers the axis around the midpoint of the given range.
+ *
+ * @param min The minimum value of the data range.
+ * @param max The maximum value of the data range.
+ * @param numSteps The number of desired intervals (steps) on the axis. Must be greater than 0.
+ * @return A [VerticalAxisSteps] object containing all step values and the step size.
+ *
+ * @throws IllegalArgumentException if [numSteps] is not greater than 0 or [min] is greater than [max].
+ */
+fun generateVerticalAxisSteps(min: Double, max: Double, numSteps: Int): VerticalAxisSteps {
+    require(numSteps > 0) { "Number of steps must be greater than 0" }
+    require(min <= max) { "Lower bound must be less than or equal to upper bound" }
+
+    val stepSize: Int
+    val start: Int
+
+    if (min == max) {
+        stepSize = 1
+        val center = min.toInt()
+        val halfSteps = numSteps / 2
+        start = center - halfSteps
+    } else {
+        val rawRange = max - min
+        stepSize = kotlin.math.ceil(rawRange / numSteps).toInt()
+        val paddedRange = stepSize * numSteps
+        val midpoint = (min + max) / 2
+        start = kotlin.math.floor(midpoint - paddedRange / 2).toInt()
+    }
+
+    return VerticalAxisSteps(
+        all = List(numSteps + 1) { i -> (start + i * stepSize).toDouble() },
+        stepSize = stepSize,
+    )
+}
+
+/**
+ * Data class representing the steps for a vertical axis.
+ *
+ * @property all The list of all step values (numSteps + 1 values to represent numSteps intervals).
+ * @property stepSize The computed distance between each step.
+ * @property first The first step value in the list.
+ * @property last The last step value in the list.
+ */
+data class VerticalAxisSteps(
+    val all: List<Double>,
+    val stepSize: Int
+) {
+    val first: Double = all.first()
+    val last: Double = all.last()
 }

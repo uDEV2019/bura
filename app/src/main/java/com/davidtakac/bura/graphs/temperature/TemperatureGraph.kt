@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -53,11 +52,11 @@ import com.davidtakac.bura.graphs.common.drawPastOverlayWithPoint
 import com.davidtakac.bura.graphs.common.drawPlotLinePath
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
+import com.davidtakac.bura.graphs.common.generateVerticalAxisSteps
 import com.davidtakac.bura.temperature.Temperature
 import com.davidtakac.bura.temperature.string
 import java.time.LocalDate
 import java.time.LocalTime
-import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 @Composable
@@ -70,25 +69,30 @@ fun TemperatureGraph(
 ) {
     val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
     val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-    val range = absMinTempC.absoluteValue + absMaxTempC.absoluteValue
-    val maxCelsius = remember(absMaxTemp) { absMaxTempC + range * 0.2 }
-    val minCelsius = remember(absMinTemp) { absMinTempC - range * 0.2 }
+    val steps = generateVerticalAxisSteps(absMinTempC, absMaxTempC, 4).run {
+        copy(
+            all = all.toMutableList().apply {
+                add(index = 0, element = first - stepSize)
+                add(last + stepSize)
+            }
+        )
+    }
+    val (minC, maxC) = steps.first to steps.last
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
-    val plotColors = AppTheme.colors.temperatureColors(minCelsius, maxCelsius)
+    val plotColors = AppTheme.colors.temperatureColors(minC, maxC)
     Canvas(modifier) {
         drawTempAxis(
             unit = absMinTemp.unit,
-            minTempC = minCelsius,
-            maxTempC = maxCelsius,
+            steps = steps.all,
             context = context,
             measurer = measurer,
             args = args
         )
         drawHorizontalAxisAndPlot(
             state = state,
-            minCelsius = minCelsius,
-            maxCelsius = maxCelsius,
+            minCelsius = minC,
+            maxCelsius = maxC,
             context = context,
             measurer = measurer,
             plotColors = plotColors,
@@ -203,21 +207,18 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
 
 private fun DrawScope.drawTempAxis(
     unit: Temperature.Unit,
-    maxTempC: Double,
-    minTempC: Double,
+    steps: List<Double>,
     context: Context,
     measurer: TextMeasurer,
     args: GraphArgs
 ) {
-    val rangeC = maxTempC - minTempC
-    val steps = 7
     drawVerticalAxis(
         steps = steps,
         args = args,
         measurer = measurer,
     ) { step ->
         Temperature
-            .fromDegreesCelsius(value = (rangeC * step / steps.toDouble()) + minTempC)
+            .fromDegreesCelsius(step)
             .convertTo(unit)
             .string(context, args.numberFormat)
     }

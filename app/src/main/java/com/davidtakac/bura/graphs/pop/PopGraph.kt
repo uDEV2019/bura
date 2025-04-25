@@ -146,7 +146,8 @@ private fun DrawScope.drawVerticalAxis(
 ) {
     val steps = 5
     drawVerticalAxis(
-        steps = steps,
+        // todo: fix pop steps
+        steps = listOf(),
         args = args,
         measurer = measurer,
     ) { step ->
