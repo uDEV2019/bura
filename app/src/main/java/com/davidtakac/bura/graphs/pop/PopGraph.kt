@@ -44,6 +44,7 @@ import com.davidtakac.bura.graphs.common.drawPastOverlayWithPoint
 import com.davidtakac.bura.graphs.common.drawPlotLinePath
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
+import com.davidtakac.bura.graphs.common.generateVerticalAxisSteps
 import com.davidtakac.bura.pop.Pop
 import com.davidtakac.bura.pop.string
 import java.time.LocalDate
@@ -54,9 +55,11 @@ fun PopGraph(state: PopGraph, args: GraphArgs, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
     val plotColor = AppTheme.colors.popColor
+    val steps = generateVerticalAxisSteps(min = 0.0, max = 100.0, numSteps = 5)
     Canvas(modifier) {
         drawVerticalAxis(
             context = context,
+            steps = steps.all,
             measurer = measurer,
             args = args,
         )
@@ -141,17 +144,16 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
 
 private fun DrawScope.drawVerticalAxis(
     context: Context,
+    steps: List<Double>,
     measurer: TextMeasurer,
     args: GraphArgs
 ) {
-    val steps = 5
     drawVerticalAxis(
-        // todo: fix pop steps
-        steps = listOf(),
+        steps = steps,
         args = args,
         measurer = measurer,
     ) { step ->
-        Pop((step / steps.toDouble()) * 100).string(context, args.numberFormat)
+        Pop(step).string(context, args.numberFormat)
     }
 }
 

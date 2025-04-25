@@ -69,7 +69,7 @@ fun TemperatureGraph(
 ) {
     val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
     val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-    val steps = generateVerticalAxisSteps(absMinTempC, absMaxTempC, 4).run {
+    val steps = generateVerticalAxisSteps(absMinTempC, absMaxTempC, numSteps = 4).run {
         copy(
             all = all.toMutableList().apply {
                 add(index = 0, element = first - stepSize)
