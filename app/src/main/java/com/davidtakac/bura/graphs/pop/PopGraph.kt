@@ -55,7 +55,8 @@ fun PopGraph(state: PopGraph, args: GraphArgs, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
     val plotColor = AppTheme.colors.popColor
-    val steps = generateVerticalAxisSteps(min = 0.0, max = 100.0, numSteps = 5)
+    val max = 120.0
+    val steps = generateVerticalAxisSteps(min = 0.0, max = max, numSteps = 6)
     Canvas(modifier) {
         drawVerticalAxis(
             context = context,
@@ -65,6 +66,7 @@ fun PopGraph(state: PopGraph, args: GraphArgs, modifier: Modifier = Modifier) {
         )
         drawHorizontalAxisAndPlot(
             state = state,
+            max = max,
             context = context,
             measurer = measurer,
             plotColor = plotColor,
@@ -75,12 +77,12 @@ fun PopGraph(state: PopGraph, args: GraphArgs, modifier: Modifier = Modifier) {
 
 private fun DrawScope.drawHorizontalAxisAndPlot(
     state: PopGraph,
+    max: Double,
     context: Context,
     measurer: TextMeasurer,
     plotColor: Color,
     args: GraphArgs,
 ) {
-    val range = 100f
     val plotPath = Path()
     val plotFillPath = Path()
     fun movePlot(x: Float, y: Float) {
@@ -101,7 +103,7 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         val pop = point.pop.value
         val minY = args.topGutter + args.axisWidth + (args.plotWidth / 2)
         val maxY = size.height - args.bottomGutter - args.axisWidth - (args.plotWidth / 2)
-        val y = calcY(pop.value / range).top.coerceIn(minY, maxY)
+        val y = calcY(pop.value / max).top.coerceIn(minY, maxY)
         movePlot(x, y)
         lastX = x
 
@@ -128,7 +130,7 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         color = plotColor,
         alpha = args.plotFillAlpha
     )
-    
+
     maxCenter?.let { (offset, pop) ->
         drawLabeledPoint(
             label = pop.string(context, args.numberFormat),
@@ -153,7 +155,9 @@ private fun DrawScope.drawVerticalAxis(
         args = args,
         measurer = measurer,
     ) { step ->
-        Pop(step).string(context, args.numberFormat)
+        step.takeUnless { it > 100 }
+            ?.let { Pop(it).string(context, args.numberFormat) }
+            ?: ""
     }
 }
 
@@ -175,7 +179,7 @@ private fun PopGraphPreview() {
 @Composable
 private fun PopGraphRtlPreview() {
     AppTheme(darkTheme = false) {
-        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl)  {
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             PopGraph(
                 state = previewState, modifier = Modifier
                     .height(300.dp)
