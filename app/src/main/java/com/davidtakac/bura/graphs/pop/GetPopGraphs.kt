@@ -33,30 +33,42 @@ fun getPopGraphs(
     return ForecastResult.Success(
         data = popDays.mapIndexed { idx, popDay ->
             val conditionDay = conditionDays[idx]
-            PopGraph(
-                day = popDay.first().hour.toLocalDate(),
-                points = buildList {
-                    val firstPopTomorrow = popDays.getOrNull(idx + 1)?.first()
-                    val popDayAdjusted: PopPeriod
-                    val conditionDayAdjusted: ConditionPeriod
-                    if (firstPopTomorrow != null) {
-                        // To avoid an empty space at the end of every day, we add the first pop
-                        // of tomorrow for completeness
-                        val firstConditionTomorrow = conditionDays.get(idx + 1).first()
-                        popDayAdjusted = PopPeriod(popDay + firstPopTomorrow)
-                        conditionDayAdjusted = ConditionPeriod(conditionDay + firstConditionTomorrow)
-                    } else {
-                        popDayAdjusted = popDay
-                        conditionDayAdjusted = conditionDay
-                    }
-                    val maxPop = popDayAdjusted.maxBy { it.pop }
-                    for (i in popDayAdjusted.indices) {
-                        val popMoment = popDayAdjusted[i]
-                        val conditionMoment = conditionDayAdjusted[i]
-                        add(getPoint(now, popMoment, maxPop, conditionMoment))
-                    }
-                }
-            )
+            val popTomorrow = popDays.getOrNull(idx + 1)
+            val conditionTomorrow = conditionDays.getOrNull(idx + 1)
+            getPopGraph(now, popDay, conditionDay, popTomorrow, conditionTomorrow)
+        }
+    )
+}
+
+private fun getPopGraph(
+    now: LocalDateTime,
+    popDay: PopPeriod,
+    conditionDay: ConditionPeriod,
+    popTomorrow: PopPeriod?,
+    conditionTomorrow: ConditionPeriod?
+): PopGraph {
+    return PopGraph(
+        day = popDay.first().hour.toLocalDate(),
+        points = buildList {
+            val firstPopTomorrow = popTomorrow?.first()
+            val popDayAdjusted: PopPeriod
+            val conditionDayAdjusted: ConditionPeriod
+            if (firstPopTomorrow != null) {
+                // To avoid an empty space at the end of every day, we add the first pop
+                // of tomorrow for completeness
+                val firstConditionTomorrow = conditionTomorrow!!.first()
+                popDayAdjusted = PopPeriod(popDay + firstPopTomorrow)
+                conditionDayAdjusted = ConditionPeriod(conditionDay + firstConditionTomorrow)
+            } else {
+                popDayAdjusted = popDay
+                conditionDayAdjusted = conditionDay
+            }
+            val maxPop = popDayAdjusted.maxBy { it.pop }
+            for (i in popDayAdjusted.indices) {
+                val popMoment = popDayAdjusted[i]
+                val conditionMoment = conditionDayAdjusted[i]
+                add(getPoint(now, popMoment, maxPop, conditionMoment))
+            }
         }
     )
 }
