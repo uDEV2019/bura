@@ -69,10 +69,9 @@ fun TemperatureGraph(
 ) {
     val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
     val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-    val steps = generateVerticalAxisSteps(absMinTempC, absMaxTempC, numSteps = 4).run {
+    val steps = generateVerticalAxisSteps(absMinTempC, absMaxTempC, numSteps = 5).run {
         copy(
             all = all.toMutableList().apply {
-                add(index = 0, element = first - stepSize)
                 add(last + stepSize)
             }
         )
@@ -308,7 +307,6 @@ private fun ConditionGraphNowEndPreview() {
     }
 }
 
-// TODO: make flat state have distinct steps, this currently has multiple same step values
 @Preview
 @Composable
 private fun ConditionGraphFlatPreview() {

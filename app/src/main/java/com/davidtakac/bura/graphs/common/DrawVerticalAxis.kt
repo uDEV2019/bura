@@ -64,12 +64,13 @@ fun DrawScope.drawVerticalAxis(
  * Generates a list of vertical axis step values for graphing or charting purposes.
  *
  * This function calculates evenly spaced steps for a vertical axis based on a given
- * minimum and maximum value and a desired number of steps. It returns a [VerticalAxisSteps]
- * object containing the list of step values and the computed step size.
+ * minimum and maximum value and a desired number of steps. The steps always begin
+ * at or just below the [min] value, and padding is applied only at the top
+ * (i.e., the final value may exceed [max]).
  *
- * - If [min] and [max] are equal, the function centers the steps around the single value.
- * - If [min] and [max] differ, it calculates a suitable step size to cover the range
- *   evenly and centers the axis around the midpoint of the given range.
+ * - If [min] and [max] are equal, the steps are centered around that single value.
+ * - If [min] and [max] differ, the function chooses a step size that covers the full
+ *   range in [numSteps] steps, padding only at the upper end if needed.
  *
  * @param min The minimum value of the data range.
  * @param max The maximum value of the data range.
@@ -93,9 +94,7 @@ fun generateVerticalAxisSteps(min: Double, max: Double, numSteps: Int): Vertical
     } else {
         val rawRange = max - min
         stepSize = kotlin.math.ceil(rawRange / numSteps).toInt()
-        val paddedRange = stepSize * numSteps
-        val midpoint = (min + max) / 2
-        start = kotlin.math.floor(midpoint - paddedRange / 2).toInt()
+        start = kotlin.math.floor(min).toInt()
     }
 
     return VerticalAxisSteps(

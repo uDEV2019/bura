@@ -46,6 +46,7 @@ import com.davidtakac.bura.graphs.common.GraphTime
 import com.davidtakac.bura.graphs.common.drawPastOverlay
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
+import com.davidtakac.bura.graphs.common.generateVerticalAxisSteps
 import com.davidtakac.bura.precipitation.MixedPrecipitation
 import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.precipitation.Rain
@@ -72,16 +73,25 @@ fun PrecipitationGraph(
     val showersColor = AppTheme.colors.showersColor
     val snowColor = AppTheme.colors.snowColor
     val maxAdjusted = remember(max) {
+        val rainMm = max.convertTo(Precipitation.Unit.Millimeters).value.coerceAtLeast(minimumValue = 5.0)
         MixedPrecipitation.fromMillimeters(
-            rain = Rain.fromMillimeters((max.convertTo(Precipitation.Unit.Millimeters).value * 1.2f).coerceAtLeast(5.0)),
+            rain = Rain.fromMillimeters(rainMm),
             showers = Showers.Zero,
             snow = Snow.Zero
         ).convertTo(max.unit)
     }
+    val steps = generateVerticalAxisSteps(min = 0.0, max = maxAdjusted.value, numSteps = 5).run {
+        copy(
+            all = all.toMutableList().apply {
+                add(last + stepSize)
+            }
+        )
+    }
     Canvas(modifier) {
         drawPrecipAxis(
-            max = maxAdjusted,
+            unit = max.unit,
             context = context,
+            steps = steps.all,
             measurer = measurer,
             args = args
         )
@@ -180,23 +190,20 @@ private fun DrawScope.drawHorizontalAxisAndBars(
 }
 
 private fun DrawScope.drawPrecipAxis(
-    max: MixedPrecipitation,
+    unit: Precipitation.Unit,
     context: Context,
+    steps: List<Double>,
     measurer: TextMeasurer,
     args: GraphArgs
 ) {
-    val range = max.convertTo(Precipitation.Unit.Millimeters).value
-    val steps = 7
     drawVerticalAxis(
-        // todo: fix precip steps
-        steps = listOf(),
+        steps = steps,
         args = args,
         measurer = measurer,
     ) { step ->
-        val frac = step / steps.toDouble()
-        val rain = Rain.fromMillimeters(value = range * frac).convertTo(max.unit)
+        val rain = Rain.fromMillimeters(step).convertTo(unit)
         val valueString = rain.valueString(args.numberFormat)
-        if (frac == 0.0) rain.string(context, args.numberFormat) else valueString
+        if (step == steps[0]) rain.string(context, args.numberFormat) else valueString
     }
 }
 
@@ -208,6 +215,22 @@ private fun PrecipitationGraphPreview() {
             state = previewState,
             args = GraphArgs.rememberPrecipitationArgs(),
             max = previewState.points.maxOf { it.precip },
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(4f / 3f)
+                .background(MaterialTheme.colorScheme.surface)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SmallPrecipitationGraphPreview() {
+    AppTheme {
+        PrecipitationGraph(
+            state = smallPreviewState,
+            args = GraphArgs.rememberPrecipitationArgs(),
+            max = smallPreviewState.points.maxOf { it.precip },
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(4f / 3f)
@@ -237,7 +260,6 @@ private fun PrecipitationGraphRtlPreview() {
 @Preview
 @Composable
 private fun PrecipitationGraphDarkPreview() {
-    val now = remember { LocalDateTime.parse("1970-01-01T08:00") }
     AppTheme(darkTheme = true) {
         PrecipitationGraph(
             state = previewState,
@@ -264,6 +286,28 @@ private val previewState = PrecipitationGraph(
                 rain = Rain.fromMillimeters(Random.nextDouble(until = 5.0)),
                 showers = Showers.fromMillimeters(Random.nextDouble(until = 5.0)),
                 snow = Snow.fromMillimeters(Random.nextDouble(until = 5.0))
+            ),
+            cond = Condition(
+                wmoCode = Random.nextInt(0, 3),
+                isDay = Random.nextBoolean()
+            )
+        )
+    }
+)
+
+private val smallPreviewState = PrecipitationGraph(
+    day = LocalDate.parse("1970-01-01"),
+    points = List(24) {
+        PrecipitationGraphPoint(
+            time = GraphTime(
+                hour = LocalDateTime.parse("1970-01-01T00:00")
+                    .plus(it.toLong(), ChronoUnit.HOURS),
+                now = LocalDateTime.parse("1970-01-01T08:00")
+            ),
+            precip = MixedPrecipitation.fromMillimeters(
+                rain = Rain.fromMillimeters(Random.nextDouble(until = 5.0)),
+                showers = Showers.Zero,
+                snow = Snow.Zero
             ),
             cond = Condition(
                 wmoCode = Random.nextInt(0, 3),
