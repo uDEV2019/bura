@@ -60,57 +60,25 @@ fun DrawScope.drawVerticalAxis(
     }
 }
 
-/**
- * Generates a list of vertical axis step values for graphing or charting purposes.
- *
- * This function calculates evenly spaced steps for a vertical axis based on a given
- * minimum and maximum value and a desired number of steps. The steps always begin
- * at or just below the [min] value, and padding is applied only at the top
- * (i.e., the final value may exceed [max]).
- *
- * - If [min] and [max] are equal, the steps are centered around that single value.
- * - If [min] and [max] differ, the function chooses a step size that covers the full
- *   range in [numSteps] steps, padding only at the upper end if needed.
- *
- * @param min The minimum value of the data range.
- * @param max The maximum value of the data range.
- * @param numSteps The number of desired intervals (steps) on the axis. Must be greater than 0.
- * @return A [VerticalAxisSteps] object containing all step values and the step size.
- *
- * @throws IllegalArgumentException if [numSteps] is not greater than 0 or [min] is greater than [max].
- */
 fun generateVerticalAxisSteps(min: Double, max: Double, numSteps: Int): VerticalAxisSteps {
     require(numSteps > 0) { "Number of steps must be greater than 0" }
     require(min <= max) { "Lower bound must be less than or equal to upper bound" }
 
     val stepSize: Int
-    val start: Int
-
     if (min == max) {
         stepSize = 1
-        val center = min.toInt()
-        val halfSteps = numSteps / 2
-        start = center - halfSteps
     } else {
         val rawRange = max - min
         stepSize = kotlin.math.ceil(rawRange / numSteps).toInt()
-        start = kotlin.math.floor(min).toInt()
     }
 
+    val start = kotlin.math.floor(min).toInt()
     return VerticalAxisSteps(
         all = List(numSteps + 1) { i -> (start + i * stepSize).toDouble() },
         stepSize = stepSize,
     )
 }
 
-/**
- * Data class representing the steps for a vertical axis.
- *
- * @property all The list of all step values (numSteps + 1 values to represent numSteps intervals).
- * @property stepSize The computed distance between each step.
- * @property first The first step value in the list.
- * @property last The last step value in the list.
- */
 data class VerticalAxisSteps(
     val all: List<Double>,
     val stepSize: Int

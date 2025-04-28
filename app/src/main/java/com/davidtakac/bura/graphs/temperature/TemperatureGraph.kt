@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -67,14 +68,17 @@ fun TemperatureGraph(
     absMaxTemp: Temperature,
     modifier: Modifier = Modifier
 ) {
-    val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-    val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-    val steps = generateVerticalAxisSteps(absMinTempC, absMaxTempC, numSteps = 5).run {
-        copy(
-            all = all.toMutableList().apply {
-                add(last + stepSize)
-            }
-        )
+    val steps = remember(absMinTemp, absMaxTemp) {
+        val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
+        val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
+        // TODO: add smart top padding for labels
+        generateVerticalAxisSteps(absMinTempC, absMaxTempC, numSteps = 5).run {
+            copy(
+                all = all.toMutableList().apply {
+                    add(last + stepSize)
+                }
+            )
+        }
     }
     val (minC, maxC) = steps.first to steps.last
     val context = LocalContext.current

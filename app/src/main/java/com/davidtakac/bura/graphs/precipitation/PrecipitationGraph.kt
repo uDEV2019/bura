@@ -72,20 +72,25 @@ fun PrecipitationGraph(
     val rainColor = AppTheme.colors.rainColor
     val showersColor = AppTheme.colors.showersColor
     val snowColor = AppTheme.colors.snowColor
-    val maxAdjusted = remember(max) {
-        val rainMm = max.convertTo(Precipitation.Unit.Millimeters).value.coerceAtLeast(minimumValue = 5.0)
-        MixedPrecipitation.fromMillimeters(
-            rain = Rain.fromMillimeters(rainMm),
+    val (steps, newMax) = remember(max) {
+        // todo: add smart padding to top of graphs
+        val steps = generateVerticalAxisSteps(
+            min = 0.0,
+            max = max.convertTo(Precipitation.Unit.Millimeters).value,
+            numSteps = 5
+        ).run {
+            copy(
+                all = all.toMutableList().apply {
+                    add(last + stepSize)
+                }
+            )
+        }
+        val newMax = MixedPrecipitation.fromMillimeters(
+            rain = Rain.fromMillimeters(steps.last),
             showers = Showers.Zero,
             snow = Snow.Zero
-        ).convertTo(max.unit)
-    }
-    val steps = generateVerticalAxisSteps(min = 0.0, max = maxAdjusted.value, numSteps = 5).run {
-        copy(
-            all = all.toMutableList().apply {
-                add(last + stepSize)
-            }
         )
+        steps to newMax
     }
     Canvas(modifier) {
         drawPrecipAxis(
@@ -97,7 +102,7 @@ fun PrecipitationGraph(
         )
         drawHorizontalAxisAndBars(
             state = state,
-            max = maxAdjusted,
+            max = newMax,
             context = context,
             measurer = measurer,
             rainColor = rainColor,
@@ -120,7 +125,8 @@ private fun DrawScope.drawHorizontalAxisAndBars(
 ) {
     val iconSize = 24.dp.toPx()
     val iconSizeRound = iconSize.roundToInt()
-    val hasSpaceFor12Icons = (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
+    val hasSpaceFor12Icons =
+        (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
     val iconY = ((args.topGutter / 2) - (iconSize / 2)).roundToInt()
     val range = max.value * 1.2f
 
@@ -128,7 +134,7 @@ private fun DrawScope.drawHorizontalAxisAndBars(
     drawTimeAxis(
         measurer = measurer,
         args = args
-    ) { i, x , calcY ->
+    ) { i, x, calcY ->
         val point = state.points.getOrNull(i) ?: return@drawTimeAxis
         if (point.time.meta == GraphTime.Meta.Present) nowX = x
 
@@ -144,7 +150,8 @@ private fun DrawScope.drawHorizontalAxisAndBars(
         val barSpacing = 1.dp.toPx()
         val desiredBarWidth = 8.dp.toPx()
 
-        val barXOffset = (if (layoutDirection == LayoutDirection.Ltr) desiredBarWidth else -desiredBarWidth) / 4
+        val barXOffset =
+            (if (layoutDirection == LayoutDirection.Ltr) desiredBarWidth else -desiredBarWidth) / 4
         val barX = if (i == 0) x + barXOffset else x
         val barWidth = if (i == 0) desiredBarWidth / 2 else desiredBarWidth
         drawLine(
@@ -163,7 +170,8 @@ private fun DrawScope.drawHorizontalAxisAndBars(
             strokeWidth = barWidth
         )
 
-        val bottomOfSnow = topOfShowers - if (rainY.height > 0 || showersY.height > 0) barSpacing else 0f
+        val bottomOfSnow =
+            topOfShowers - if (rainY.height > 0 || showersY.height > 0) barSpacing else 0f
         val topOfSnow = bottomOfSnow - snowY.height
         drawLine(
             brush = SolidColor(snowColor),
@@ -175,9 +183,13 @@ private fun DrawScope.drawHorizontalAxisAndBars(
         // Condition icons
         if (i % (if (hasSpaceFor12Icons) 2 else 3) == 1) {
             val iconX = x - (iconSize / 2)
-            val iconDrawable = AppCompatResources.getDrawable(context, point.cond.image(context, args.icons))!!
+            val iconDrawable =
+                AppCompatResources.getDrawable(context, point.cond.image(context, args.icons))!!
             drawImage(
-                image = iconDrawable.toBitmap(width = iconSizeRound, height = iconSizeRound).asImageBitmap(),
+                image = iconDrawable.toBitmap(
+                    width = iconSizeRound,
+                    height = iconSizeRound
+                ).asImageBitmap(),
                 dstOffset = IntOffset(iconX.roundToInt(), y = iconY),
                 dstSize = IntSize(width = iconSizeRound, height = iconSizeRound),
             )
@@ -231,6 +243,22 @@ private fun SmallPrecipitationGraphPreview() {
             state = smallPreviewState,
             args = GraphArgs.rememberPrecipitationArgs(),
             max = smallPreviewState.points.maxOf { it.precip },
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(4f / 3f)
+                .background(MaterialTheme.colorScheme.surface)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SmallPrecipitationGraphInchesPreview() {
+    AppTheme {
+        PrecipitationGraph(
+            state = smallPreviewStateInches,
+            args = GraphArgs.rememberPrecipitationArgs(),
+            max = smallPreviewStateInches.points.maxOf { it.precip },
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(4f / 3f)
@@ -305,10 +333,32 @@ private val smallPreviewState = PrecipitationGraph(
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
             precip = MixedPrecipitation.fromMillimeters(
-                rain = Rain.fromMillimeters(Random.nextDouble(until = 5.0)),
+                rain = Rain.Zero,//.fromMillimeters(Random.nextDouble(until = 5.0)),
                 showers = Showers.Zero,
                 snow = Snow.Zero
             ),
+            cond = Condition(
+                wmoCode = Random.nextInt(0, 3),
+                isDay = Random.nextBoolean()
+            )
+        )
+    }
+)
+
+private val smallPreviewStateInches = PrecipitationGraph(
+    day = LocalDate.parse("1970-01-01"),
+    points = List(24) {
+        PrecipitationGraphPoint(
+            time = GraphTime(
+                hour = LocalDateTime.parse("1970-01-01T00:00")
+                    .plus(it.toLong(), ChronoUnit.HOURS),
+                now = LocalDateTime.parse("1970-01-01T08:00")
+            ),
+            precip = MixedPrecipitation.fromMillimeters(
+                rain = Rain.Zero,
+                showers = Showers.Zero,
+                snow = Snow.Zero
+            ).convertTo(Precipitation.Unit.Inches),
             cond = Condition(
                 wmoCode = Random.nextInt(0, 3),
                 isDay = Random.nextBoolean()
