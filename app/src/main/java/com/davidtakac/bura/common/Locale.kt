@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.common
 
-import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -42,22 +41,20 @@ private val supportedLocales = listOf(
     Locale.forLanguageTag("cs"),
 )
 
-private fun appLocale(context: Context): Locale {
-    val defaultLocale = context.resources.configuration.locales[0]
-    val defaultLocaleSupported = supportedLocales.any { it == defaultLocale || it.language == defaultLocale.language }
-    return if (defaultLocaleSupported) defaultLocale else fallbackLocale
-}
-
 @Composable
 fun rememberAppLocale(): Locale {
     val context = LocalContext.current
-    return remember(context) { appLocale(context) }
+    return remember(context) {
+        val defaultLocale = context.resources.configuration.locales[0]
+        val defaultLocaleSupported = supportedLocales.any { it == defaultLocale || it.language == defaultLocale.language }
+        if (defaultLocaleSupported) defaultLocale else fallbackLocale
+    }
 }
 
 @Composable
 fun rememberDateTimeFormatter(@StringRes ofPattern: Int): DateTimeFormatter {
     val pattern = stringResource(ofPattern)
-    val locale = appLocale(LocalContext.current)
+    val locale = rememberAppLocale()
     return remember(pattern, locale) {
         DateTimeFormatter
             .ofPattern(pattern, locale)
@@ -85,6 +82,6 @@ fun rememberDateTimeDayAndTimeFormatter(): DateTimeFormatter = rememberDateTimeF
 
 @Composable
 fun rememberNumberFormat(): NumberFormat {
-    val locale = appLocale(LocalContext.current)
+    val locale = rememberAppLocale()
     return remember(locale) { NumberFormat.getNumberInstance(locale) }
 }
