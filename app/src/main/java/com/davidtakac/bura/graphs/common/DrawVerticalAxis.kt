@@ -60,28 +60,47 @@ fun DrawScope.drawVerticalAxis(
     }
 }
 
-fun generateVerticalAxisSteps(min: Double, max: Double, numSteps: Int): VerticalAxisSteps {
-    require(numSteps > 0) { "Number of steps must be greater than 0" }
-    require(min <= max) { "Lower bound must be less than or equal to upper bound" }
+fun generateVerticalAxisSteps(
+    min: Double,
+    max: Double,
+    steps: Int,
+    paddingLocation: VerticalAxisPaddingStrategy,
+): VerticalAxisSteps {
+    require(steps >= 2)
+    require(min <= max)
 
-    val stepSize: Int
+    val stepSize: Double
+    val start: Double
     if (min == max) {
-        stepSize = 1
+        stepSize = 1.0
+        start = when (paddingLocation) {
+            VerticalAxisPaddingStrategy.Top -> min
+            VerticalAxisPaddingStrategy.TopAndBottom -> min - steps / 2.0
+        }
     } else {
         val rawRange = max - min
-        stepSize = kotlin.math.ceil(rawRange / numSteps).toInt()
+        stepSize = kotlin.math.ceil(rawRange / steps)
+        val paddedRange = stepSize * steps
+        val midpoint = (min + max) / 2
+        start = when (paddingLocation) {
+            VerticalAxisPaddingStrategy.Top -> TODO()
+            VerticalAxisPaddingStrategy.TopAndBottom -> kotlin.math.floor(midpoint - paddedRange / 2)
+        }
     }
 
-    val start = kotlin.math.floor(min).toInt()
     return VerticalAxisSteps(
-        all = List(numSteps + 1) { i -> (start + i * stepSize).toDouble() },
+        all = List(steps) { i -> start + i * stepSize },
         stepSize = stepSize,
     )
 }
 
+enum class VerticalAxisPaddingStrategy {
+    Top, TopAndBottom
+}
+
 data class VerticalAxisSteps(
     val all: List<Double>,
-    val stepSize: Int
+    val stepSize: Double
 ) {
     val first: Double = all.first()
     val last: Double = all.last()

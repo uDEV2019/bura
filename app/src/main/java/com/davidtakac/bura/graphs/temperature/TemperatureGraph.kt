@@ -72,7 +72,7 @@ fun TemperatureGraph(
         val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
         val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
         // TODO: add smart top padding for labels
-        generateVerticalAxisSteps(absMinTempC, absMaxTempC, numSteps = 5).run {
+        generateVerticalAxisSteps(absMinTempC, absMaxTempC, steps = 5).run {
             copy(
                 all = all.toMutableList().apply {
                     add(last + stepSize)

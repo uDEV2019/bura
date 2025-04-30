@@ -77,7 +77,7 @@ fun PrecipitationGraph(
         val steps = generateVerticalAxisSteps(
             min = 0.0,
             max = max.convertTo(Precipitation.Unit.Millimeters).value,
-            numSteps = 5
+            steps = 5
         ).run {
             copy(
                 all = all.toMutableList().apply {
