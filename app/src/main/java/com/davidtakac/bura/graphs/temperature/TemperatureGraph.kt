@@ -53,7 +53,7 @@ import com.davidtakac.bura.graphs.common.drawPastOverlayWithPoint
 import com.davidtakac.bura.graphs.common.drawPlotLinePath
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
-import com.davidtakac.bura.graphs.common.generateVerticalAxisSteps
+import com.davidtakac.bura.graphs.common.niceScale
 import com.davidtakac.bura.temperature.Temperature
 import com.davidtakac.bura.temperature.string
 import java.time.LocalDate
@@ -71,23 +71,22 @@ fun TemperatureGraph(
     val steps = remember(absMinTemp, absMaxTemp) {
         val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
         val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-        // TODO: add smart top padding for labels
-        generateVerticalAxisSteps(absMinTempC, absMaxTempC, steps = 5).run {
-            copy(
-                all = all.toMutableList().apply {
-                    add(last + stepSize)
-                }
-            )
-        }
+        val niceScale = niceScale(absMinTempC, absMaxTempC, maxTicks = 10)
+        val niceSteps = mutableListOf(niceScale.min)
+        do {
+            val tick = niceSteps.last() + niceScale.spacing
+            niceSteps.add(tick)
+        } while (tick < niceScale.max)
+        niceSteps
     }
-    val (minC, maxC) = steps.first to steps.last
+    val (minC, maxC) = steps.first() to steps.last()
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
     val plotColors = AppTheme.colors.temperatureColors(minC, maxC)
     Canvas(modifier) {
         drawTempAxis(
             unit = absMinTemp.unit,
-            steps = steps.all,
+            steps = steps,
             context = context,
             measurer = measurer,
             args = args

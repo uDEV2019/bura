@@ -74,19 +74,10 @@ fun PrecipitationGraph(
     val snowColor = AppTheme.colors.snowColor
     val (steps, newMax) = remember(max) {
         // todo: add smart padding to top of graphs
-        val steps = generateVerticalAxisSteps(
-            min = 0.0,
-            max = max.convertTo(Precipitation.Unit.Millimeters).value,
-            steps = 5
-        ).run {
-            copy(
-                all = all.toMutableList().apply {
-                    add(last + stepSize)
-                }
-            )
-        }
+
+        val steps = listOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
         val newMax = MixedPrecipitation.fromMillimeters(
-            rain = Rain.fromMillimeters(steps.last),
+            rain = Rain.fromMillimeters(steps.last()),
             showers = Showers.Zero,
             snow = Snow.Zero
         )
@@ -96,7 +87,7 @@ fun PrecipitationGraph(
         drawPrecipAxis(
             unit = max.unit,
             context = context,
-            steps = steps.all,
+            steps = steps,
             measurer = measurer,
             args = args
         )

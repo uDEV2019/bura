@@ -63,19 +63,17 @@ fun PopGraph(state: PopGraph, args: GraphArgs, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
     val plotColor = AppTheme.colors.popColor
-    val max = 120.0
-    // todo: add smart padding to top of graph and get max from steps
-    val steps = generateVerticalAxisSteps(min = 0.0, max = max, steps = 6)
+    val steps = listOf(0.0, 20.0, 40.0, 60.0, 80.0, 100.0, 120.0)
     Canvas(modifier) {
         drawVerticalAxis(
             context = context,
-            steps = steps.all,
+            steps = steps,
             measurer = measurer,
             args = args,
         )
         drawHorizontalAxisAndPlot(
             state = state,
-            max = max,
+            max = steps.last(),
             context = context,
             measurer = measurer,
             plotColor = plotColor,
