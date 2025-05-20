@@ -18,11 +18,11 @@ import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.unit.LayoutDirection
 
-fun DrawScope.drawVerticalAxis(
-    steps: List<Double>,
+fun <T> DrawScope.drawVerticalAxis(
+    steps: List<T>,
     args: GraphArgs,
     measurer: TextMeasurer,
-    stepFormatter: (step: Double) -> String?,
+    stepFormatter: (step: T) -> String?,
 ) {
     val lineX =
         if (layoutDirection == LayoutDirection.Ltr) size.width - args.endGutter

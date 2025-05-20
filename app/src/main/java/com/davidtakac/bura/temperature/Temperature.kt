@@ -57,5 +57,14 @@ class Temperature private constructor(
             value = value,
             unit = Unit.DegreesCelsius
         )
+
+        fun fromDegreesFahrenheit(value: Double): Temperature {
+            val celsius = (value - 32) * 5 / 9
+            return Temperature(
+                degreesCelsius = celsius,
+                value = value,
+                unit = Temperature.Unit.DegreesFahrenheit
+            )
+        }
     }
 }

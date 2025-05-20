@@ -47,6 +47,7 @@ import com.davidtakac.bura.condition.Condition
 import com.davidtakac.bura.condition.image
 import com.davidtakac.bura.graphs.common.GraphArgs
 import com.davidtakac.bura.graphs.common.GraphTime
+import com.davidtakac.bura.graphs.common.NiceScale
 import com.davidtakac.bura.graphs.common.closePlotFillPath
 import com.davidtakac.bura.graphs.common.drawLabeledPoint
 import com.davidtakac.bura.graphs.common.drawPastOverlayWithPoint
@@ -68,33 +69,50 @@ fun TemperatureGraph(
     absMaxTemp: Temperature,
     modifier: Modifier = Modifier
 ) {
-    val steps = remember(absMinTemp, absMaxTemp) {
-        val absMinTempC = absMinTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-        val absMaxTempC = absMaxTemp.convertTo(Temperature.Unit.DegreesCelsius).value
-        val niceScale = niceScale(absMinTempC, absMaxTempC, maxTicks = 10)
-        val niceSteps = mutableListOf(niceScale.min)
-        do {
-            val tick = niceSteps.last() + niceScale.spacing
-            niceSteps.add(tick)
-        } while (tick < niceScale.max)
-        niceSteps
+    val unit = absMinTemp.unit
+    val (min, max, scale) = remember(absMinTemp, absMaxTemp) {
+        val maxTicks = 7
+        // Avoids case where min == max, or where the scale is too small to display nice numbers
+        var absMinTempValue = absMinTemp.value
+        var absMaxTempValue = absMaxTemp.value
+        if (absMaxTempValue - absMinTempValue < maxTicks) {
+            absMinTempValue -= maxTicks / 2.0
+            absMaxTempValue += maxTicks / 2.0
+        }
+        val initialScale = niceScale(absMinTempValue, absMaxTempValue, maxTicks)
+        // Avoids case where scale min max are equal to extremes (looks bad)
+        val adjustedNiceMin = initialScale.min - initialScale.spacing
+        val adjustedNiceMax = initialScale.max + initialScale.spacing
+        val adjustedNiceScale = NiceScale(adjustedNiceMin, adjustedNiceMax, initialScale.spacing)
+        // Converts scale to Temperature objects for further use
+        if (unit == Temperature.Unit.DegreesCelsius) {
+            Triple(
+                Temperature.fromDegreesCelsius(adjustedNiceScale.min),
+                Temperature.fromDegreesCelsius(adjustedNiceScale.max),
+                adjustedNiceScale.scale.map(Temperature::fromDegreesCelsius)
+            )
+        } else {
+            Triple(
+                Temperature.fromDegreesFahrenheit(adjustedNiceScale.min),
+                Temperature.fromDegreesFahrenheit(adjustedNiceScale.max),
+                adjustedNiceScale.scale.map(Temperature::fromDegreesFahrenheit)
+            )
+        }
     }
-    val (minC, maxC) = steps.first() to steps.last()
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
-    val plotColors = AppTheme.colors.temperatureColors(minC, maxC)
+    val plotColors = AppTheme.colors.temperatureColors(min, max)
     Canvas(modifier) {
         drawTempAxis(
-            unit = absMinTemp.unit,
-            steps = steps,
+            steps = scale,
             context = context,
             measurer = measurer,
             args = args
         )
         drawHorizontalAxisAndPlot(
             state = state,
-            minCelsius = minC,
-            maxCelsius = maxC,
+            min = min.value,
+            max = max.value,
             context = context,
             measurer = measurer,
             plotColors = plotColors,
@@ -106,17 +124,18 @@ fun TemperatureGraph(
 private fun DrawScope.drawHorizontalAxisAndPlot(
     state: TemperatureGraph,
     plotColors: List<Color>,
-    minCelsius: Double,
-    maxCelsius: Double,
+    min: Double,
+    max: Double,
     context: Context,
     measurer: TextMeasurer,
     args: GraphArgs
 ) {
     val iconSize = 24.dp.toPx()
     val iconSizeRound = iconSize.roundToInt()
-    val hasSpaceFor12Icons = (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
+    val hasSpaceFor12Icons =
+        (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
     val iconY = ((args.topGutter / 2) - (iconSize / 2)).roundToInt()
-    val range = maxCelsius - minCelsius
+    val range = max - min
 
     val plotPath = Path()
     val plotFillPath = Path()
@@ -137,8 +156,7 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         // Temperature line
         val point = state.points.getOrNull(i) ?: return@drawTimeAxis
         val temp = point.temperature
-        val tempCelsius = temp.value.convertTo(Temperature.Unit.DegreesCelsius).value
-        val y = calcY((tempCelsius - minCelsius) / range).top
+        val y = calcY((temp.value.value - min) / range).top
         movePlot(x, y)
         lastX = x
 
@@ -150,9 +168,13 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         // Condition icons
         if (i % (if (hasSpaceFor12Icons) 2 else 3) == 1) {
             val iconX = x - (iconSize / 2)
-            val iconDrawable = AppCompatResources.getDrawable(context, point.condition.image(context, args.icons))!!
+            val iconDrawable = AppCompatResources.getDrawable(
+                context,
+                point.condition.image(context, args.icons)
+            )!!
             drawImage(
-                image = iconDrawable.toBitmap(width = iconSizeRound, height = iconSizeRound).asImageBitmap(),
+                image = iconDrawable.toBitmap(width = iconSizeRound, height = iconSizeRound)
+                    .asImageBitmap(),
                 dstOffset = IntOffset(iconX.roundToInt(), y = iconY),
                 dstSize = IntSize(width = iconSizeRound, height = iconSizeRound),
             )
@@ -208,8 +230,7 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
 }
 
 private fun DrawScope.drawTempAxis(
-    unit: Temperature.Unit,
-    steps: List<Double>,
+    steps: List<Temperature>,
     context: Context,
     measurer: TextMeasurer,
     args: GraphArgs
@@ -218,12 +239,7 @@ private fun DrawScope.drawTempAxis(
         steps = steps,
         args = args,
         measurer = measurer,
-    ) { step ->
-        Temperature
-            .fromDegreesCelsius(step)
-            .convertTo(unit)
-            .string(context, args.numberFormat)
-    }
+    ) { it.string(context, args.numberFormat) }
 }
 
 @Preview

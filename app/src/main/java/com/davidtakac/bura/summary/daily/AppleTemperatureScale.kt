@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -38,21 +39,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.davidtakac.bura.common.AppTheme
+import com.davidtakac.bura.temperature.Temperature
 
 @Composable
 fun AppleTemperatureScale(
-    minCelsius: Double,
-    nowCelsius: Double?,
-    maxCelsius: Double,
-    absMinCelsius: Double,
-    absMaxCelsius: Double,
+    min: Temperature,
+    now: Temperature?,
+    max: Temperature,
+    absMin: Temperature,
+    absMax: Temperature,
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = MaterialTheme.colorScheme.surfaceVariant
     val nowColor = MaterialTheme.colorScheme.onSurface
     val nowOutlineThickness = with(LocalDensity.current) { 4.dp.toPx() }
-    val gradient = AppTheme.colors.temperatureColors(absMinCelsius, absMaxCelsius)
+    val gradient = AppTheme.colors.temperatureColors(absMin, absMax)
     val layoutDirection = LocalLayoutDirection.current
+    val absMinValue = absMin.value
+    val absMaxValue = absMax.value
+    val minValue = min.value
+    val maxValue = max.value
+    val nowValue = now?.value
     Canvas(
         modifier = Modifier
             .height(6.dp)
@@ -64,9 +71,9 @@ fun AppleTemperatureScale(
                 endX = if (layoutDirection == LayoutDirection.Ltr) Float.POSITIVE_INFINITY else 0f
             ))
     ) {
-        val range = absMaxCelsius - absMinCelsius
-        val pillMinPerc = (minCelsius - absMinCelsius) / range
-        val pillMaxPerc = 1 - (absMaxCelsius - maxCelsius) / range
+        val range = absMaxValue - absMinValue
+        val pillMinPerc = (minValue - absMinValue) / range
+        val pillMaxPerc = 1 - (absMaxValue - maxValue) / range
         val pillLeft =
             if (this.layoutDirection == LayoutDirection.Ltr) (pillMinPerc * size.width).toFloat()
             else ((1 - pillMaxPerc) * size.width).toFloat()
@@ -76,8 +83,8 @@ fun AppleTemperatureScale(
         // Coerce makes the pill at least a circle shape when the day's temperature range
         // is very small, like 0-2C difference between min and max temps
         val pillWidth = (pillRight - pillLeft).coerceAtLeast(size.height)
-        nowCelsius?.let {
-            val nowPerc = (it - absMinCelsius) / range
+        nowValue?.let {
+            val nowPerc = (it - absMinValue) / range
             val nowLeft =
                 if (this.layoutDirection == LayoutDirection.Ltr) (nowPerc * size.width).toFloat()
                 else ((1 - nowPerc) * size.width).toFloat()
@@ -131,11 +138,11 @@ fun AppleTemperatureScale(
 private fun AppleTemperatureScalePreview() {
     AppTheme {
         AppleTemperatureScale(
-            minCelsius = 0.0,
-            maxCelsius = 20.0,
-            nowCelsius = 2.0,
-            absMinCelsius = -5.0,
-            absMaxCelsius = 22.0,
+            min = Temperature.fromDegreesCelsius(0.0),
+            max = Temperature.fromDegreesCelsius(20.0),
+            now = Temperature.fromDegreesCelsius(2.0),
+            absMin = Temperature.fromDegreesCelsius(-5.0),
+            absMax = Temperature.fromDegreesCelsius(22.0),
             modifier = Modifier.width(200.dp)
         )
     }
@@ -147,11 +154,11 @@ private fun AppleTemperatureScaleRtlPreview() {
     AppTheme {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             AppleTemperatureScale(
-                minCelsius = 0.0,
-                maxCelsius = 20.0,
-                nowCelsius = 2.0,
-                absMinCelsius = -5.0,
-                absMaxCelsius = 22.0,
+                min = Temperature.fromDegreesCelsius(0.0),
+                max = Temperature.fromDegreesCelsius(20.0),
+                now = Temperature.fromDegreesCelsius(2.0),
+                absMin = Temperature.fromDegreesCelsius(-5.0),
+                absMax = Temperature.fromDegreesCelsius(22.0),
                 modifier = Modifier.width(200.dp)
             )
         }

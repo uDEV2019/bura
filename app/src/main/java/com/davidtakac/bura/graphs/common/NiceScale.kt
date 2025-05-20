@@ -55,4 +55,15 @@ data class NiceScale(
     val min: Double,
     val max: Double,
     val spacing: Double
-)
+) {
+    val scale: List<Double>
+
+    init {
+        val scale = mutableListOf(min)
+        do {
+            val tick = scale.last() + spacing
+            scale.add(tick)
+        } while (tick < max)
+        this.scale = scale
+    }
+}

@@ -14,6 +14,7 @@ package com.davidtakac.bura.common
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import com.davidtakac.bura.temperature.Temperature
 import kotlin.math.roundToInt
 
 data class AppColors(
@@ -25,8 +26,11 @@ data class AppColors(
     val snowColor: Color,
     val precipitationColor: Color,
 ) {
-    fun temperatureColors(fromCelsius: Double, toCelsius: Double): List<Color> =
-        temperatureColors.slice(getIndexOfNearestColor(fromCelsius)..getIndexOfNearestColor(toCelsius))
+    fun temperatureColors(from: Temperature, to: Temperature): List<Color> {
+        val fromCelsius = from.convertTo(Temperature.Unit.DegreesCelsius).value
+        val toCelsius = to.convertTo(Temperature.Unit.DegreesCelsius).value
+        return temperatureColors.slice(getIndexOfNearestColor(fromCelsius)..getIndexOfNearestColor(toCelsius))
+    }
 
     val uvIndexColorStops: List<Pair<Float, Color>>  get() =
         uvIndexColors.map { it.key / 11f to it.value }

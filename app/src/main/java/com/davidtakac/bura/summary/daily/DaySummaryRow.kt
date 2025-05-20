@@ -150,11 +150,11 @@ fun DaySummaryRow(
                         modifier = Modifier.width(maxTempWidth)
                     )
                     AppleTemperatureScale(
-                        absMinCelsius = absMin.convertTo(Temperature.Unit.DegreesCelsius).value,
-                        absMaxCelsius = absMax.convertTo(Temperature.Unit.DegreesCelsius).value,
-                        minCelsius = state.min.convertTo(Temperature.Unit.DegreesCelsius).value,
-                        nowCelsius = state.tempNow?.convertTo(Temperature.Unit.DegreesCelsius)?.value,
-                        maxCelsius = state.max.convertTo(Temperature.Unit.DegreesCelsius).value,
+                        absMin = absMin,
+                        absMax = absMax,
+                        min = state.min,
+                        now = state.tempNow,
+                        max = state.max,
                         modifier = Modifier.weight(1f)
                     )
                     Text(
