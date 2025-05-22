@@ -81,6 +81,12 @@ Nicely explained by @LeftyDextrous in #28:
 
 > The extreme ends of the spectrum are the full temperature range of the week. The colored bar is the temperature range for that day, and the dot is the current temperature.
 
+### I can't find my location!
+The Open-Meteo geocoding API is a bit particular. I've found it is often better to enter a simple, 
+single-word, generic search term like "Berlin" and then choose from the list of results. Entering
+more complicated queries with multiple words, commas, etc. confuses the API. This helped @Zzetth
+in #94.
+
 ## Credit
 - Forecast data by [Open-Meteo](https://open-meteo.com/) licensed under [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)  
 - Location data by [Open-Meteo](https://open-meteo.com/) licensed under [Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)  
