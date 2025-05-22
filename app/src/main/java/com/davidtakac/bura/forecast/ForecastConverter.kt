@@ -68,15 +68,7 @@ class ForecastConverter {
                 val rain = data.rain[i].convertTo(toUnits.rain)
                 val showers = data.showers[i].convertTo(toUnits.showers)
                 val snowfall = data.snow[i].convertTo(toUnits.snow)
-                precipMoments.add(PrecipitationMoment(
-                    time,
-                    MixedPrecipitation(
-                        rain = rain,
-                        snow = snowfall,
-                        showers = showers,
-                        unit = Precipitation.Unit.Millimeters
-                    ).convertTo(toUnits.precipitation)
-                ))
+                precipMoments.add(PrecipitationMoment(time, MixedPrecipitation(rain, showers, snowfall, Precipitation.Unit.Millimeters).convertTo(toUnits.precipitation)))
                 uvIndexMoments.add(UvIndexMoment(time, data.uvIndex[i]))
                 windMoments.add(WindMoment(time, Wind(data.windSpeed[i].convertTo(toUnits.windSpeed), data.windDirection[i])))
                 gustMoments.add(GustMoment(time, data.gustSpeed[i].convertTo(toUnits.windSpeed)))
