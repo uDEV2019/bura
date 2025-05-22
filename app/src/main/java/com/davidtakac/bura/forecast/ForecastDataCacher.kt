@@ -74,50 +74,20 @@ class ForecastDataCacher(private val root: File) {
             ForecastData(
                 timestamp = Instant.ofEpochSecond(record.getLong("timestamp")),
                 times = record.getJSONArray("times").mapToList(LocalDateTime::parse),
-                temperature = record.getJSONArray("temperature").mapToList {
-                    Temperature(
-                        it.toDouble(),
-                        Temperature.Unit.DegreesCelsius
-                    )
-                },
-                feelsLikeTemperature = record.getJSONArray("feelsLike").mapToList {
-                    Temperature(
-                        it.toDouble(),
-                        Temperature.Unit.DegreesCelsius
-                    )
-                },
-                dewPointTemperature = record.getJSONArray("dewPoint").mapToList {
-                    Temperature(
-                        it.toDouble(),
-                        Temperature.Unit.DegreesCelsius
-                    )
-                },
+                temperature = record.getJSONArray("temperature").mapToList { Temperature(it.toDouble(), Temperature.Unit.DegreesCelsius) },
+                feelsLikeTemperature = record.getJSONArray("feelsLike").mapToList { Temperature(it.toDouble(), Temperature.Unit.DegreesCelsius) },
+                dewPointTemperature = record.getJSONArray("dewPoint").mapToList { Temperature(it.toDouble(), Temperature.Unit.DegreesCelsius) },
                 sunrises = record.getJSONArray("sunrises").mapToList(LocalDateTime::parse),
                 sunsets = record.getJSONArray("sunsets").mapToList(LocalDateTime::parse),
                 pop = record.getJSONArray("pop").mapToList { Pop(it.toDouble()) },
-                rain = record.getJSONArray("rain").mapToList {
-                    Rain(
-                        it.toDouble(),
-                        Precipitation.Unit.Millimeters
-                    )
-                },
-                showers = record.getJSONArray("showers").mapToList {
-                    Showers(
-                        it.toDouble(),
-                        Precipitation.Unit.Millimeters
-                    )
-                },
-                snow = record.getJSONArray("snow").mapToList {
-                    Snow(
-                        it.toDouble(),
-                        Precipitation.Unit.Millimeters
-                    )
-                },
+                rain = record.getJSONArray("rain").mapToList { Rain(it.toDouble(), Precipitation.Unit.Millimeters) },
+                showers = record.getJSONArray("showers").mapToList { Showers(it.toDouble(), Precipitation.Unit.Millimeters) },
+                snow = record.getJSONArray("snow").mapToList { Snow(it.toDouble(), Precipitation.Unit.Millimeters) },
                 uvIndex = record.getJSONArray("uvIndex").mapToList { UvIndex(it.toInt()) },
                 windSpeed = record.getJSONArray("windSpeed").mapToList { WindSpeed.fromMetersPerSecond(it.toDouble()) },
                 windDirection = record.getJSONArray("windDirection").mapToList { WindDirection(it.toDouble()) },
                 gustSpeed = record.getJSONArray("gustSpeed").mapToList { WindSpeed.fromMetersPerSecond(it.toDouble()) },
-                pressure = record.getJSONArray("pressure").mapToList { Pressure.fromHectopascal(it.toDouble()) },
+                pressure = record.getJSONArray("pressure").mapToList { Pressure(it.toDouble(), Pressure.Unit.Hectopascal) },
                 visibility = record.getJSONArray("visibility").mapToList { Visibility.fromMeters(it.toDouble()) },
                 humidity = record.getJSONArray("humidity").mapToList { Humidity(it.toDouble()) },
                 wmoCode = record.getJSONArray("wmoCode").mapToList(String::toInt),

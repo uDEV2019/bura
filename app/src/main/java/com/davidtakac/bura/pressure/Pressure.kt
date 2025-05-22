@@ -14,13 +14,17 @@ package com.davidtakac.bura.pressure
 
 import java.util.Objects
 
-class Pressure private constructor(
-    private val hectopascal: Double,
+class Pressure(
     val value: Double,
     val unit: Unit
 ) : Comparable<Pressure> {
+    private val hectopascal: Double = when (unit) {
+        Unit.Hectopascal -> value
+        Unit.InchesOfMercury -> value * 33.86389
+        Unit.MillimetersOfMercury -> value * 1.33322
+    }
+
     fun convertTo(unit: Unit): Pressure = Pressure(
-        hectopascal = hectopascal,
         value = hectopascal * when (unit) {
             Unit.Hectopascal -> 1.0
             Unit.InchesOfMercury -> 0.02953
@@ -32,7 +36,6 @@ class Pressure private constructor(
     operator fun plus(other: Pressure): Pressure {
         val sum = hectopascal + other.hectopascal
         return Pressure(
-            hectopascal = sum,
             value = sum,
             unit = Unit.Hectopascal
         ).convertTo(unit)
@@ -41,7 +44,6 @@ class Pressure private constructor(
     operator fun div(other: Int): Pressure {
         val result = hectopascal / other
         return Pressure(
-            hectopascal = result,
             value = result,
             unit = Unit.Hectopascal
         ).convertTo(unit)
@@ -68,14 +70,5 @@ class Pressure private constructor(
         Hectopascal,
         InchesOfMercury,
         MillimetersOfMercury
-    }
-
-    companion object {
-        fun fromHectopascal(value: Double): Pressure =
-            Pressure(
-                hectopascal = value,
-                value = value,
-                unit = Unit.Hectopascal
-            )
     }
 }

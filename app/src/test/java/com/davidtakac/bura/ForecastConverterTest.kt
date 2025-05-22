@@ -100,8 +100,8 @@ class ForecastConverterTest {
             WindSpeed.fromMetersPerSecond(10.0)
         )
         val pressure = listOf(
-            Pressure.fromHectopascal(1000.0),
-            Pressure.fromHectopascal(1000.0)
+            Pressure(1000.0, Pressure.Unit.Hectopascal),
+            Pressure(1000.0, Pressure.Unit.Hectopascal)
         )
         val visibility = listOf(
             Visibility.fromMeters(1000.0),
@@ -200,8 +200,8 @@ class ForecastConverterTest {
             WindSpeed.fromMetersPerSecond(10.0)
         )
         val pressure = listOf(
-            Pressure.fromHectopascal(1000.0),
-            Pressure.fromHectopascal(1000.0)
+            Pressure(1000.0, Pressure.Unit.Hectopascal),
+            Pressure(1000.0, Pressure.Unit.Hectopascal)
         )
         val visibility = listOf(
             Visibility.fromMeters(1000.0)

@@ -33,11 +33,11 @@ class GetPressureSummaryTest {
             moments = listOf(
                 PressureMoment(
                     hour = firstMoment,
-                    pressure = Pressure.fromHectopascal(0.0)
+                    pressure = Pressure(0.0, Pressure.Unit.Hectopascal)
                 ),
                 PressureMoment(
                     hour = secondMoment,
-                    pressure = Pressure.fromHectopascal(1.0)
+                    pressure = Pressure(1.0, Pressure.Unit.Hectopascal)
                 )
             )
         )
@@ -46,8 +46,8 @@ class GetPressureSummaryTest {
         assertEquals(
             ForecastResult.Success(
                 PressureSummary(
-                    now = Pressure.fromHectopascal(1.0),
-                    average = Pressure.fromHectopascal(0.5),
+                    now = Pressure(1.0, Pressure.Unit.Hectopascal),
+                    average = Pressure(0.5, Pressure.Unit.Hectopascal),
                     trend = PressureTrend.Rising
                 )
             ),
@@ -62,7 +62,7 @@ class GetPressureSummaryTest {
             moments = listOf(
                 PressureMoment(
                     hour = firstMoment,
-                    pressure = Pressure.fromHectopascal(1.0)
+                    pressure = Pressure(1.0, Pressure.Unit.Hectopascal)
                 )
             )
         )
@@ -80,7 +80,7 @@ class GetPressureSummaryTest {
             moments = listOf(
                 PressureMoment(
                     hour = firstMoment,
-                    pressure = Pressure.fromHectopascal(1.0)
+                    pressure = Pressure(1.0, Pressure.Unit.Hectopascal)
                 )
             )
         )

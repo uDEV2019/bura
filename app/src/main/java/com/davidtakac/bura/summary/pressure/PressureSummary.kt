@@ -93,8 +93,8 @@ private fun PressureSummaryPreview() {
         ) {
             PressureSummary(
                 state = PressureSummary(
-                    now = Pressure.fromHectopascal(1013.25),
-                    average = Pressure.fromHectopascal(1010.0),
+                    now = Pressure(1013.25, Pressure.Unit.Hectopascal),
+                    average = Pressure(1010.0, Pressure.Unit.Hectopascal),
                     trend = PressureTrend.Rising
                 )
             )

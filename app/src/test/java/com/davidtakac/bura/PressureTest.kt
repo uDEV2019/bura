@@ -19,7 +19,7 @@ import org.junit.Test
 class PressureTest {
     @Test
     fun `converts to inHg and mmHg`() {
-        val pressure = Pressure.fromHectopascal(1000.0)
+        val pressure = Pressure(1000.0, Pressure.Unit.Hectopascal)
         assertEquals(1000.0, pressure.value, 0.0)
         assertEquals(Pressure.Unit.Hectopascal, pressure.unit)
 
@@ -34,8 +34,8 @@ class PressureTest {
 
     @Test
     fun plus() {
-        val one = Pressure.fromHectopascal(1000.0)
-        val two = Pressure.fromHectopascal(1000.0)
+        val one = Pressure(1000.0, Pressure.Unit.Hectopascal)
+        val two = Pressure(1000.0, Pressure.Unit.Hectopascal)
         two.convertTo(Pressure.Unit.InchesOfMercury)
         val sum = one + two
         assertEquals(2000.0, sum.value, 0.0)
@@ -44,23 +44,23 @@ class PressureTest {
 
     @Test
     fun divide() {
-        val pressure = Pressure.fromHectopascal(1000.0)
+        val pressure = Pressure(1000.0, Pressure.Unit.Hectopascal)
         val dividend = 2
         val result = pressure / dividend
-        assertEquals(Pressure.fromHectopascal(500.0), result)
+        assertEquals(Pressure(500.0, Pressure.Unit.Hectopascal), result)
     }
 
     @Test
     fun `greater than`() {
-        val less = Pressure.fromHectopascal(1000.0)
-        val greater = Pressure.fromHectopascal(1001.0)
+        val less = Pressure(1000.0, Pressure.Unit.Hectopascal)
+        val greater = Pressure(1001.0, Pressure.Unit.Hectopascal)
         greater.convertTo(Pressure.Unit.InchesOfMercury)
         assertTrue(greater > less)
     }
 
     @Test
     fun `construct from hPa`() {
-        val pressure = Pressure.fromHectopascal(1000.0)
+        val pressure = Pressure(1000.0, Pressure.Unit.Hectopascal)
         assertEquals(1000.0, pressure.value, 0.0)
         assertEquals(Pressure.Unit.Hectopascal, pressure.unit)
     }

@@ -26,11 +26,11 @@ class PressurePeriodTest {
         val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
         val period = PressurePeriod(
             moments = listOf(
-                PressureMoment(hour = firstMoment, Pressure.fromHectopascal(1000.0)),
-                PressureMoment(hour = secondMoment, Pressure.fromHectopascal(1000.0))
+                PressureMoment(hour = firstMoment, Pressure(1000.0, Pressure.Unit.Hectopascal)),
+                PressureMoment(hour = secondMoment, Pressure(1000.0, Pressure.Unit.Hectopascal))
             )
         )
-        assertEquals(Pressure.fromHectopascal(1000.0), period.minimum)
+        assertEquals(Pressure(1000.0, Pressure.Unit.Hectopascal), period.minimum)
     }
 
     @Test
@@ -39,10 +39,10 @@ class PressurePeriodTest {
         val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
         val period = PressurePeriod(
             moments = listOf(
-                PressureMoment(firstMoment, Pressure.fromHectopascal(1000.0)),
-                PressureMoment(secondMoment, Pressure.fromHectopascal(1010.0))
+                PressureMoment(firstMoment, Pressure(1000.0, Pressure.Unit.Hectopascal)),
+                PressureMoment(secondMoment, Pressure(1010.0, Pressure.Unit.Hectopascal))
             )
         )
-        assertEquals(Pressure.fromHectopascal(1005.0), period.average)
+        assertEquals(Pressure(1005.0, Pressure.Unit.Hectopascal), period.average)
     }
 }

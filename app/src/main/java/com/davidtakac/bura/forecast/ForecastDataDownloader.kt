@@ -130,7 +130,7 @@ class ForecastDataDownloader(private val userAgentProvider: UserAgentProvider) {
             val gustSpeed = hourly.getJSONArray("wind_gusts_10m").mapToList { WindSpeed.fromMetersPerSecond(it.toDouble()) }
             val visibility = hourly.getJSONArray("visibility").mapToList { Visibility.fromMeters(it.toDouble()) }
             val humidity = hourly.getJSONArray("relative_humidity_2m").mapToList { Humidity(it.toDouble()) }
-            val pressure = hourly.getJSONArray("pressure_msl").mapToList { Pressure.fromHectopascal(it.toDouble()) }
+            val pressure = hourly.getJSONArray("pressure_msl").mapToList { Pressure(it.toDouble(), Pressure.Unit.Hectopascal) }
 
             ForecastData(
                 timestamp = Instant.now(),
