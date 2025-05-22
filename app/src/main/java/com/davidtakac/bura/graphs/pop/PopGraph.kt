@@ -51,7 +51,6 @@ import com.davidtakac.bura.graphs.common.drawPastOverlayWithPoint
 import com.davidtakac.bura.graphs.common.drawPlotLinePath
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
-import com.davidtakac.bura.graphs.common.generateVerticalAxisSteps
 import com.davidtakac.bura.pop.Pop
 import com.davidtakac.bura.pop.string
 import java.time.LocalDate

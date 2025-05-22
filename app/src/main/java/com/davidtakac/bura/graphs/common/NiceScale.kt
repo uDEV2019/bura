@@ -17,6 +17,7 @@ import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
 
+// TODO: Make this a class insetad of a function? Kind of awkward
 // Source: Graphics Gems 1 by Andrew S. Glassner and https://stackoverflow.com/a/16363437
 fun niceScale(min: Double, max: Double, maxTicks: Int): NiceScale {
     val range = niceNum(srcNum = max - min, round = false)

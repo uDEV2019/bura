@@ -103,8 +103,8 @@ fun TemperatureGraph(
         )
         drawHorizontalAxisAndPlot(
             state = state,
-            min = min.value,
-            max = max.value,
+            min = min,
+            max = max,
             context = context,
             measurer = measurer,
             plotColors = plotColors,
@@ -116,8 +116,8 @@ fun TemperatureGraph(
 private fun DrawScope.drawHorizontalAxisAndPlot(
     state: TemperatureGraph,
     plotColors: List<Color>,
-    min: Double,
-    max: Double,
+    min: Temperature,
+    max: Temperature,
     context: Context,
     measurer: TextMeasurer,
     args: GraphArgs
@@ -127,7 +127,7 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
     val hasSpaceFor12Icons =
         (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
     val iconY = ((args.topGutter / 2) - (iconSize / 2)).roundToInt()
-    val range = max - min
+    val range = max.value - min.value
 
     val plotPath = Path()
     val plotFillPath = Path()
@@ -148,7 +148,7 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         // Temperature line
         val point = state.points.getOrNull(i) ?: return@drawTimeAxis
         val temp = point.temperature
-        val y = calcY((temp.value.value - min) / range).top
+        val y = calcY((temp.value.value - min.value) / range).top
         movePlot(x, y)
         lastX = x
 

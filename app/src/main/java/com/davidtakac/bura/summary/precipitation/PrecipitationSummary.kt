@@ -162,9 +162,7 @@ private fun PrecipitationSummaryPreview() {
                     state = PrecipitationSummary(
                         past = PastPrecipitation(
                             inHours = 24,
-                            total = Snow(100.0, Precipitation.Unit.Millimeters).convertTo(
-                                Precipitation.Unit.Inches
-                            )
+                            total = Snow(100.0, Precipitation.Unit.Millimeters).convertTo(Precipitation.Unit.Inches)
                         ),
                         future = FuturePrecipitation.None(inDays = 7)
                     ),
