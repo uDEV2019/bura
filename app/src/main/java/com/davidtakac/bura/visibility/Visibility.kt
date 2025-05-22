@@ -85,14 +85,6 @@ class Visibility(
         }
         return "${String.format("%.2f", value)} $suffix ($description)"
     }
-
-    companion object {
-        @Deprecated("Deprecated", ReplaceWith("Visibility(value, Visibility.Unit.Meters)"))
-        fun fromMeters(value: Double): Visibility = Visibility(
-            value = value,
-            unit = Unit.Meters
-        )
-    }
 }
 
 private fun metersTo(meters: Double, unit: Unit): Double = meters * when (unit) {
