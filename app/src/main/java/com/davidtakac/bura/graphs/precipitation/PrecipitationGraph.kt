@@ -43,10 +43,11 @@ import com.davidtakac.bura.condition.Condition
 import com.davidtakac.bura.condition.image
 import com.davidtakac.bura.graphs.common.GraphArgs
 import com.davidtakac.bura.graphs.common.GraphTime
+import com.davidtakac.bura.graphs.common.NiceScale
 import com.davidtakac.bura.graphs.common.drawPastOverlay
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
-import com.davidtakac.bura.graphs.common.generateVerticalAxisSteps
+import com.davidtakac.bura.graphs.common.niceScale
 import com.davidtakac.bura.precipitation.MixedPrecipitation
 import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.precipitation.Rain
@@ -73,16 +74,18 @@ fun PrecipitationGraph(
     val showersColor = AppTheme.colors.showersColor
     val snowColor = AppTheme.colors.snowColor
     val (steps, newMax) = remember(max) {
-        // todo: add smart padding to top of graphs
-
-        val steps = listOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
-        val newMax = MixedPrecipitation(
-            rain = Rain(steps.last(), Precipitation.Unit.Millimeters),
-            snow = Snow.Zero,
-            showers = Showers.Zero,
-            unit = Precipitation.Unit.Millimeters
+        val maxTicks = 5
+        val initialNiceScale = niceScale(
+            min = 0.0,
+            max = max.value.coerceAtLeast(maxTicks.toDouble()),
+            maxTicks = maxTicks
         )
-        steps to newMax
+        val adjustedNiceScale = NiceScale(
+            min = 0.0,
+            max = initialNiceScale.max + initialNiceScale.spacing,
+            spacing = initialNiceScale.spacing
+        )
+        adjustedNiceScale.scale to Rain(adjustedNiceScale.max, max.unit)
     }
     Canvas(modifier) {
         drawPrecipAxis(
@@ -107,7 +110,7 @@ fun PrecipitationGraph(
 
 private fun DrawScope.drawHorizontalAxisAndBars(
     state: PrecipitationGraph,
-    max: MixedPrecipitation,
+    max: Precipitation,
     rainColor: Color,
     showersColor: Color,
     snowColor: Color,
@@ -120,7 +123,7 @@ private fun DrawScope.drawHorizontalAxisAndBars(
     val hasSpaceFor12Icons =
         (size.width - args.startGutter - args.endGutter) - (iconSizeRound * 12) >= (12 * 2.dp.toPx())
     val iconY = ((args.topGutter / 2) - (iconSize / 2)).roundToInt()
-    val range = max.value * 1.2f
+    val range = max.value
 
     var nowX: Float? = null
     drawTimeAxis(
