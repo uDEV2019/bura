@@ -36,17 +36,24 @@ class WindSummaryTest {
             listOf(
                 WindMoment(
                     time,
-                    Wind(WindSpeed.fromMetersPerSecond(0.0), WindDirection(0.0))
+                    Wind(WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond), WindDirection(0.0))
                 )
             )
         )
-        val gustPeriod = GustPeriod(listOf(GustMoment(time, WindSpeed.fromMetersPerSecond(1.0))))
+        val gustPeriod = GustPeriod(listOf(
+            GustMoment(
+                time,
+                WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
+            )))
         val summary = getWindSummary(now, windPeriod, gustPeriod)
         assertEquals(
             ForecastResult.Success(
                 WindSummary(
-                    windNow = Wind(WindSpeed.fromMetersPerSecond(0.0), WindDirection(0.0)),
-                    gustNow = WindSpeed.fromMetersPerSecond(1.0)
+                    windNow = Wind(
+                        WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond),
+                        WindDirection(0.0)
+                    ),
+                    gustNow = WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
                 )
             ),
             summary
@@ -61,11 +68,15 @@ class WindSummaryTest {
             listOf(
                 WindMoment(
                     time,
-                    Wind(WindSpeed.fromMetersPerSecond(0.0), WindDirection(0.0))
+                    Wind(WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond), WindDirection(0.0))
                 )
             )
         )
-        val gustPeriod = GustPeriod(listOf(GustMoment(time, WindSpeed.fromMetersPerSecond(1.0))))
+        val gustPeriod = GustPeriod(listOf(
+            GustMoment(
+                time,
+                WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
+            )))
         val summary = getWindSummary(now, windPeriod, gustPeriod)
         assertEquals(ForecastResult.Outdated, summary)
     }

@@ -14,11 +14,17 @@ package com.davidtakac.bura.wind
 
 import java.util.Objects
 
-class WindSpeed private constructor(
-    private val metersPerSecond: Double,
+class WindSpeed(
     val value: Double,
     val unit: Unit
 ) : Comparable<WindSpeed> {
+    private val metersPerSecond: Double = when (unit) {
+        Unit.MetersPerSecond -> value
+        Unit.KilometersPerHour -> value / 3.6
+        Unit.MilesPerHour -> value / 2.23694
+        Unit.Knots -> value / 1.94384
+    }
+
     val beaufort: Int = when {
         metersPerSecond < 0.3 -> 0
         metersPerSecond <= 1.5 -> 1
@@ -43,7 +49,6 @@ class WindSpeed private constructor(
             Unit.Knots -> 1.94384
         }
         return WindSpeed(
-            metersPerSecond = metersPerSecond,
             value = newValue,
             unit = unit
         )
@@ -73,13 +78,5 @@ class WindSpeed private constructor(
             Unit.Knots -> "kn"
         }
         return "${String.format("%.2f", value)} $suffix ($beaufort bft)"
-    }
-
-    companion object {
-        fun fromMetersPerSecond(value: Double): WindSpeed = WindSpeed(
-            metersPerSecond = value,
-            value = value,
-            unit = Unit.MetersPerSecond
-        )
     }
 }

@@ -106,10 +106,10 @@ private fun WindSummaryPreview() {
             WindSummary(
                 state = WindSummary(
                     windNow = Wind(
-                        speed = WindSpeed.fromMetersPerSecond(9.0),
+                        speed = WindSpeed(9.0, WindSpeed.Unit.MetersPerSecond),
                         from = WindDirection(76.0)
                     ),
-                    gustNow = WindSpeed.fromMetersPerSecond(20.0)
+                    gustNow = WindSpeed(20.0, WindSpeed.Unit.MetersPerSecond)
                 ),
             )
         }

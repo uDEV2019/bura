@@ -26,10 +26,10 @@ class GustMomentListTest {
         val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
         val period = GustPeriod(
             moments = listOf(
-                GustMoment(firstMoment, WindSpeed.fromMetersPerSecond(0.0)),
-                GustMoment(secondMoment, WindSpeed.fromMetersPerSecond(1.0))
+                GustMoment(firstMoment, WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond)),
+                GustMoment(secondMoment, WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond))
             )
         )
-        assertEquals(WindSpeed.fromMetersPerSecond(1.0), period.maximum)
+        assertEquals(WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond), period.maximum)
     }
 }

@@ -30,15 +30,15 @@ class WindPeriodTest {
             moments = listOf(
                 WindMoment(
                     firstMoment,
-                    Wind(WindSpeed.fromMetersPerSecond(0.0), WindDirection(0.0))
+                    Wind(WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond), WindDirection(0.0))
                 ),
                 WindMoment(
                     secondMoment,
-                    Wind(WindSpeed.fromMetersPerSecond(1.0), WindDirection(0.0))
+                    Wind(WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond), WindDirection(0.0))
                 ),
             )
         )
-        assertEquals(WindSpeed.fromMetersPerSecond(0.0), period.minimumSpeed)
-        assertEquals(WindSpeed.fromMetersPerSecond(1.0), period.maximumSpeed)
+        assertEquals(WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond), period.minimumSpeed)
+        assertEquals(WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond), period.maximumSpeed)
     }
 }

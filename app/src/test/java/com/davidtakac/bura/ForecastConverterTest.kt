@@ -88,16 +88,16 @@ class ForecastConverterTest {
             UvIndex(1)
         )
         val windSpeed = listOf(
-            WindSpeed.fromMetersPerSecond(1.0),
-            WindSpeed.fromMetersPerSecond(1.0)
+            WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond),
+            WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
         )
         val windDirection = listOf(
             WindDirection(10.0),
             WindDirection(10.0)
         )
         val gustSpeed = listOf(
-            WindSpeed.fromMetersPerSecond(10.0),
-            WindSpeed.fromMetersPerSecond(10.0)
+            WindSpeed(10.0, WindSpeed.Unit.MetersPerSecond),
+            WindSpeed(10.0, WindSpeed.Unit.MetersPerSecond)
         )
         val pressure = listOf(
             Pressure(1000.0, Pressure.Unit.Hectopascal),
@@ -188,16 +188,16 @@ class ForecastConverterTest {
             UvIndex(1)
         )
         val windSpeed = listOf(
-            WindSpeed.fromMetersPerSecond(1.0),
-            WindSpeed.fromMetersPerSecond(1.0)
+            WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond),
+            WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
         )
         val windDirection = listOf(
             WindDirection(10.0),
             WindDirection(10.0)
         )
         val gustSpeed = listOf(
-            WindSpeed.fromMetersPerSecond(10.0),
-            WindSpeed.fromMetersPerSecond(10.0)
+            WindSpeed(10.0, WindSpeed.Unit.MetersPerSecond),
+            WindSpeed(10.0, WindSpeed.Unit.MetersPerSecond)
         )
         val pressure = listOf(
             Pressure(1000.0, Pressure.Unit.Hectopascal),
