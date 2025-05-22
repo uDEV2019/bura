@@ -70,14 +70,21 @@ fun PrecipitationGraph(
 ) {
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
+    val unit = max.unit
     val rainColor = AppTheme.colors.rainColor
     val showersColor = AppTheme.colors.showersColor
     val snowColor = AppTheme.colors.snowColor
     val (steps, newMax) = remember(max) {
         val maxTicks = 5
+        val leastMax = MixedPrecipitation(
+            rain = Rain(5.0, Precipitation.Unit.Millimeters),
+            showers = Showers.ZeroMillimeters,
+            snow = Snow.ZeroMillimeters,
+            unit = Precipitation.Unit.Millimeters
+        )
         val initialNiceScale = niceScale(
             min = 0.0,
-            max = max.value.coerceAtLeast(maxTicks.toDouble()),
+            max = (if (max < leastMax) leastMax.convertTo(unit) else max).value,
             maxTicks = maxTicks
         )
         val adjustedNiceScale = NiceScale(
@@ -85,11 +92,22 @@ fun PrecipitationGraph(
             max = initialNiceScale.max + initialNiceScale.spacing,
             spacing = initialNiceScale.spacing
         )
-        adjustedNiceScale.scale to Rain(adjustedNiceScale.max, max.unit)
+        adjustedNiceScale.scale.map {
+            MixedPrecipitation(
+                rain = Rain(it, max.unit),
+                showers = Showers.ZeroMillimeters,
+                snow = Snow.ZeroMillimeters,
+                unit = unit
+            )
+        } to MixedPrecipitation(
+            rain = Rain(adjustedNiceScale.max, max.unit),
+            snow = Snow.ZeroMillimeters,
+            showers = Showers.ZeroMillimeters,
+            unit = unit
+        )
     }
     Canvas(modifier) {
         drawPrecipAxis(
-            unit = max.unit,
             context = context,
             steps = steps,
             measurer = measurer,
@@ -197,9 +215,8 @@ private fun DrawScope.drawHorizontalAxisAndBars(
 }
 
 private fun DrawScope.drawPrecipAxis(
-    unit: Precipitation.Unit,
     context: Context,
-    steps: List<Double>,
+    steps: List<Precipitation>,
     measurer: TextMeasurer,
     args: GraphArgs
 ) {
@@ -208,9 +225,8 @@ private fun DrawScope.drawPrecipAxis(
         args = args,
         measurer = measurer,
     ) { step ->
-        val rain = Rain(step, Precipitation.Unit.Millimeters).convertTo(unit)
-        val valueString = rain.valueString(args.numberFormat)
-        if (step == steps[0]) rain.string(context, args.numberFormat) else valueString
+        val valueString = step.valueString(args.numberFormat)
+        if (step == steps[0]) step.string(context, args.numberFormat) else valueString
     }
 }
 
@@ -329,9 +345,9 @@ private val smallPreviewState = PrecipitationGraph(
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
             precip = MixedPrecipitation(
-                rain = Rain.Zero,//.fromMillimeters(Random.nextDouble(until = 5.0)),
-                snow = Snow.Zero,
-                showers = Showers.Zero,
+                rain = Rain(Random.nextDouble(until = 5.0), Precipitation.Unit.Millimeters),
+                snow = Snow.ZeroMillimeters,
+                showers = Showers.ZeroMillimeters,
                 unit = Precipitation.Unit.Millimeters
             ),
             cond = Condition(
@@ -352,9 +368,9 @@ private val smallPreviewStateInches = PrecipitationGraph(
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
             precip = MixedPrecipitation(
-                rain = Rain.Zero,
-                snow = Snow.Zero,
-                showers = Showers.Zero,
+                rain = Rain.ZeroMillimeters,
+                snow = Snow.ZeroMillimeters,
+                showers = Showers.ZeroMillimeters,
                 unit = Precipitation.Unit.Millimeters
             ).convertTo(Precipitation.Unit.Inches),
             cond = Condition(

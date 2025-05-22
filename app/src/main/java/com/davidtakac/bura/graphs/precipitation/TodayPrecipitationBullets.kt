@@ -75,7 +75,7 @@ private fun PrecipitationTodayPreview() {
                                 70.0,
                                 Precipitation.Unit.Millimeters
                             ).convertTo(Precipitation.Unit.Centimeters),
-                            showers = Showers.Zero,
+                            showers = Showers.ZeroMillimeters,
                             unit = Precipitation.Unit.Millimeters
                         )
                     ),

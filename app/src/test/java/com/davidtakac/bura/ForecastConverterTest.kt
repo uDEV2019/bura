@@ -76,12 +76,12 @@ class ForecastConverterTest {
             Rain(1.0, Precipitation.Unit.Millimeters)
         )
         val showers = listOf(
-            Showers.Zero,
-            Showers.Zero
+            Showers.ZeroMillimeters,
+            Showers.ZeroMillimeters
         )
         val snowfall = listOf(
-            Snow.Zero,
-            Snow.Zero
+            Snow.ZeroMillimeters,
+            Snow.ZeroMillimeters
         )
         val uvIndex = listOf(
             UvIndex(1),
@@ -176,12 +176,12 @@ class ForecastConverterTest {
             Rain(1.0, Precipitation.Unit.Millimeters)
         )
         val showers = listOf(
-            Showers.Zero,
-            Showers.Zero
+            Showers.ZeroMillimeters,
+            Showers.ZeroMillimeters
         )
         val snowfall = listOf(
-            Snow.Zero,
-            Snow.Zero
+            Snow.ZeroMillimeters,
+            Snow.ZeroMillimeters
         )
         val uvIndex = listOf(
             UvIndex(1),

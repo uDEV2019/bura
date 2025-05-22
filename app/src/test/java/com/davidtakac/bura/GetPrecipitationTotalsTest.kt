@@ -42,7 +42,7 @@ class GetPrecipitationTotalsTest {
                         precipitation = MixedPrecipitation(
                             rain = Rain(1.0, Precipitation.Unit.Millimeters),
                             snow = Snow(5.0, Precipitation.Unit.Millimeters),
-                            showers = Showers.Zero,
+                            showers = Showers.ZeroMillimeters,
                             unit = Precipitation.Unit.Millimeters
                         )
                     )
@@ -53,8 +53,8 @@ class GetPrecipitationTotalsTest {
                     PrecipitationMoment(
                         hour = startOfSecondDay.plus(i.toLong(), ChronoUnit.HOURS),
                         precipitation = MixedPrecipitation(
-                            rain = Rain.Zero,
-                            snow = Snow.Zero,
+                            rain = Rain.ZeroMillimeters,
+                            snow = Snow.ZeroMillimeters,
                             showers = Showers(2.0, Precipitation.Unit.Millimeters),
                             unit = Precipitation.Unit.Millimeters
                         )
@@ -75,7 +75,7 @@ class GetPrecipitationTotalsTest {
                         total = MixedPrecipitation(
                             rain = Rain(8.0, Precipitation.Unit.Millimeters),
                             snow = Snow(40.0, Precipitation.Unit.Millimeters),
-                            showers = Showers.Zero,
+                            showers = Showers.ZeroMillimeters,
                             unit = Precipitation.Unit.Millimeters
                         ),
                     ),

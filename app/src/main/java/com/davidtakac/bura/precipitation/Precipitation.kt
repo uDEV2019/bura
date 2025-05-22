@@ -55,7 +55,7 @@ class Rain(value: Double, unit: Unit) : Precipitation(value, unit) {
         Objects.hash(millimeters, value, unit)
 
     companion object {
-        val Zero get() = Rain(0.0, Unit.Millimeters)
+        val ZeroMillimeters get() = Rain(0.0, Unit.Millimeters)
     }
 }
 
@@ -76,7 +76,7 @@ class Showers(value: Double, unit: Unit) : Precipitation(value, unit) {
         Objects.hash(millimeters, value, unit)
 
     companion object {
-        val Zero get() = Showers(0.0, Unit.Millimeters)
+        val ZeroMillimeters get() = Showers(0.0, Unit.Millimeters)
     }
 }
 
@@ -108,7 +108,7 @@ class Snow(
         Objects.hash(millimeters, value, unit, liquidMillimeters, liquidValue)
 
     companion object {
-        val Zero get() = Snow(0.0, Unit.Millimeters)
+        val ZeroMillimeters get() = Snow(0.0, Unit.Millimeters)
     }
 }
 
@@ -158,7 +158,12 @@ class MixedPrecipitation(
         "${super.toString()} (Rain: $rain, Showers: $showers, Snow: $snow)"
 
     companion object {
-        val Zero get() = MixedPrecipitation(Rain.Zero, Showers.Zero, Snow.Zero, Unit.Millimeters)
+        val ZeroMillimeters get() = MixedPrecipitation(
+            rain = Rain.ZeroMillimeters,
+            showers = Showers.ZeroMillimeters,
+            snow = Snow.ZeroMillimeters,
+            unit = Unit.Millimeters
+        )
     }
 }
 

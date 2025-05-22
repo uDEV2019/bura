@@ -31,8 +31,8 @@ class PrecipitationPeriodTest {
                     unixEpochStart,
                     MixedPrecipitation(
                         rain = Rain(1.0, Precipitation.Unit.Millimeters),
-                        snow = Snow.Zero,
-                        showers = Showers.Zero,
+                        snow = Snow.ZeroMillimeters,
+                        showers = Showers.ZeroMillimeters,
                         unit = Precipitation.Unit.Millimeters
                     ),
                 )
@@ -41,8 +41,8 @@ class PrecipitationPeriodTest {
         assertEquals(
             MixedPrecipitation(
                 rain = Rain(1.0, Precipitation.Unit.Millimeters),
-                snow = Snow.Zero,
-                showers = Showers.Zero,
+                snow = Snow.ZeroMillimeters,
+                showers = Showers.ZeroMillimeters,
                 unit = Precipitation.Unit.Millimeters
             ), period.total
         )

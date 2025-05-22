@@ -148,11 +148,11 @@ private fun PrecipitationSummaryPreview() {
                     state = PrecipitationSummary(
                         past = PastPrecipitation(
                             inHours = 24,
-                            total = Rain.Zero
+                            total = Rain.ZeroMillimeters
                         ),
                         future = FuturePrecipitation.InHours(
                             inHours = 24,
-                            total = Rain.Zero
+                            total = Rain.ZeroMillimeters
                         ),
                     ),
                     onClick = {},

@@ -81,11 +81,11 @@ class PrecipitationTest {
     @Test
     fun plus() {
         val rainOne = Rain(10.0, Precipitation.Unit.Millimeters)
-        val showersOne = Showers.Zero
+        val showersOne = Showers.ZeroMillimeters
         val snowOne = Snow(70.0, Precipitation.Unit.Millimeters)
         val rainTwo = Rain(5.0, Precipitation.Unit.Millimeters)
         val showersTwo = Showers(10.0, Precipitation.Unit.Millimeters)
-        val snowTwo = Snow.Zero
+        val snowTwo = Snow.ZeroMillimeters
         val one = MixedPrecipitation(
             rain = rainOne,
             snow = snowOne,

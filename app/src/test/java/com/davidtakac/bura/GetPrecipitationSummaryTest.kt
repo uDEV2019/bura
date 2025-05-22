@@ -44,8 +44,8 @@ class GetPrecipitationSummaryTest {
                     rain = Rain(
                         millimetersPerHour,
                         Precipitation.Unit.Millimeters
-                    ), snow = Snow.Zero,
-                    showers = Showers.Zero, unit = Precipitation.Unit.Millimeters
+                    ), snow = Snow.ZeroMillimeters,
+                    showers = Showers.ZeroMillimeters, unit = Precipitation.Unit.Millimeters
                 )
             )
         }
@@ -172,9 +172,9 @@ class GetPrecipitationSummaryTest {
                 FuturePrecipitation.InHours(
                     inHours = 24,
                     total = MixedPrecipitation(
-                        rain = Rain.Zero,
-                        snow = Snow.Zero,
-                        showers = Showers.Zero,
+                        rain = Rain.ZeroMillimeters,
+                        snow = Snow.ZeroMillimeters,
+                        showers = Showers.ZeroMillimeters,
                         unit = Precipitation.Unit.Millimeters
                     )
                 ),
