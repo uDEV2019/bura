@@ -85,19 +85,11 @@ fun TemperatureGraph(
         val adjustedNiceMax = initialScale.max + initialScale.spacing
         val adjustedNiceScale = NiceScale(adjustedNiceMin, adjustedNiceMax, initialScale.spacing)
         // Converts scale to Temperature objects for further use
-        if (unit == Temperature.Unit.DegreesCelsius) {
-            Triple(
-                Temperature.fromDegreesCelsius(adjustedNiceScale.min),
-                Temperature.fromDegreesCelsius(adjustedNiceScale.max),
-                adjustedNiceScale.scale.map(Temperature::fromDegreesCelsius)
-            )
-        } else {
-            Triple(
-                Temperature.fromDegreesFahrenheit(adjustedNiceScale.min),
-                Temperature.fromDegreesFahrenheit(adjustedNiceScale.max),
-                adjustedNiceScale.scale.map(Temperature::fromDegreesFahrenheit)
-            )
-        }
+        Triple(
+            Temperature(adjustedNiceScale.min, unit),
+            Temperature(adjustedNiceScale.max, unit),
+            adjustedNiceScale.scale.map { Temperature(it, unit) }
+        )
     }
     val context = LocalContext.current
     val measurer = rememberTextMeasurer()
@@ -360,7 +352,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-5.0),
+                value = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -372,7 +364,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-6.0),
+                value = Temperature(-6.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -384,7 +376,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-6.5),
+                value = Temperature(-6.5, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -396,7 +388,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-7.0),
+                value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -408,7 +400,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-9.0),
+                value = Temperature(-9.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -420,7 +412,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-10.0),
+                value = Temperature(-10.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -432,7 +424,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-10.0),
+                value = Temperature(-10.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Minimum
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -444,7 +436,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Past
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-8.0),
+                value = Temperature(-8.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 0, isDay = false),
@@ -456,7 +448,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Present
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-5.0),
+                value = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -468,7 +460,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-3.0),
+                value = Temperature(-3.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -480,7 +472,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(0.0),
+                value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -492,7 +484,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(0.0),
+                value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -504,7 +496,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(1.0),
+                value = Temperature(1.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -516,7 +508,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(1.0),
+                value = Temperature(1.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -528,7 +520,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(2.0),
+                value = Temperature(2.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Maximum
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -540,7 +532,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(0.0),
+                value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -552,7 +544,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-1.0),
+                value = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = true),
@@ -564,7 +556,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-3.0),
+                value = Temperature(-3.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -576,7 +568,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-2.0),
+                value = Temperature(-2.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -588,7 +580,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-5.0),
+                value = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -600,7 +592,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-6.0),
+                value = Temperature(-6.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -612,7 +604,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-7.0),
+                value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -624,7 +616,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-7.0),
+                value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -636,7 +628,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-7.0),
+                value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),
@@ -648,7 +640,7 @@ private val previewState = TemperatureGraph(
                 meta = GraphTime.Meta.Future
             ),
             temperature = GraphTemperature(
-                value = Temperature.fromDegreesCelsius(-8.0),
+                value = Temperature(-8.0, Temperature.Unit.DegreesCelsius),
                 meta = GraphTemperature.Meta.Regular
             ),
             condition = Condition(wmoCode = 3, isDay = false),

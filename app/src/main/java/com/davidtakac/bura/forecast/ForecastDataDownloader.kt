@@ -83,9 +83,24 @@ class ForecastDataDownloader(private val userAgentProvider: UserAgentProvider) {
             val indexOfLast23HourInstant = times.indexOfLast { it.toLocalTime() == LocalTime.parse("23:00") }
             val timesProcessed = times.slice(0..indexOfLast23HourInstant)
 
-            val temperature = hourly.getJSONArray("temperature_2m").mapToList { Temperature.fromDegreesCelsius(it.toDouble()) }
-            val feelsLikeTemperature = hourly.getJSONArray("apparent_temperature").mapToList { Temperature.fromDegreesCelsius(it.toDouble()) }
-            val dewPointTemperature = hourly.getJSONArray("dew_point_2m").mapToList { Temperature.fromDegreesCelsius(it.toDouble()) }
+            val temperature = hourly.getJSONArray("temperature_2m").mapToList {
+                Temperature(
+                    it.toDouble(),
+                    Temperature.Unit.DegreesCelsius
+                )
+            }
+            val feelsLikeTemperature = hourly.getJSONArray("apparent_temperature").mapToList {
+                Temperature(
+                    it.toDouble(),
+                    Temperature.Unit.DegreesCelsius
+                )
+            }
+            val dewPointTemperature = hourly.getJSONArray("dew_point_2m").mapToList {
+                Temperature(
+                    it.toDouble(),
+                    Temperature.Unit.DegreesCelsius
+                )
+            }
             val wmoCode = hourly.getJSONArray("weather_code").mapToList(String::toInt)
             val isDay = hourly.getJSONArray("is_day").mapToList(String::toInt).map { it == 1 }
             val pop = hourly.getJSONArray("precipitation_probability").mapToList { Pop(it.toDouble()) }

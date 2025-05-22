@@ -102,14 +102,14 @@ private fun HourlySummaryPreview() {
                     HourSummary.Weather(
                         time = LocalDateTime.parse("2023-01-01T18:00"),
                         isNow = true,
-                        temp = Temperature.fromDegreesCelsius(2.0),
+                        temp = Temperature(2.0, Temperature.Unit.DegreesCelsius),
                         pop = Pop(75.0),
                         desc = Condition(wmoCode = 1, isDay = true)
                     ),
                     HourSummary.Weather(
                         time = LocalDateTime.parse("2023-01-01T19:00"),
                         isNow = false,
-                        temp = Temperature.fromDegreesCelsius(3.0),
+                        temp = Temperature(3.0, Temperature.Unit.DegreesCelsius),
                         pop = Pop(0.0),
                         desc = Condition(wmoCode = 2, isDay = true)
                     ),
@@ -120,7 +120,7 @@ private fun HourlySummaryPreview() {
                     HourSummary.Weather(
                         time = LocalDateTime.parse("2023-01-01T20:00"),
                         isNow = false,
-                        temp = Temperature.fromDegreesCelsius(5.0),
+                        temp = Temperature(5.0, Temperature.Unit.DegreesCelsius),
                         pop = Pop(0.0),
                         desc = Condition(wmoCode = 2, isDay = false)
                     ),

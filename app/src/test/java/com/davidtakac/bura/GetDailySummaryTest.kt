@@ -42,11 +42,26 @@ class GetDailySummaryTest {
         val now = secondDayFirstMoment.plus(10, ChronoUnit.MINUTES)
         val temperaturePeriod = TemperaturePeriod(
             moments = listOf(
-                TemperatureMoment(firstDayFirstMoment, Temperature.fromDegreesCelsius(0.0)),
-                TemperatureMoment(firstDaySecondMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(firstDayThirdMoment, Temperature.fromDegreesCelsius(2.0)),
-                TemperatureMoment(secondDayFirstMoment, Temperature.fromDegreesCelsius(3.0)),
-                TemperatureMoment(secondDaySecondMoment, Temperature.fromDegreesCelsius(4.0))
+                TemperatureMoment(
+                    firstDayFirstMoment,
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
+                ),
+                TemperatureMoment(
+                    firstDaySecondMoment,
+                    Temperature(1.0, Temperature.Unit.DegreesCelsius)
+                ),
+                TemperatureMoment(
+                    firstDayThirdMoment,
+                    Temperature(2.0, Temperature.Unit.DegreesCelsius)
+                ),
+                TemperatureMoment(
+                    secondDayFirstMoment,
+                    Temperature(3.0, Temperature.Unit.DegreesCelsius)
+                ),
+                TemperatureMoment(
+                    secondDaySecondMoment,
+                    Temperature(4.0, Temperature.Unit.DegreesCelsius)
+                )
             )
         )
         val conditionPeriod = ConditionPeriod(
@@ -86,15 +101,15 @@ class GetDailySummaryTest {
         assertEquals(
             ForecastResult.Success(
                 DailySummary(
-                    minTemp = Temperature.fromDegreesCelsius(3.0),
-                    maxTemp = Temperature.fromDegreesCelsius(4.0),
+                    minTemp = Temperature(3.0, Temperature.Unit.DegreesCelsius),
+                    maxTemp = Temperature(4.0, Temperature.Unit.DegreesCelsius),
                     days = listOf(
                         DaySummary(
                             isToday = true,
                             time = secondDayFirstMoment.atZone(ZoneId.of("GMT")).toLocalDate(),
-                            tempNow = Temperature.fromDegreesCelsius(3.0),
-                            min = Temperature.fromDegreesCelsius(3.0),
-                            max = Temperature.fromDegreesCelsius(4.0),
+                            tempNow = Temperature(3.0, Temperature.Unit.DegreesCelsius),
+                            min = Temperature(3.0, Temperature.Unit.DegreesCelsius),
+                            max = Temperature(4.0, Temperature.Unit.DegreesCelsius),
                             desc = Condition(wmoCode = 5, isDay = false),
                             pop = Pop(5.0)
                         )
@@ -113,7 +128,7 @@ class GetDailySummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )

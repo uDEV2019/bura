@@ -63,7 +63,7 @@ private fun HumiditySummaryPreview() {
             HumiditySummary(
                 state = HumiditySummary(
                     humidityNow = Humidity(92.0),
-                    dewPointNow = Temperature.fromDegreesCelsius(19.0)
+                    dewPointNow = Temperature(19.0, Temperature.Unit.DegreesCelsius)
                 ),
                 modifier = Modifier.fillMaxWidth()
             )

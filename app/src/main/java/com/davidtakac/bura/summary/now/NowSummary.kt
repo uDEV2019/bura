@@ -197,10 +197,10 @@ private fun NowSummaryPreview() {
         Surface(modifier = Modifier.width(400.dp)) {
             NowSummary(
                 state = NowSummary(
-                    temp = Temperature.fromDegreesCelsius(20.0),
-                    feelsLike = Temperature.fromDegreesCelsius(18.0),
-                    minTemp = Temperature.fromDegreesCelsius(15.0),
-                    maxTemp = Temperature.fromDegreesCelsius(25.0),
+                    temp = Temperature(20.0, Temperature.Unit.DegreesCelsius),
+                    feelsLike = Temperature(18.0, Temperature.Unit.DegreesCelsius),
+                    minTemp = Temperature(15.0, Temperature.Unit.DegreesCelsius),
+                    maxTemp = Temperature(25.0, Temperature.Unit.DegreesCelsius),
                     cond = Condition(
                         wmoCode = 53,
                         isDay = true

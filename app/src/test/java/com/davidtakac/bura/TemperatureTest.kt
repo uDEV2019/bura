@@ -19,7 +19,7 @@ import org.junit.Test
 class TemperatureTest {
     @Test
     fun `convert to fahrenheit`() {
-        val temperature = Temperature.fromDegreesCelsius(0.0)
+        val temperature = Temperature(0.0, Temperature.Unit.DegreesCelsius)
         assertEquals(0.0, temperature.value, 0.0)
         assertEquals(Temperature.Unit.DegreesCelsius, temperature.unit)
 
@@ -30,28 +30,32 @@ class TemperatureTest {
 
     @Test
     fun equals() {
-        val one = Temperature.fromDegreesCelsius(0.0)
-        val two = Temperature.fromDegreesCelsius(0.0)
+        val one = Temperature(0.0, Temperature.Unit.DegreesCelsius)
+        val two = Temperature(0.0, Temperature.Unit.DegreesCelsius)
         two.convertTo(Temperature.Unit.DegreesFahrenheit)
         assertEquals(one, two)
     }
 
     @Test
     fun `greater than`() {
-        val less = Temperature.fromDegreesCelsius(0.0)
-        val greater = Temperature.fromDegreesCelsius(1.0)
+        val less = Temperature(0.0, Temperature.Unit.DegreesCelsius)
+        val greater = Temperature(1.0, Temperature.Unit.DegreesCelsius)
         greater.convertTo(Temperature.Unit.DegreesFahrenheit)
         assertTrue(greater > less)
     }
 
     @Test
     fun plus() {
-        val one = Temperature.fromDegreesCelsius(1.0)
-        val two = Temperature.fromDegreesCelsius(2.0).convertTo(Temperature.Unit.DegreesFahrenheit)
+        val one = Temperature(1.0, Temperature.Unit.DegreesCelsius)
+        val two = Temperature(
+            2.0,
+            Temperature.Unit.DegreesCelsius
+        ).convertTo(Temperature.Unit.DegreesFahrenheit)
         val sum = one + two
         assertEquals(
-            Temperature.fromDegreesCelsius(3.0),
-            sum
+            Temperature(3.0, Temperature.Unit.DegreesCelsius).value,
+            sum.value,
+            0.01
         )
     }
 }

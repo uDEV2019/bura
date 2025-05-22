@@ -73,7 +73,7 @@ private fun WeatherSummaryPreview() {
                 state = HourSummary.Weather(
                     time = LocalDateTime.parse("2023-01-01T14:00"),
                     isNow = true,
-                    temp = Temperature.fromDegreesCelsius(20.0),
+                    temp = Temperature(20.0, Temperature.Unit.DegreesCelsius),
                     pop = Pop(50.0),
                     desc = Condition(wmoCode = 51, isDay = true)
                 ),
@@ -82,7 +82,7 @@ private fun WeatherSummaryPreview() {
                 state = HourSummary.Weather(
                     time = LocalDateTime.parse("2023-01-01T15:00"),
                     isNow = false,
-                    temp = Temperature.fromDegreesCelsius(20.0),
+                    temp = Temperature(20.0, Temperature.Unit.DegreesCelsius),
                     pop = null,
                     desc = Condition(wmoCode = 1, isDay = true)
                 )

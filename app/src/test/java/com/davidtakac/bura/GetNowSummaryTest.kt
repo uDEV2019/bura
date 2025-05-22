@@ -36,16 +36,34 @@ class GetNowSummaryTest {
             val secondDayFirstMoment = firstDaySecondMoment.plus(1, ChronoUnit.HOURS)
             val temperaturePeriod = TemperaturePeriod(
                 moments = listOf(
-                    TemperatureMoment(firstDayFirstMoment, Temperature.fromDegreesCelsius(0.0)),
-                    TemperatureMoment(firstDaySecondMoment, Temperature.fromDegreesCelsius(1.0)),
-                    TemperatureMoment(secondDayFirstMoment, Temperature.fromDegreesCelsius(20.0))
+                    TemperatureMoment(
+                        firstDayFirstMoment,
+                        Temperature(0.0, Temperature.Unit.DegreesCelsius)
+                    ),
+                    TemperatureMoment(
+                        firstDaySecondMoment,
+                        Temperature(1.0, Temperature.Unit.DegreesCelsius)
+                    ),
+                    TemperatureMoment(
+                        secondDayFirstMoment,
+                        Temperature(20.0, Temperature.Unit.DegreesCelsius)
+                    )
                 )
             )
             val feelsLikePeriod = TemperaturePeriod(
                 moments = listOf(
-                    TemperatureMoment(firstDayFirstMoment, Temperature.fromDegreesCelsius(-1.0)),
-                    TemperatureMoment(firstDaySecondMoment, Temperature.fromDegreesCelsius(0.0)),
-                    TemperatureMoment(secondDayFirstMoment, Temperature.fromDegreesCelsius(20.0))
+                    TemperatureMoment(
+                        firstDayFirstMoment,
+                        Temperature(-1.0, Temperature.Unit.DegreesCelsius)
+                    ),
+                    TemperatureMoment(
+                        firstDaySecondMoment,
+                        Temperature(0.0, Temperature.Unit.DegreesCelsius)
+                    ),
+                    TemperatureMoment(
+                        secondDayFirstMoment,
+                        Temperature(20.0, Temperature.Unit.DegreesCelsius)
+                    )
                 )
             )
             val conditionPeriod = ConditionPeriod(
@@ -59,10 +77,10 @@ class GetNowSummaryTest {
             assertEquals(
                 ForecastResult.Success(
                     NowSummary(
-                        temp = Temperature.fromDegreesCelsius(0.0),
-                        feelsLike = Temperature.fromDegreesCelsius(-1.0),
-                        minTemp = Temperature.fromDegreesCelsius(0.0),
-                        maxTemp = Temperature.fromDegreesCelsius(1.0),
+                        temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                        feelsLike = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
+                        minTemp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                        maxTemp = Temperature(1.0, Temperature.Unit.DegreesCelsius),
                         cond = Condition(1, false)
                     )
                 ),
@@ -77,12 +95,12 @@ class GetNowSummaryTest {
         val now = afterFirstMoment.plus(10, ChronoUnit.MINUTES)
         val temperaturePeriod = TemperaturePeriod(
             moments = listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(0.0)),
+                TemperatureMoment(firstMoment, Temperature(0.0, Temperature.Unit.DegreesCelsius)),
             )
         )
         val feelsLikePeriod = TemperaturePeriod(
             moments = listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(-1.0)),
+                TemperatureMoment(firstMoment, Temperature(-1.0, Temperature.Unit.DegreesCelsius)),
             )
         )
         val conditionPeriod = ConditionPeriod(

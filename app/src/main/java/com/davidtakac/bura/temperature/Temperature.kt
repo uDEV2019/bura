@@ -14,13 +14,16 @@ package com.davidtakac.bura.temperature
 
 import java.util.Objects
 
-class Temperature private constructor(
-    private val degreesCelsius: Double,
+class Temperature(
     val value: Double,
     val unit: Unit
 ) : Comparable<Temperature> {
+    private val degreesCelsius: Double = when (unit) {
+        Unit.DegreesCelsius -> value
+        Unit.DegreesFahrenheit -> (value - 32) * 5 / 9
+    }
+
     fun convertTo(unit: Unit): Temperature = Temperature(
-        degreesCelsius = degreesCelsius,
         value = when (unit) {
             Unit.DegreesCelsius -> degreesCelsius
             Unit.DegreesFahrenheit -> (degreesCelsius * 1.8) + 32
@@ -34,12 +37,12 @@ class Temperature private constructor(
     }
 
     operator fun plus(other: Temperature): Temperature =
-        fromDegreesCelsius(degreesCelsius + other.degreesCelsius).convertTo(unit)
+        Temperature(degreesCelsius + other.degreesCelsius, Unit.DegreesCelsius).convertTo(unit)
 
     override fun compareTo(other: Temperature): Int = degreesCelsius.compareTo(other.degreesCelsius)
 
     override fun equals(other: Any?): Boolean =
-        other is Temperature && other.degreesCelsius == degreesCelsius && other.value == value && other.unit == unit
+        other is Temperature && other.value == value && other.unit == unit
 
     override fun hashCode(): Int = Objects.hash(degreesCelsius, value, unit)
 
@@ -49,22 +52,5 @@ class Temperature private constructor(
             Unit.DegreesFahrenheit -> "°F"
         }
         return "${String.format("%.2f", value)}$suffix"
-    }
-
-    companion object {
-        fun fromDegreesCelsius(value: Double): Temperature = Temperature(
-            degreesCelsius = value,
-            value = value,
-            unit = Unit.DegreesCelsius
-        )
-
-        fun fromDegreesFahrenheit(value: Double): Temperature {
-            val celsius = (value - 32) * 5 / 9
-            return Temperature(
-                degreesCelsius = celsius,
-                value = value,
-                unit = Temperature.Unit.DegreesFahrenheit
-            )
-        }
     }
 }

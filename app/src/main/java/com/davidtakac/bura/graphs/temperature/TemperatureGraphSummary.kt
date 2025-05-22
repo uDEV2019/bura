@@ -97,8 +97,8 @@ private fun TemperatureGraphSummaryTodayPreview() {
             TemperatureGraphSummary(
                 state = TemperatureGraphSummary(
                     day = LocalDate.parse("1970-01-03"),
-                    minTemp = Temperature.fromDegreesCelsius(10.0),
-                    maxTemp = Temperature.fromDegreesCelsius(30.0),
+                    minTemp = Temperature(10.0, Temperature.Unit.DegreesCelsius),
+                    maxTemp = Temperature(30.0, Temperature.Unit.DegreesCelsius),
                     condition = Condition(wmoCode = 53, isDay = true),
                     now = null
                 ),
@@ -118,8 +118,8 @@ private fun TemperatureGraphSummaryDayPreview() {
             TemperatureGraphSummary(
                 state = TemperatureGraphSummary(
                     day = LocalDate.parse("1970-01-03"),
-                    minTemp = Temperature.fromDegreesCelsius(10.0),
-                    maxTemp = Temperature.fromDegreesCelsius(30.0),
+                    minTemp = Temperature(10.0, Temperature.Unit.DegreesCelsius),
+                    maxTemp = Temperature(30.0, Temperature.Unit.DegreesCelsius),
                     condition = Condition(wmoCode = 53, isDay = true),
                     now = null,
                 ),

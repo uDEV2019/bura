@@ -46,9 +46,9 @@ class GetHourlySummaryTest {
         val now = firstMoment.plus(10, ChronoUnit.MINUTES)
         val temperaturePeriod = TemperaturePeriod(
             moments = listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(0.0)),
-                TemperatureMoment(secondMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(thirdMoment, Temperature.fromDegreesCelsius(2.0))
+                TemperatureMoment(firstMoment, Temperature(0.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(thirdMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius))
             )
         )
         val popPeriod = PopPeriod(
@@ -88,7 +88,7 @@ class GetHourlySummaryTest {
                     HourSummary.Weather(
                         time = firstMoment,
                         isNow = true,
-                        temp = Temperature.fromDegreesCelsius(0.0),
+                        temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                         desc = Condition(wmoCode = 1, isDay = false),
                         pop = null
                     ),
@@ -99,7 +99,7 @@ class GetHourlySummaryTest {
                     HourSummary.Weather(
                         time = secondMoment,
                         isNow = false,
-                        temp = Temperature.fromDegreesCelsius(1.0),
+                        temp = Temperature(1.0, Temperature.Unit.DegreesCelsius),
                         desc = Condition(wmoCode = 1, isDay = true),
                         pop = Pop(10.0)
                     ),
@@ -110,7 +110,7 @@ class GetHourlySummaryTest {
                     HourSummary.Weather(
                         time = thirdMoment,
                         isNow = false,
-                        temp = Temperature.fromDegreesCelsius(2.0),
+                        temp = Temperature(2.0, Temperature.Unit.DegreesCelsius),
                         desc = Condition(wmoCode = 1, isDay = false),
                         pop = Pop(10.0)
                     ),
@@ -128,7 +128,7 @@ class GetHourlySummaryTest {
             moments = listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(1.0)
+                    Temperature(1.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
@@ -163,7 +163,7 @@ class GetHourlySummaryTest {
             moments = listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 ),
             )
         )
@@ -196,7 +196,7 @@ class GetHourlySummaryTest {
                     HourSummary.Weather(
                         time = firstMoment.atZone(ZoneId.of("GMT")).toLocalDateTime(),
                         isNow = true,
-                        temp = Temperature.fromDegreesCelsius(0.0),
+                        temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                         desc = Condition(wmoCode = 1, isDay = false),
                         pop = null
                     ),

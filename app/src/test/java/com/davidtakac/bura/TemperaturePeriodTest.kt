@@ -26,11 +26,11 @@ class TemperaturePeriodTest {
         val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
         val period = TemperaturePeriod(
             moments = listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(secondMoment, Temperature.fromDegreesCelsius(2.0)),
+                TemperatureMoment(firstMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius)),
             )
         )
-        assertEquals(Temperature.fromDegreesCelsius(1.0), period.minimum)
-        assertEquals(Temperature.fromDegreesCelsius(2.0), period.maximum)
+        assertEquals(Temperature(1.0, Temperature.Unit.DegreesCelsius), period.minimum)
+        assertEquals(Temperature(2.0, Temperature.Unit.DegreesCelsius), period.maximum)
     }
 }

@@ -46,7 +46,7 @@ class GetSavedPlacesTest {
             listOf(
                 TemperatureMoment(
                     hour = momentDateTime,
-                    temperature = Temperature.fromDegreesCelsius(10.0)
+                    temperature = Temperature(10.0, Temperature.Unit.DegreesCelsius)
                 )
             ),
         )
@@ -65,9 +65,9 @@ class GetSavedPlacesTest {
                 time = LocalTime.parse("00:10"),
                 selected = false,
                 conditions = SavedPlace.Conditions(
-                    temp = Temperature.fromDegreesCelsius(10.0),
-                    minTemp = Temperature.fromDegreesCelsius(10.0),
-                    maxTemp = Temperature.fromDegreesCelsius(10.0),
+                    temp = Temperature(10.0, Temperature.Unit.DegreesCelsius),
+                    minTemp = Temperature(10.0, Temperature.Unit.DegreesCelsius),
+                    maxTemp = Temperature(10.0, Temperature.Unit.DegreesCelsius),
                     condition = Condition(0, true)
                 )
             ),
@@ -110,7 +110,7 @@ class GetSavedPlacesTest {
             listOf(
                 TemperatureMoment(
                     hour = momentDateTime,
-                    temperature = Temperature.fromDegreesCelsius(10.0)
+                    temperature = Temperature(10.0, Temperature.Unit.DegreesCelsius)
                 )
             ),
         )

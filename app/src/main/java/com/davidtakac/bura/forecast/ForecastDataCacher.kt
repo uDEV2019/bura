@@ -74,9 +74,24 @@ class ForecastDataCacher(private val root: File) {
             ForecastData(
                 timestamp = Instant.ofEpochSecond(record.getLong("timestamp")),
                 times = record.getJSONArray("times").mapToList(LocalDateTime::parse),
-                temperature = record.getJSONArray("temperature").mapToList { Temperature.fromDegreesCelsius(it.toDouble()) },
-                feelsLikeTemperature = record.getJSONArray("feelsLike").mapToList { Temperature.fromDegreesCelsius(it.toDouble()) },
-                dewPointTemperature = record.getJSONArray("dewPoint").mapToList { Temperature.fromDegreesCelsius(it.toDouble()) },
+                temperature = record.getJSONArray("temperature").mapToList {
+                    Temperature(
+                        it.toDouble(),
+                        Temperature.Unit.DegreesCelsius
+                    )
+                },
+                feelsLikeTemperature = record.getJSONArray("feelsLike").mapToList {
+                    Temperature(
+                        it.toDouble(),
+                        Temperature.Unit.DegreesCelsius
+                    )
+                },
+                dewPointTemperature = record.getJSONArray("dewPoint").mapToList {
+                    Temperature(
+                        it.toDouble(),
+                        Temperature.Unit.DegreesCelsius
+                    )
+                },
                 sunrises = record.getJSONArray("sunrises").mapToList(LocalDateTime::parse),
                 sunsets = record.getJSONArray("sunsets").mapToList(LocalDateTime::parse),
                 pop = record.getJSONArray("pop").mapToList { Pop(it.toDouble()) },

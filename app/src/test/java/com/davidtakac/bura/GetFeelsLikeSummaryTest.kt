@@ -33,7 +33,7 @@ class GetFeelsLikeSummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(-1.0)
+                    Temperature(-1.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
@@ -41,15 +41,15 @@ class GetFeelsLikeSummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
         assertEquals(
             ForecastResult.Success(
                 FeelsLikeSummary(
-                    feelsLikeNow = Temperature.fromDegreesCelsius(-1.0),
-                    actualNow = Temperature.fromDegreesCelsius(0.0),
+                    feelsLikeNow = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
+                    actualNow = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                     vsActual = FeelsVsActual.Colder
                 )
             ),
@@ -65,7 +65,7 @@ class GetFeelsLikeSummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(-0.5)
+                    Temperature(-0.5, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
@@ -73,15 +73,15 @@ class GetFeelsLikeSummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
         assertEquals(
             ForecastResult.Success(
                 FeelsLikeSummary(
-                    feelsLikeNow = Temperature.fromDegreesCelsius(-0.5),
-                    actualNow = Temperature.fromDegreesCelsius(0.0),
+                    feelsLikeNow = Temperature(-0.5, Temperature.Unit.DegreesCelsius),
+                    actualNow = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                     vsActual = FeelsVsActual.Similar
                 )
             ),
@@ -97,7 +97,7 @@ class GetFeelsLikeSummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
@@ -105,7 +105,7 @@ class GetFeelsLikeSummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )

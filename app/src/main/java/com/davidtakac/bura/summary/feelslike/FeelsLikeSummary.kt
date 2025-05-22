@@ -70,8 +70,8 @@ private fun FeelsLikeSummaryPreview() {
         ) {
             FeelsLikeSummary(
                 state = FeelsLikeSummary(
-                    feelsLikeNow = Temperature.fromDegreesCelsius(20.0),
-                    actualNow = Temperature.fromDegreesCelsius(25.0),
+                    feelsLikeNow = Temperature(20.0, Temperature.Unit.DegreesCelsius),
+                    actualNow = Temperature(25.0, Temperature.Unit.DegreesCelsius),
                     vsActual = FeelsVsActual.Warmer
                 ),
                 modifier = Modifier.fillMaxWidth()

@@ -217,9 +217,9 @@ private fun SavedPlaceCardPreview() {
                     time = LocalTime.parse("08:32"),
                     selected = true,
                     conditions = SavedPlace.Conditions(
-                        temp = Temperature.fromDegreesCelsius(10.0),
-                        minTemp = Temperature.fromDegreesCelsius(5.0),
-                        maxTemp = Temperature.fromDegreesCelsius(20.0),
+                        temp = Temperature(10.0, Temperature.Unit.DegreesCelsius),
+                        minTemp = Temperature(5.0, Temperature.Unit.DegreesCelsius),
+                        maxTemp = Temperature(20.0, Temperature.Unit.DegreesCelsius),
                         condition = Condition(1, true)
                     )
                 ),

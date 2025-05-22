@@ -36,7 +36,7 @@ class HumiditySummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )
@@ -44,7 +44,7 @@ class HumiditySummaryTest {
             ForecastResult.Success(
                 HumiditySummary(
                     humidityNow = Humidity(0.0),
-                    dewPointNow = Temperature.fromDegreesCelsius(0.0)
+                    dewPointNow = Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             ),
             getHumiditySummary(now, humidityPeriod, dewPointPeriod)
@@ -60,7 +60,7 @@ class HumiditySummaryTest {
             listOf(
                 TemperatureMoment(
                     firstMoment,
-                    Temperature.fromDegreesCelsius(0.0)
+                    Temperature(0.0, Temperature.Unit.DegreesCelsius)
                 )
             )
         )

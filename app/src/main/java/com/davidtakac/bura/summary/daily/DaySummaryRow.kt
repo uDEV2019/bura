@@ -211,7 +211,7 @@ private fun DayAndPopMaxHeightDummy(modifier: Modifier = Modifier) {
 @Composable
 private fun rememberMaxTempWidth(): Dp {
     val measurer = rememberTextMeasurer()
-    val maxTemp = remember { Temperature.fromDegreesCelsius(999.0) }
+    val maxTemp = remember { Temperature(999.0, Temperature.Unit.DegreesCelsius) }
     val density = LocalDensity.current
     val maxTempString = maxTemp.string()
     val textStyle = LocalTextStyle.current
@@ -232,17 +232,17 @@ private fun DaySummaryPreview() {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
-            val absoluteMin = remember { Temperature.fromDegreesCelsius(0.0) }
-            val absoluteMax = remember { Temperature.fromDegreesCelsius(20.0) }
+            val absoluteMin = remember { Temperature(0.0, Temperature.Unit.DegreesCelsius) }
+            val absoluteMax = remember { Temperature(20.0, Temperature.Unit.DegreesCelsius) }
             DaySummaryRow(
                 absMin = absoluteMin,
                 absMax = absoluteMax,
                 state = DaySummary(
                     isToday = true,
                     time = LocalDate.parse("2023-01-01"),
-                    tempNow = Temperature.fromDegreesCelsius(2.0),
-                    min = Temperature.fromDegreesCelsius(2.0),
-                    max = Temperature.fromDegreesCelsius(19.0),
+                    tempNow = Temperature(2.0, Temperature.Unit.DegreesCelsius),
+                    min = Temperature(2.0, Temperature.Unit.DegreesCelsius),
+                    max = Temperature(19.0, Temperature.Unit.DegreesCelsius),
                     pop = null,
                     desc = Condition(wmoCode = 1, isDay = true)
                 ),
@@ -255,9 +255,9 @@ private fun DaySummaryPreview() {
                 state = DaySummary(
                     isToday = false,
                     time = LocalDate.parse("2023-01-02"),
-                    tempNow = Temperature.fromDegreesCelsius(5.0),
-                    min = Temperature.fromDegreesCelsius(0.0),
-                    max = Temperature.fromDegreesCelsius(5.0),
+                    tempNow = Temperature(5.0, Temperature.Unit.DegreesCelsius),
+                    min = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                    max = Temperature(5.0, Temperature.Unit.DegreesCelsius),
                     pop = Pop(15.0),
                     desc = Condition(wmoCode = 51, isDay = true)
                 ),
@@ -270,9 +270,9 @@ private fun DaySummaryPreview() {
                 state = DaySummary(
                     isToday = false,
                     time = LocalDate.parse("2023-01-03"),
-                    tempNow = Temperature.fromDegreesCelsius(9.0),
-                    min = Temperature.fromDegreesCelsius(7.0),
-                    max = Temperature.fromDegreesCelsius(15.0),
+                    tempNow = Temperature(9.0, Temperature.Unit.DegreesCelsius),
+                    min = Temperature(7.0, Temperature.Unit.DegreesCelsius),
+                    max = Temperature(15.0, Temperature.Unit.DegreesCelsius),
                     pop = Pop(0.0),
                     desc = Condition(wmoCode = 2, isDay = true)
                 ),

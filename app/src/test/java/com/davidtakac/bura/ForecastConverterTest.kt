@@ -54,16 +54,16 @@ class ForecastConverterTest {
         val sunrises = listOf<LocalDateTime>()
         val sunsets = listOf<LocalDateTime>()
         val temperature = listOf(
-            Temperature.fromDegreesCelsius(0.0),
-            Temperature.fromDegreesCelsius(0.0)
+            Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            Temperature(0.0, Temperature.Unit.DegreesCelsius)
         )
         val feelsLikeTemperature = listOf(
-            Temperature.fromDegreesCelsius(0.0),
-            Temperature.fromDegreesCelsius(0.0)
+            Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            Temperature(0.0, Temperature.Unit.DegreesCelsius)
         )
         val dewPointTemperature = listOf(
-            Temperature.fromDegreesCelsius(0.0),
-            Temperature.fromDegreesCelsius(0.0)
+            Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            Temperature(0.0, Temperature.Unit.DegreesCelsius)
         )
         val pop = listOf(
             Pop(value = 0.0),
@@ -154,16 +154,16 @@ class ForecastConverterTest {
         val sunrises = listOf<LocalDateTime>()
         val sunsets = listOf<LocalDateTime>()
         val temperature = listOf(
-            Temperature.fromDegreesCelsius(0.0),
-            Temperature.fromDegreesCelsius(0.0)
+            Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            Temperature(0.0, Temperature.Unit.DegreesCelsius)
         )
         val feelsLikeTemperature = listOf(
-            Temperature.fromDegreesCelsius(0.0),
-            Temperature.fromDegreesCelsius(0.0)
+            Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            Temperature(0.0, Temperature.Unit.DegreesCelsius)
         )
         val dewPointTemperature = listOf(
-            Temperature.fromDegreesCelsius(0.0),
-            Temperature.fromDegreesCelsius(0.0)
+            Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            Temperature(0.0, Temperature.Unit.DegreesCelsius)
         )
         val pop = listOf(
             Pop(value = 0.0),

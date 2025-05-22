@@ -138,11 +138,11 @@ fun AppleTemperatureScale(
 private fun AppleTemperatureScalePreview() {
     AppTheme {
         AppleTemperatureScale(
-            min = Temperature.fromDegreesCelsius(0.0),
-            max = Temperature.fromDegreesCelsius(20.0),
-            now = Temperature.fromDegreesCelsius(2.0),
-            absMin = Temperature.fromDegreesCelsius(-5.0),
-            absMax = Temperature.fromDegreesCelsius(22.0),
+            min = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+            max = Temperature(20.0, Temperature.Unit.DegreesCelsius),
+            now = Temperature(2.0, Temperature.Unit.DegreesCelsius),
+            absMin = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
+            absMax = Temperature(22.0, Temperature.Unit.DegreesCelsius),
             modifier = Modifier.width(200.dp)
         )
     }
@@ -154,11 +154,11 @@ private fun AppleTemperatureScaleRtlPreview() {
     AppTheme {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             AppleTemperatureScale(
-                min = Temperature.fromDegreesCelsius(0.0),
-                max = Temperature.fromDegreesCelsius(20.0),
-                now = Temperature.fromDegreesCelsius(2.0),
-                absMin = Temperature.fromDegreesCelsius(-5.0),
-                absMax = Temperature.fromDegreesCelsius(22.0),
+                min = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                max = Temperature(20.0, Temperature.Unit.DegreesCelsius),
+                now = Temperature(2.0, Temperature.Unit.DegreesCelsius),
+                absMin = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
+                absMax = Temperature(22.0, Temperature.Unit.DegreesCelsius),
                 modifier = Modifier.width(200.dp)
             )
         }

@@ -47,9 +47,9 @@ class GetTemperatureGraphsTest {
         )
         val tempPeriod = TemperaturePeriod(
             listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(0.0)),
-                TemperatureMoment(secondMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(thirdMoment, Temperature.fromDegreesCelsius(2.0))
+                TemperatureMoment(firstMoment, Temperature(0.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(thirdMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius))
             )
         )
         val result = (getTemperatureGraphs(
@@ -67,7 +67,7 @@ class GetTemperatureGraphsTest {
                             meta = GraphTime.Meta.Past
                         ),
                         temperature = GraphTemperature(
-                            value = Temperature.fromDegreesCelsius(0.0),
+                            value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
                             meta = GraphTemperature.Meta.Minimum
                         ),
                         condition = Condition(1, true),
@@ -79,7 +79,7 @@ class GetTemperatureGraphsTest {
                             meta = GraphTime.Meta.Present
                         ),
                         temperature = GraphTemperature(
-                            value = Temperature.fromDegreesCelsius(1.0),
+                            value = Temperature(1.0, Temperature.Unit.DegreesCelsius),
                             meta = GraphTemperature.Meta.Regular
                         ),
                         condition = Condition(2, false),
@@ -91,7 +91,7 @@ class GetTemperatureGraphsTest {
                             meta = GraphTime.Meta.Future
                         ),
                         temperature = GraphTemperature(
-                            value = Temperature.fromDegreesCelsius(2.0),
+                            value = Temperature(2.0, Temperature.Unit.DegreesCelsius),
                             meta = GraphTemperature.Meta.Maximum
                         ),
                         condition = Condition(3, false),
@@ -118,9 +118,9 @@ class GetTemperatureGraphsTest {
         )
         val tempPeriod = TemperaturePeriod(
             listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(secondMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(thirdMoment, Temperature.fromDegreesCelsius(1.0))
+                TemperatureMoment(firstMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(thirdMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius))
             )
         )
         val result = (getTemperatureGraphs(
@@ -146,9 +146,9 @@ class GetTemperatureGraphsTest {
         )
         val tempPeriod = TemperaturePeriod(
             listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(secondMoment, Temperature.fromDegreesCelsius(1.0)),
-                TemperatureMoment(thirdMoment, Temperature.fromDegreesCelsius(2.0))
+                TemperatureMoment(firstMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(thirdMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius))
             )
         )
         val result = (getTemperatureGraphs(
@@ -175,8 +175,8 @@ class GetTemperatureGraphsTest {
         )
         val tempPeriod = TemperaturePeriod(
             listOf(
-                TemperatureMoment(firstMoment, Temperature.fromDegreesCelsius(2.0)),
-                TemperatureMoment(secondMoment, Temperature.fromDegreesCelsius(1.0)),
+                TemperatureMoment(firstMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
             )
         )
         val result = (getTemperatureGraphs(
@@ -194,7 +194,7 @@ class GetTemperatureGraphsTest {
                             meta = GraphTime.Meta.Present
                         ),
                         temperature = GraphTemperature(
-                            value = Temperature.fromDegreesCelsius(2.0),
+                            value = Temperature(2.0, Temperature.Unit.DegreesCelsius),
                             meta = GraphTemperature.Meta.Regular
                         ),
 
@@ -206,7 +206,7 @@ class GetTemperatureGraphsTest {
                             meta = GraphTime.Meta.Future
                         ),
                         temperature = GraphTemperature(
-                            value = Temperature.fromDegreesCelsius(1.0),
+                            value = Temperature(1.0, Temperature.Unit.DegreesCelsius),
                             meta = GraphTemperature.Meta.Regular
                         ),
                         condition = Condition(2, false)
