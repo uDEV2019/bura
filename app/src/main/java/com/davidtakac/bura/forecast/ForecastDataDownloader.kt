@@ -17,6 +17,7 @@ import com.davidtakac.bura.common.mapToList
 import com.davidtakac.bura.humidity.Humidity
 import com.davidtakac.bura.place.Coordinates
 import com.davidtakac.bura.pop.Pop
+import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.precipitation.Rain
 import com.davidtakac.bura.precipitation.Showers
 import com.davidtakac.bura.precipitation.Snow
@@ -104,10 +105,25 @@ class ForecastDataDownloader(private val userAgentProvider: UserAgentProvider) {
             val wmoCode = hourly.getJSONArray("weather_code").mapToList(String::toInt)
             val isDay = hourly.getJSONArray("is_day").mapToList(String::toInt).map { it == 1 }
             val pop = hourly.getJSONArray("precipitation_probability").mapToList { Pop(it.toDouble()) }
-            val rain = hourly.getJSONArray("rain").mapToList { Rain.fromMillimeters(it.toDouble()) }
-            val showers = hourly.getJSONArray("showers").mapToList { Showers.fromMillimeters(it.toDouble()) }
+            val rain = hourly.getJSONArray("rain").mapToList {
+                Rain(
+                    it.toDouble(),
+                    Precipitation.Unit.Millimeters
+                )
+            }
+            val showers = hourly.getJSONArray("showers").mapToList {
+                Showers(
+                    it.toDouble(),
+                    Precipitation.Unit.Millimeters
+                )
+            }
             // Open-Meteo returns snow in centimeters
-            val snowfall = hourly.getJSONArray("snowfall").mapToList { Snow.fromMillimeters(value = it.toDouble() * 10) }
+            val snowfall = hourly.getJSONArray("snowfall").mapToList {
+                Snow(
+                    value = it.toDouble(),
+                    unit = Precipitation.Unit.Centimeters
+                )
+            }
             val uvIndex = hourly.getJSONArray("uv_index").mapToList { UvIndex(it.toDouble().toInt()) }
             val windSpeed = hourly.getJSONArray("wind_speed_10m").mapToList { WindSpeed.fromMetersPerSecond(it.toDouble()) }
             val windDirection = hourly.getJSONArray("wind_direction_10m").mapToList { WindDirection(it.toDouble()) }

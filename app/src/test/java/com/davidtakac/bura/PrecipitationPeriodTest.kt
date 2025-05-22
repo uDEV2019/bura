@@ -13,6 +13,7 @@
 package com.davidtakac.bura
 
 import com.davidtakac.bura.precipitation.MixedPrecipitation
+import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.precipitation.PrecipitationMoment
 import com.davidtakac.bura.precipitation.PrecipitationPeriod
 import com.davidtakac.bura.precipitation.Rain
@@ -28,10 +29,22 @@ class PrecipitationPeriodTest {
             moments = listOf(
                 PrecipitationMoment(
                     unixEpochStart,
-                    MixedPrecipitation.fromMillimeters(Rain.fromMillimeters(1.0), Showers.Zero, Snow.Zero),
+                    MixedPrecipitation(
+                        rain = Rain(1.0, Precipitation.Unit.Millimeters),
+                        snow = Snow.Zero,
+                        showers = Showers.Zero,
+                        unit = Precipitation.Unit.Millimeters
+                    ),
                 )
             )
         )
-        assertEquals(MixedPrecipitation.fromMillimeters(Rain.fromMillimeters(1.0), Showers.Zero, Snow.Zero), period.total)
+        assertEquals(
+            MixedPrecipitation(
+                rain = Rain(1.0, Precipitation.Unit.Millimeters),
+                snow = Snow.Zero,
+                showers = Showers.Zero,
+                unit = Precipitation.Unit.Millimeters
+            ), period.total
+        )
     }
 }

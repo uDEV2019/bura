@@ -106,10 +106,11 @@ private fun PrecipitationRainSnowPreview() {
     AppTheme {
         Surface {
             PrecipitationBullets(
-                state = MixedPrecipitation.fromMillimeters(
-                    Rain.fromMillimeters(1.0),
-                    Showers.Zero,
-                    Snow.fromMillimeters(70.0)
+                state = MixedPrecipitation(
+                    rain = Rain(1.0, Precipitation.Unit.Millimeters),
+                    snow = Snow(70.0, Precipitation.Unit.Millimeters),
+                    showers = Showers.Zero,
+                    unit = Precipitation.Unit.Millimeters
                 ),
                 modifier = Modifier
                     .width(400.dp)

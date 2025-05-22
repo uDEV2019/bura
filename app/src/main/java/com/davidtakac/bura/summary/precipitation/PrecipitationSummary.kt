@@ -134,11 +134,11 @@ private fun PrecipitationSummaryPreview() {
                     state = PrecipitationSummary(
                         past = PastPrecipitation(
                             inHours = 12,
-                            total = Rain.fromMillimeters(12.59)
+                            total = Rain(12.59, Precipitation.Unit.Millimeters)
                         ),
                         future = FuturePrecipitation.OnDay(
                             onDay = LocalDate.parse("2023-01-01"),
-                            total = Rain.fromMillimeters(5.0)
+                            total = Rain(5.0, Precipitation.Unit.Millimeters)
                         )
                     ),
                     onClick = {},
@@ -162,7 +162,9 @@ private fun PrecipitationSummaryPreview() {
                     state = PrecipitationSummary(
                         past = PastPrecipitation(
                             inHours = 24,
-                            total = Snow.fromMillimeters(100.0).convertTo(Precipitation.Unit.Inches)
+                            total = Snow(100.0, Precipitation.Unit.Millimeters).convertTo(
+                                Precipitation.Unit.Inches
+                            )
                         ),
                         future = FuturePrecipitation.None(inDays = 7)
                     ),

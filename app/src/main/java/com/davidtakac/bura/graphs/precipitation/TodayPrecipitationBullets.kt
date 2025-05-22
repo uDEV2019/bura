@@ -69,18 +69,26 @@ private fun PrecipitationTodayPreview() {
                     day = LocalDate.parse("1970-01-01"),
                     past = TotalPrecipitationInHours(
                         hours = 24,
-                        total = MixedPrecipitation.fromMillimeters(
-                            Rain.fromMillimeters(1.0),
-                            Showers.Zero,
-                            Snow.fromMillimeters(70.0).convertTo(Precipitation.Unit.Centimeters)
+                        total = MixedPrecipitation(
+                            Rain(1.0, Precipitation.Unit.Millimeters),
+                            snow = Snow(
+                                70.0,
+                                Precipitation.Unit.Millimeters
+                            ).convertTo(Precipitation.Unit.Centimeters),
+                            showers = Showers.Zero,
+                            unit = Precipitation.Unit.Millimeters
                         )
                     ),
                     future = TotalPrecipitationInHours(
                         hours = 24,
-                        MixedPrecipitation.fromMillimeters(
-                            Rain.fromMillimeters(1.0),
-                            Showers.fromMillimeters(11.0),
-                            Snow.fromMillimeters(70.0).convertTo(Precipitation.Unit.Centimeters)
+                        MixedPrecipitation(
+                            Rain(1.0, Precipitation.Unit.Millimeters),
+                            snow = Snow(
+                                70.0,
+                                Precipitation.Unit.Millimeters
+                            ).convertTo(Precipitation.Unit.Centimeters),
+                            showers = Showers(11.0, Precipitation.Unit.Millimeters),
+                            unit = Precipitation.Unit.Millimeters
                         )
                     )
                 ),

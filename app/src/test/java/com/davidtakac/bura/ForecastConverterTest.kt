@@ -72,8 +72,8 @@ class ForecastConverterTest {
         val isDay = listOf(true, false)
         val wmoCodes = listOf(1, 2)
         val rain = listOf(
-            Rain.fromMillimeters(1.0),
-            Rain.fromMillimeters(1.0)
+            Rain(1.0, Precipitation.Unit.Millimeters),
+            Rain(1.0, Precipitation.Unit.Millimeters)
         )
         val showers = listOf(
             Showers.Zero,
@@ -172,8 +172,8 @@ class ForecastConverterTest {
         val isDay = listOf(true, false)
         val wmoCodes = listOf(1, 2)
         val rain = listOf(
-            Rain.fromMillimeters(1.0),
-            Rain.fromMillimeters(1.0)
+            Rain(1.0, Precipitation.Unit.Millimeters),
+            Rain(1.0, Precipitation.Unit.Millimeters)
         )
         val showers = listOf(
             Showers.Zero,

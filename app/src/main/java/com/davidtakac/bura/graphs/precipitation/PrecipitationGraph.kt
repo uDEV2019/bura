@@ -76,10 +76,11 @@ fun PrecipitationGraph(
         // todo: add smart padding to top of graphs
 
         val steps = listOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
-        val newMax = MixedPrecipitation.fromMillimeters(
-            rain = Rain.fromMillimeters(steps.last()),
+        val newMax = MixedPrecipitation(
+            rain = Rain(steps.last(), Precipitation.Unit.Millimeters),
+            snow = Snow.Zero,
             showers = Showers.Zero,
-            snow = Snow.Zero
+            unit = Precipitation.Unit.Millimeters
         )
         steps to newMax
     }
@@ -204,7 +205,7 @@ private fun DrawScope.drawPrecipAxis(
         args = args,
         measurer = measurer,
     ) { step ->
-        val rain = Rain.fromMillimeters(step).convertTo(unit)
+        val rain = Rain(step, Precipitation.Unit.Millimeters).convertTo(unit)
         val valueString = rain.valueString(args.numberFormat)
         if (step == steps[0]) rain.string(context, args.numberFormat) else valueString
     }
@@ -301,10 +302,11 @@ private val previewState = PrecipitationGraph(
                     .plus(it.toLong(), ChronoUnit.HOURS),
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
-            precip = MixedPrecipitation.fromMillimeters(
-                rain = Rain.fromMillimeters(Random.nextDouble(until = 5.0)),
-                showers = Showers.fromMillimeters(Random.nextDouble(until = 5.0)),
-                snow = Snow.fromMillimeters(Random.nextDouble(until = 5.0))
+            precip = MixedPrecipitation(
+                rain = Rain(Random.nextDouble(until = 5.0), Precipitation.Unit.Millimeters),
+                snow = Snow(Random.nextDouble(until = 5.0), Precipitation.Unit.Millimeters),
+                showers = Showers(Random.nextDouble(until = 5.0), Precipitation.Unit.Millimeters),
+                unit = Precipitation.Unit.Millimeters
             ),
             cond = Condition(
                 wmoCode = Random.nextInt(0, 3),
@@ -323,10 +325,11 @@ private val smallPreviewState = PrecipitationGraph(
                     .plus(it.toLong(), ChronoUnit.HOURS),
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
-            precip = MixedPrecipitation.fromMillimeters(
+            precip = MixedPrecipitation(
                 rain = Rain.Zero,//.fromMillimeters(Random.nextDouble(until = 5.0)),
+                snow = Snow.Zero,
                 showers = Showers.Zero,
-                snow = Snow.Zero
+                unit = Precipitation.Unit.Millimeters
             ),
             cond = Condition(
                 wmoCode = Random.nextInt(0, 3),
@@ -345,10 +348,11 @@ private val smallPreviewStateInches = PrecipitationGraph(
                     .plus(it.toLong(), ChronoUnit.HOURS),
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
-            precip = MixedPrecipitation.fromMillimeters(
+            precip = MixedPrecipitation(
                 rain = Rain.Zero,
+                snow = Snow.Zero,
                 showers = Showers.Zero,
-                snow = Snow.Zero
+                unit = Precipitation.Unit.Millimeters
             ).convertTo(Precipitation.Unit.Inches),
             cond = Condition(
                 wmoCode = Random.nextInt(0, 3),

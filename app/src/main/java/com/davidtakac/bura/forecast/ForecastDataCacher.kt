@@ -95,9 +95,24 @@ class ForecastDataCacher(private val root: File) {
                 sunrises = record.getJSONArray("sunrises").mapToList(LocalDateTime::parse),
                 sunsets = record.getJSONArray("sunsets").mapToList(LocalDateTime::parse),
                 pop = record.getJSONArray("pop").mapToList { Pop(it.toDouble()) },
-                rain = record.getJSONArray("rain").mapToList { Rain.fromMillimeters(it.toDouble()) },
-                showers = record.getJSONArray("showers").mapToList { Showers.fromMillimeters(it.toDouble()) },
-                snow = record.getJSONArray("snow").mapToList { Snow.fromMillimeters(it.toDouble()) },
+                rain = record.getJSONArray("rain").mapToList {
+                    Rain(
+                        it.toDouble(),
+                        Precipitation.Unit.Millimeters
+                    )
+                },
+                showers = record.getJSONArray("showers").mapToList {
+                    Showers(
+                        it.toDouble(),
+                        Precipitation.Unit.Millimeters
+                    )
+                },
+                snow = record.getJSONArray("snow").mapToList {
+                    Snow(
+                        it.toDouble(),
+                        Precipitation.Unit.Millimeters
+                    )
+                },
                 uvIndex = record.getJSONArray("uvIndex").mapToList { UvIndex(it.toInt()) },
                 windSpeed = record.getJSONArray("windSpeed").mapToList { WindSpeed.fromMetersPerSecond(it.toDouble()) },
                 windDirection = record.getJSONArray("windDirection").mapToList { WindDirection(it.toDouble()) },

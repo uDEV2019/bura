@@ -36,6 +36,7 @@ import com.davidtakac.bura.condition.Condition
 import com.davidtakac.bura.condition.ConditionMoment
 import com.davidtakac.bura.condition.ConditionPeriod
 import com.davidtakac.bura.precipitation.MixedPrecipitation
+import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.wind.Wind
 import com.davidtakac.bura.wind.WindMoment
 import com.davidtakac.bura.wind.WindPeriod
@@ -67,7 +68,15 @@ class ForecastConverter {
                 val rain = data.rain[i].convertTo(toUnits.rain)
                 val showers = data.showers[i].convertTo(toUnits.showers)
                 val snowfall = data.snow[i].convertTo(toUnits.snow)
-                precipMoments.add(PrecipitationMoment(time, MixedPrecipitation.fromMillimeters(rain, showers, snowfall).convertTo(toUnits.precipitation)))
+                precipMoments.add(PrecipitationMoment(
+                    time,
+                    MixedPrecipitation(
+                        rain = rain,
+                        snow = snowfall,
+                        showers = showers,
+                        unit = Precipitation.Unit.Millimeters
+                    ).convertTo(toUnits.precipitation)
+                ))
                 uvIndexMoments.add(UvIndexMoment(time, data.uvIndex[i]))
                 windMoments.add(WindMoment(time, Wind(data.windSpeed[i].convertTo(toUnits.windSpeed), data.windDirection[i])))
                 gustMoments.add(GustMoment(time, data.gustSpeed[i].convertTo(toUnits.windSpeed)))

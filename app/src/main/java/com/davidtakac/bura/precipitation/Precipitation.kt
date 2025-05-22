@@ -12,13 +12,15 @@
 
 package com.davidtakac.bura.precipitation
 
+import com.davidtakac.bura.precipitation.Precipitation.Unit
 import java.util.Objects
 
 sealed class Precipitation(
-    protected val millimeters: Double,
     val value: Double,
     val unit: Unit
 ) : Comparable<Precipitation> {
+    protected val millimeters = toMillimeters(value, unit)
+
     enum class Unit {
         Millimeters, Centimeters, Inches
     }
@@ -36,17 +38,15 @@ sealed class Precipitation(
         millimeters.compareTo(other.millimeters)
 }
 
-class Rain(millimeters: Double, value: Double, unit: Unit) :
-    Precipitation(millimeters, value, unit) {
+class Rain(value: Double, unit: Unit) : Precipitation(value, unit) {
     fun convertTo(unit: Unit): Rain =
         Rain(
-            millimeters = millimeters,
             value = millimetersTo(millimeters, unit),
             unit = unit
         )
 
     operator fun plus(other: Rain): Rain =
-        fromMillimeters(millimeters + other.millimeters).convertTo(unit)
+        Rain(millimeters + other.millimeters, Unit.Millimeters).convertTo(unit)
 
     override fun equals(other: Any?): Boolean =
         other is Rain && other.millimeters == millimeters && other.value == value && other.unit == unit
@@ -55,24 +55,19 @@ class Rain(millimeters: Double, value: Double, unit: Unit) :
         Objects.hash(millimeters, value, unit)
 
     companion object {
-        val Zero get() = fromMillimeters(0.0)
-
-        fun fromMillimeters(value: Double): Rain =
-            Rain(value, value, Unit.Millimeters)
+        val Zero get() = Rain(0.0, Unit.Millimeters)
     }
 }
 
-class Showers(millimeters: Double, value: Double, unit: Unit) :
-    Precipitation(millimeters, value, unit) {
+class Showers(value: Double, unit: Unit) : Precipitation(value, unit) {
     fun convertTo(unit: Unit): Showers =
         Showers(
-            millimeters = millimeters,
             value = millimetersTo(millimeters, unit),
             unit = unit
         )
 
     operator fun plus(other: Showers): Showers =
-        fromMillimeters(millimeters + other.millimeters).convertTo(unit)
+        Showers(millimeters + other.millimeters, Unit.Millimeters).convertTo(unit)
 
     override fun equals(other: Any?): Boolean =
         other is Showers && other.millimeters == millimeters && other.value == value && other.unit == unit
@@ -81,29 +76,29 @@ class Showers(millimeters: Double, value: Double, unit: Unit) :
         Objects.hash(millimeters, value, unit)
 
     companion object {
-        val Zero get() = fromMillimeters(0.0)
-
-        fun fromMillimeters(value: Double): Showers =
-            Showers(value, value, Unit.Millimeters)
+        val Zero get() = Showers(0.0, Unit.Millimeters)
     }
 }
 
 class Snow(
-    private val liquidMillimeters: Double,
-    val liquidValue: Double,
-    millimeters: Double, value: Double, unit: Unit
-) : Precipitation(millimeters, value, unit) {
+    value: Double,
+    unit: Unit
+) : Precipitation(value, unit) {
+    val liquidValue: Double
+    private val liquidMillimeters: Double = millimeters / 7
+
+    init {
+        liquidValue = millimetersTo(liquidMillimeters, unit)
+    }
+
     fun convertTo(unit: Unit): Snow =
         Snow(
-            liquidMillimeters = liquidMillimeters,
-            liquidValue = millimetersTo(liquidMillimeters, unit),
-            millimeters = millimeters,
             value = millimetersTo(millimeters, unit),
             unit = unit
         )
 
     operator fun plus(other: Snow): Snow =
-        fromMillimeters(millimeters + other.millimeters).convertTo(unit)
+        Snow(millimeters + other.millimeters, Unit.Millimeters).convertTo(unit)
 
     override fun equals(other: Any?): Boolean =
         other is Snow && other.millimeters == millimeters && other.value == value && other.unit == unit
@@ -113,18 +108,7 @@ class Snow(
         Objects.hash(millimeters, value, unit, liquidMillimeters, liquidValue)
 
     companion object {
-        val Zero get() = fromMillimeters(0.0)
-
-        fun fromMillimeters(value: Double): Snow {
-            val liquidMm = value / 7
-            return Snow(
-                liquidMillimeters = liquidMm,
-                liquidValue = liquidMm,
-                millimeters = value,
-                value = value,
-                unit = Unit.Millimeters
-            )
-        }
+        val Zero get() = Snow(0.0, Unit.Millimeters)
     }
 }
 
@@ -132,15 +116,13 @@ class MixedPrecipitation(
     val rain: Rain,
     val showers: Showers,
     val snow: Snow,
-    millimeters: Double, value: Double, unit: Unit
-) : Precipitation(millimeters, value, unit) {
+    unit: Unit
+) : Precipitation(rain.convertTo(unit).value + showers.convertTo(unit).value + snow.convertTo(unit).liquidValue, unit) {
     fun convertTo(unit: Unit): MixedPrecipitation =
         MixedPrecipitation(
             rain = rain,
             showers = showers,
             snow = snow,
-            millimeters = millimeters,
-            value = millimetersTo(millimeters, unit),
             unit = unit
         )
 
@@ -154,15 +136,20 @@ class MixedPrecipitation(
     }
 
     operator fun plus(other: MixedPrecipitation): MixedPrecipitation =
-        fromMillimeters(
+        MixedPrecipitation(
             rain = rain + other.rain,
+            snow = snow + other.snow,
             showers = showers + other.showers,
-            snow = snow + other.snow
+            unit = Unit.Millimeters
         ).convertTo(unit)
 
     override fun equals(other: Any?): Boolean =
-        other is MixedPrecipitation && other.millimeters == millimeters && other.value == value && other.unit == unit
-                && other.rain == rain && other.showers == showers && other.snow == snow
+        other is MixedPrecipitation
+                && other.value == value
+                && other.unit == unit
+                && other.rain == rain
+                && other.showers == showers
+                && other.snow == snow
 
     override fun hashCode(): Int =
         Objects.hash(millimeters, value, unit)
@@ -171,28 +158,20 @@ class MixedPrecipitation(
         "${super.toString()} (Rain: $rain, Showers: $showers, Snow: $snow)"
 
     companion object {
-        val Zero get() = fromMillimeters(Rain.Zero, Showers.Zero, Snow.Zero)
-
-        fun fromMillimeters(rain: Rain, showers: Showers, snow: Snow): MixedPrecipitation {
-            val rainMm = rain.convertTo(Unit.Millimeters).value
-            val showersMm = showers.convertTo(Unit.Millimeters).value
-            val snowLiquidMm = snow.convertTo(Unit.Millimeters).liquidValue
-            val sumMm = rainMm + showersMm + snowLiquidMm
-            return MixedPrecipitation(
-                rain = rain,
-                showers = showers,
-                snow = snow,
-                millimeters = sumMm,
-                value = sumMm,
-                unit = Unit.Millimeters
-            )
-        }
+        val Zero get() = MixedPrecipitation(Rain.Zero, Showers.Zero, Snow.Zero, Unit.Millimeters)
     }
 }
 
-private fun millimetersTo(millimeters: Double, unit: Precipitation.Unit): Double =
+private fun millimetersTo(millimeters: Double, unit: Unit): Double =
     millimeters * when (unit) {
         Precipitation.Unit.Millimeters -> 1.0
         Precipitation.Unit.Centimeters -> 0.1
         Precipitation.Unit.Inches -> (1 / 25.4)
+    }
+
+private fun toMillimeters(value: Double, unit: Unit): Double =
+    when (unit) {
+        Unit.Millimeters -> value
+        Unit.Centimeters -> value * 10
+        Unit.Inches -> value * 25.4
     }

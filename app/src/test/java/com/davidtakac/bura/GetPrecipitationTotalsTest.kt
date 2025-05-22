@@ -17,6 +17,7 @@ import com.davidtakac.bura.graphs.precipitation.PrecipitationTotal
 import com.davidtakac.bura.graphs.precipitation.TotalPrecipitationInHours
 import com.davidtakac.bura.graphs.precipitation.getPrecipitationTotals
 import com.davidtakac.bura.precipitation.MixedPrecipitation
+import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.precipitation.PrecipitationMoment
 import com.davidtakac.bura.precipitation.PrecipitationPeriod
 import com.davidtakac.bura.precipitation.Rain
@@ -38,10 +39,11 @@ class GetPrecipitationTotalsTest {
                 add(
                     PrecipitationMoment(
                         hour = startOfFirstDay.plus(i.toLong(), ChronoUnit.HOURS),
-                        precipitation = MixedPrecipitation.fromMillimeters(
-                            Rain.fromMillimeters(1.0),
-                            Showers.Zero,
-                            Snow.fromMillimeters(5.0)
+                        precipitation = MixedPrecipitation(
+                            rain = Rain(1.0, Precipitation.Unit.Millimeters),
+                            snow = Snow(5.0, Precipitation.Unit.Millimeters),
+                            showers = Showers.Zero,
+                            unit = Precipitation.Unit.Millimeters
                         )
                     )
                 )
@@ -50,10 +52,11 @@ class GetPrecipitationTotalsTest {
                 add(
                     PrecipitationMoment(
                         hour = startOfSecondDay.plus(i.toLong(), ChronoUnit.HOURS),
-                        precipitation = MixedPrecipitation.fromMillimeters(
-                            Rain.Zero,
-                            Showers.fromMillimeters(2.0),
-                            Snow.Zero
+                        precipitation = MixedPrecipitation(
+                            rain = Rain.Zero,
+                            snow = Snow.Zero,
+                            showers = Showers(2.0, Precipitation.Unit.Millimeters),
+                            unit = Precipitation.Unit.Millimeters
                         )
                     )
                 )
@@ -69,24 +72,26 @@ class GetPrecipitationTotalsTest {
                     day = LocalDate.parse("1970-01-01"),
                     past = TotalPrecipitationInHours(
                         hours = 8,
-                        total = MixedPrecipitation.fromMillimeters(
-                            rain = Rain.fromMillimeters(8.0),
+                        total = MixedPrecipitation(
+                            rain = Rain(8.0, Precipitation.Unit.Millimeters),
+                            snow = Snow(40.0, Precipitation.Unit.Millimeters),
                             showers = Showers.Zero,
-                            snow = Snow.fromMillimeters(40.0)
+                            unit = Precipitation.Unit.Millimeters
                         ),
                     ),
                     future = TotalPrecipitationInHours(
                         hours = 24,
-                        total = MixedPrecipitation.fromMillimeters(
-                            rain = Rain.fromMillimeters(16.0),
-                            showers = Showers.fromMillimeters(16.0),
-                            snow = Snow.fromMillimeters(80.0)
+                        total = MixedPrecipitation(
+                            rain = Rain(16.0, Precipitation.Unit.Millimeters),
+                            snow = Snow(80.0, Precipitation.Unit.Millimeters),
+                            showers = Showers(16.0, Precipitation.Unit.Millimeters),
+                            unit = Precipitation.Unit.Millimeters
                         )
                     )
                 ),
                 PrecipitationTotal.OtherDay(
                     day = LocalDate.parse("1970-01-02"),
-                    total = Showers.fromMillimeters(48.0)
+                    total = Showers(48.0, Precipitation.Unit.Millimeters)
                 )
             ),
             totals
