@@ -91,12 +91,24 @@ class ForecastConverter {
             val humidity = HumidityPeriod(humidityMoments)
             val weatherDescription = ConditionPeriod(conditionMoments)
 
-            val sunriseMoments = data.sunrises.map { SunMoment(it, SunEvent.Sunrise) }
-            val sunsetMoments = data.sunsets.map { SunMoment(it, SunEvent.Sunset) }
-            val sun = (sunriseMoments + sunsetMoments)
-                .sortedBy { it.time }
-                .takeIf { it.isNotEmpty() }
-                ?.let { SunPeriod(it) }
+            // McMurdo Station Pegasus Field returned the following on May 22:
+            // sunrise":["2025-05-23T00:00","2025-05-24T00:00","2025-05-25T00:00","2025-05-26T00:00","2025-05-27T00:00","2025-05-28T00:00","2025-05-29T00:00"],"sunset":["2025-05-23T00:00","2025-05-24T00:00","2025-05-25T00:00","2025-05-26T00:00","2025-05-27T00:00","2025-05-28T00:00","2025-05-29T00:00"]}}
+            // This code discards duplicate pairs to address this, and because they don't make sense in general
+            val sortedSunMoments = mutableListOf<SunMoment>()
+            for (i in data.sunrises.indices) {
+                val sunrise = SunMoment(data.sunrises[i], SunEvent.Sunrise)
+                val sunset = SunMoment(data.sunsets[i], SunEvent.Sunset)
+                if (sunrise.time == sunset.time) {
+                    continue
+                } else if (sunset.time < sunrise.time) {
+                    sortedSunMoments.add(sunset)
+                    sortedSunMoments.add(sunrise)
+                } else {
+                    sortedSunMoments.add(sunrise)
+                    sortedSunMoments.add(sunset)
+                }
+            }
+            val sun = sortedSunMoments.takeIf { it.isNotEmpty() }?.let { SunPeriod(it) }
 
             return@withContext Forecast(
                 temperature = temperature,
