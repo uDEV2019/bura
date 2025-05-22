@@ -88,7 +88,7 @@ class ForecastDataCacher(private val root: File) {
                 windDirection = record.getJSONArray("windDirection").mapToList { WindDirection(it.toDouble()) },
                 gustSpeed = record.getJSONArray("gustSpeed").mapToList { WindSpeed.fromMetersPerSecond(it.toDouble()) },
                 pressure = record.getJSONArray("pressure").mapToList { Pressure(it.toDouble(), Pressure.Unit.Hectopascal) },
-                visibility = record.getJSONArray("visibility").mapToList { Visibility.fromMeters(it.toDouble()) },
+                visibility = record.getJSONArray("visibility").mapToList { Visibility(it.toDouble(), Visibility.Unit.Meters) },
                 humidity = record.getJSONArray("humidity").mapToList { Humidity(it.toDouble()) },
                 wmoCode = record.getJSONArray("wmoCode").mapToList(String::toInt),
                 isDay = record.getJSONArray("isDay").mapToList(String::toBoolean)

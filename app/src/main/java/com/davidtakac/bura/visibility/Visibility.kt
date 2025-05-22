@@ -12,13 +12,20 @@
 
 package com.davidtakac.bura.visibility
 
+import com.davidtakac.bura.visibility.Visibility.Unit
 import java.util.Objects
 
-class Visibility private constructor(
-    private val meters: Double,
+class Visibility(
     val value: Double,
     val unit: Unit
 ) : Comparable<Visibility> {
+    private val meters: Double = when (unit) {
+        Unit.Meters -> value
+        Unit.Feet -> value * 3.28084
+        Unit.Kilometers -> value * 1000
+        Unit.Miles -> value / 0.00062137
+    }
+
     val description: Description = when {
         meters < 500 -> Description.VeryLow
         meters < 1000 -> Description.Low
@@ -29,30 +36,22 @@ class Visibility private constructor(
 
     fun convertTo(unit: Unit): Visibility {
         var newUnit = unit
-        var newValue = convertValueTo(newUnit)
+        var newValue = metersTo(meters, newUnit)
 
         if (newValue < 0.1 && unit == Unit.Kilometers) {
             newUnit = Unit.Meters
-            newValue = convertValueTo(newUnit)
+            newValue = metersTo(meters, newUnit)
         }
 
         if (newValue < 0.1 && unit == Unit.Miles) {
             newUnit = Unit.Feet
-            newValue = convertValueTo(newUnit)
+            newValue = metersTo(meters, newUnit)
         }
 
         return Visibility(
-            meters = meters,
             value = newValue,
             unit = newUnit
         )
-    }
-
-    private fun convertValueTo(unit: Unit): Double = meters * when (unit) {
-        Unit.Meters -> 1.0
-        Unit.Feet -> 3.28084
-        Unit.Kilometers -> 0.001
-        Unit.Miles -> 0.000621371
     }
 
     enum class Unit {
@@ -88,10 +87,17 @@ class Visibility private constructor(
     }
 
     companion object {
+        @Deprecated("Deprecated", ReplaceWith("Visibility(value, Visibility.Unit.Meters)"))
         fun fromMeters(value: Double): Visibility = Visibility(
-            meters = value,
             value = value,
             unit = Unit.Meters
         )
     }
+}
+
+private fun metersTo(meters: Double, unit: Unit): Double = meters * when (unit) {
+    Unit.Meters -> 1.0
+    Unit.Feet -> 3.28084
+    Unit.Kilometers -> 0.001
+    Unit.Miles -> 0.000621371
 }

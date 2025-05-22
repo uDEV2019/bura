@@ -104,8 +104,8 @@ class ForecastConverterTest {
             Pressure(1000.0, Pressure.Unit.Hectopascal)
         )
         val visibility = listOf(
-            Visibility.fromMeters(1000.0),
-            Visibility.fromMeters(1000.0)
+            Visibility(1000.0, Visibility.Unit.Meters),
+            Visibility(1000.0, Visibility.Unit.Meters)
         )
         val humidity = listOf(
             Humidity(80.0),
@@ -204,7 +204,7 @@ class ForecastConverterTest {
             Pressure(1000.0, Pressure.Unit.Hectopascal)
         )
         val visibility = listOf(
-            Visibility.fromMeters(1000.0)
+            Visibility(1000.0, Visibility.Unit.Meters)
             // Mismatch, should throw
         )
         val humidity = listOf(

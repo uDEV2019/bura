@@ -72,13 +72,13 @@ private fun VisibilitySummaryPreview() {
         ) {
             VisibilitySummary(
                 state = VisibilitySummary(
-                    Visibility.fromMeters(1020.0).convertTo(Visibility.Unit.Kilometers)
+                    Visibility(1020.0, Visibility.Unit.Meters).convertTo(Visibility.Unit.Kilometers)
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
             VisibilitySummary(
                 state = VisibilitySummary(
-                    Visibility.fromMeters(90.0).convertTo(Visibility.Unit.Kilometers)
+                    Visibility(90.0, Visibility.Unit.Meters).convertTo(Visibility.Unit.Kilometers)
                 ),
                 modifier = Modifier.fillMaxWidth()
             )

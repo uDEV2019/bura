@@ -26,11 +26,11 @@ class VisibilityPeriodTest {
         val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
         val period = VisibilityPeriod(
             moments = listOf(
-                VisibilityMoment(firstMoment, Visibility.fromMeters(1.0)),
-                VisibilityMoment(secondMoment, Visibility.fromMeters(2.0))
+                VisibilityMoment(firstMoment, Visibility(1.0, Visibility.Unit.Meters)),
+                VisibilityMoment(secondMoment, Visibility(2.0, Visibility.Unit.Meters))
             )
         )
-        assertEquals(Visibility.fromMeters(1.0), period.minimum)
-        assertEquals(Visibility.fromMeters(2.0), period.maximum)
+        assertEquals(Visibility(1.0, Visibility.Unit.Meters), period.minimum)
+        assertEquals(Visibility(2.0, Visibility.Unit.Meters), period.maximum)
     }
 }

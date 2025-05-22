@@ -25,14 +25,14 @@ import java.time.temporal.ChronoUnit
 class GetVisibilitySummaryTest {
     private val period = VisibilityPeriod(
         listOf(
-            VisibilityMoment(unixEpochStart, Visibility.fromMeters(1.0)),
+            VisibilityMoment(unixEpochStart, Visibility(1.0, Visibility.Unit.Meters)),
             VisibilityMoment(
                 unixEpochStart.plus(1, ChronoUnit.HOURS),
-                Visibility.fromMeters(2.0)
+                Visibility(2.0, Visibility.Unit.Meters)
             ),
             VisibilityMoment(
                 unixEpochStart.plus(2, ChronoUnit.HOURS),
-                Visibility.fromMeters(3.0)
+                Visibility(3.0, Visibility.Unit.Meters)
             )
         )
     )
@@ -41,7 +41,7 @@ class GetVisibilitySummaryTest {
     fun `gets distance and description of now`() = runTest {
         val now = unixEpochStart.plus(1, ChronoUnit.HOURS).plus(10, ChronoUnit.MINUTES)
         assertEquals(
-            Visibility.fromMeters(2.0),
+            Visibility(2.0, Visibility.Unit.Meters),
             (getVisibilitySummary(now, period) as ForecastResult.Success).data.now
         )
     }
