@@ -47,7 +47,6 @@ import com.davidtakac.bura.graphs.common.NiceScale
 import com.davidtakac.bura.graphs.common.drawPastOverlay
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
-import com.davidtakac.bura.graphs.common.niceScale
 import com.davidtakac.bura.precipitation.MixedPrecipitation
 import com.davidtakac.bura.precipitation.Precipitation
 import com.davidtakac.bura.precipitation.Rain
@@ -82,17 +81,14 @@ fun PrecipitationGraph(
             snow = Snow.ZeroMillimeters,
             unit = Precipitation.Unit.Millimeters
         )
-        val initialNiceScale = niceScale(
+        val niceScale = NiceScale(
             min = 0.0,
             max = (if (max < leastMax) leastMax.convertTo(unit) else max).value,
             maxTicks = maxTicks
         )
-        val adjustedNiceScale = NiceScale(
-            min = 0.0,
-            max = initialNiceScale.max + initialNiceScale.spacing,
-            spacing = initialNiceScale.spacing
-        )
-        adjustedNiceScale.scale.map {
+        val niceMax = niceScale.max + niceScale.spacing
+        val niceSteps = niceScale.steps.toMutableList().apply { add(niceMax) }
+        niceSteps.map {
             MixedPrecipitation(
                 rain = Rain(it, max.unit),
                 showers = Showers.ZeroMillimeters,
@@ -100,7 +96,7 @@ fun PrecipitationGraph(
                 unit = unit
             )
         } to MixedPrecipitation(
-            rain = Rain(adjustedNiceScale.max, max.unit),
+            rain = Rain(niceMax, max.unit),
             snow = Snow.ZeroMillimeters,
             showers = Showers.ZeroMillimeters,
             unit = unit

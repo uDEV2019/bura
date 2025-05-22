@@ -17,54 +17,48 @@ import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.pow
 
-// TODO: Make this a class insetad of a function? Kind of awkward
 // Source: Graphics Gems 1 by Andrew S. Glassner and https://stackoverflow.com/a/16363437
-fun niceScale(min: Double, max: Double, maxTicks: Int): NiceScale {
-    val range = niceNum(srcNum = max - min, round = false)
-    val tickSpacing = niceNum(srcNum = range / (maxTicks - 1), round = true)
-    val niceMin = floor(min / tickSpacing) * tickSpacing
-    val niceMax = ceil(max / tickSpacing) * tickSpacing
-    return NiceScale(
-        min = niceMin,
-        max = niceMax,
-        spacing = tickSpacing
-    )
-}
-
-private fun niceNum(srcNum: Double, round: Boolean): Double {
-    val exponent: Double = floor(log10(srcNum))
-    val fraction = srcNum / 10.0.pow(exponent)
-    val niceFraction: Double = if (round) {
-        when {
-            fraction < 1.5 -> 1.0
-            fraction < 3 -> 2.0
-            fraction < 7.0 -> 5.0
-            else -> 10.0
-        }
-    } else {
-        when {
-            fraction <= 1 -> 1.0
-            fraction <= 2 -> 2.0
-            fraction <= 5 -> 5.0
-            else -> 10.0
-        }
-    }
-    return niceFraction * 10.0.pow(exponent)
-}
-
-data class NiceScale(
-    val min: Double,
-    val max: Double,
-    val spacing: Double
+class NiceScale(
+    min: Double,
+    max: Double,
+    maxTicks: Int
 ) {
-    val scale: List<Double>
+    val min: Double
+    val max: Double
+    val spacing: Double
+    val steps: List<Double>
 
     init {
+        val range = niceNum(srcNum = max - min, round = false)
+        spacing = niceNum(srcNum = range / (maxTicks - 1), round = true)
+        this.min = floor(min / spacing) * spacing
+        this.max = ceil(max / spacing) * spacing
         val scale = mutableListOf(min)
         do {
             val tick = scale.last() + spacing
             scale.add(tick)
         } while (tick < max)
-        this.scale = scale
+        this.steps = scale
+    }
+
+    private fun niceNum(srcNum: Double, round: Boolean): Double {
+        val exponent: Double = floor(log10(srcNum))
+        val fraction = srcNum / 10.0.pow(exponent)
+        val niceFraction: Double = if (round) {
+            when {
+                fraction < 1.5 -> 1.0
+                fraction < 3 -> 2.0
+                fraction < 7.0 -> 5.0
+                else -> 10.0
+            }
+        } else {
+            when {
+                fraction <= 1 -> 1.0
+                fraction <= 2 -> 2.0
+                fraction <= 5 -> 5.0
+                else -> 10.0
+            }
+        }
+        return niceFraction * 10.0.pow(exponent)
     }
 }

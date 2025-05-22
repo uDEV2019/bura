@@ -54,7 +54,6 @@ import com.davidtakac.bura.graphs.common.drawPastOverlayWithPoint
 import com.davidtakac.bura.graphs.common.drawPlotLinePath
 import com.davidtakac.bura.graphs.common.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawVerticalAxis
-import com.davidtakac.bura.graphs.common.niceScale
 import com.davidtakac.bura.temperature.Temperature
 import com.davidtakac.bura.temperature.string
 import java.time.LocalDate
@@ -79,16 +78,19 @@ fun TemperatureGraph(
             absMinTempValue -= maxTicks / 2.0
             absMaxTempValue += maxTicks / 2.0
         }
-        val initialScale = niceScale(absMinTempValue, absMaxTempValue, maxTicks)
+        val niceScale = NiceScale(absMinTempValue, absMaxTempValue, maxTicks)
         // Avoids case where scale min max are equal to extremes (looks bad)
-        val adjustedNiceMin = initialScale.min - initialScale.spacing
-        val adjustedNiceMax = initialScale.max + initialScale.spacing
-        val adjustedNiceScale = NiceScale(adjustedNiceMin, adjustedNiceMax, initialScale.spacing)
+        val niceMin = niceScale.min - niceScale.spacing
+        val niceMax = niceScale.max + niceScale.spacing
+        val niceSteps = niceScale.steps.toMutableList().apply {
+            add(0, niceMin)
+            add(niceMax)
+        }
         // Converts scale to Temperature objects for further use
         Triple(
-            Temperature(adjustedNiceScale.min, unit),
-            Temperature(adjustedNiceScale.max, unit),
-            adjustedNiceScale.scale.map { Temperature(it, unit) }
+            Temperature(niceMin, unit),
+            Temperature(niceMax, unit),
+            niceSteps.map { Temperature(it, unit) }
         )
     }
     val context = LocalContext.current
