@@ -84,46 +84,15 @@ class ForecastDataDownloader(private val userAgentProvider: UserAgentProvider) {
             val indexOfLast23HourInstant = times.indexOfLast { it.toLocalTime() == LocalTime.parse("23:00") }
             val timesProcessed = times.slice(0..indexOfLast23HourInstant)
 
-            val temperature = hourly.getJSONArray("temperature_2m").mapToList {
-                Temperature(
-                    it.toDouble(),
-                    Temperature.Unit.DegreesCelsius
-                )
-            }
-            val feelsLikeTemperature = hourly.getJSONArray("apparent_temperature").mapToList {
-                Temperature(
-                    it.toDouble(),
-                    Temperature.Unit.DegreesCelsius
-                )
-            }
-            val dewPointTemperature = hourly.getJSONArray("dew_point_2m").mapToList {
-                Temperature(
-                    it.toDouble(),
-                    Temperature.Unit.DegreesCelsius
-                )
-            }
+            val temperature = hourly.getJSONArray("temperature_2m").mapToList { Temperature(it.toDouble(), Temperature.Unit.DegreesCelsius) }
+            val feelsLikeTemperature = hourly.getJSONArray("apparent_temperature").mapToList { Temperature(it.toDouble(), Temperature.Unit.DegreesCelsius) }
+            val dewPointTemperature = hourly.getJSONArray("dew_point_2m").mapToList { Temperature(it.toDouble(), Temperature.Unit.DegreesCelsius) }
             val wmoCode = hourly.getJSONArray("weather_code").mapToList(String::toInt)
             val isDay = hourly.getJSONArray("is_day").mapToList(String::toInt).map { it == 1 }
             val pop = hourly.getJSONArray("precipitation_probability").mapToList { Pop(it.toDouble()) }
-            val rain = hourly.getJSONArray("rain").mapToList {
-                Rain(
-                    it.toDouble(),
-                    Precipitation.Unit.Millimeters
-                )
-            }
-            val showers = hourly.getJSONArray("showers").mapToList {
-                Showers(
-                    it.toDouble(),
-                    Precipitation.Unit.Millimeters
-                )
-            }
-            // Open-Meteo returns snow in centimeters
-            val snowfall = hourly.getJSONArray("snowfall").mapToList {
-                Snow(
-                    value = it.toDouble(),
-                    unit = Precipitation.Unit.Centimeters
-                )
-            }
+            val rain = hourly.getJSONArray("rain").mapToList { Rain(it.toDouble(), Precipitation.Unit.Millimeters) }
+            val showers = hourly.getJSONArray("showers").mapToList { Showers(it.toDouble(), Precipitation.Unit.Millimeters) }
+            val snowfall = hourly.getJSONArray("snowfall").mapToList { Snow(value = it.toDouble(), unit = Precipitation.Unit.Centimeters) }
             val uvIndex = hourly.getJSONArray("uv_index").mapToList { UvIndex(it.toDouble().toInt()) }
             val windSpeed = hourly.getJSONArray("wind_speed_10m").mapToList { WindSpeed(it.toDouble(), WindSpeed.Unit.MetersPerSecond) }
             val windDirection = hourly.getJSONArray("wind_direction_10m").mapToList { WindDirection(it.toDouble()) }
