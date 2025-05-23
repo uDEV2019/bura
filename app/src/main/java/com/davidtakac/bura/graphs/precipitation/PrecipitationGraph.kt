@@ -363,7 +363,7 @@ private val smallPreviewStateInches = PrecipitationGraph(
                 now = LocalDateTime.parse("1970-01-01T08:00")
             ),
             precip = MixedPrecipitation(
-                rain = Rain.ZeroMillimeters,
+                rain = Rain(1.0, Precipitation.Unit.Millimeters),
                 snow = Snow.ZeroMillimeters,
                 showers = Showers.ZeroMillimeters,
                 unit = Precipitation.Unit.Millimeters
