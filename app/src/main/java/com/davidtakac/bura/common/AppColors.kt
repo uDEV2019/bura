@@ -29,7 +29,8 @@ data class AppColors(
     fun temperatureColors(from: Temperature, to: Temperature): List<Color> {
         val fromCelsius = from.convertTo(Temperature.Unit.DegreesCelsius).value
         val toCelsius = to.convertTo(Temperature.Unit.DegreesCelsius).value
-        return temperatureColors.slice(getIndexOfNearestColor(fromCelsius)..getIndexOfNearestColor(toCelsius))
+        val indices = getIndexOfNearestColor(fromCelsius) until getIndexOfNearestColor(toCelsius)
+        return temperatureColors.slice(indices)
     }
 
     val uvIndexColorStops: List<Pair<Float, Color>>  get() =
