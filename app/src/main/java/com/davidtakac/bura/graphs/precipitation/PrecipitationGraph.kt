@@ -74,9 +74,8 @@ fun PrecipitationGraph(
     val showersColor = AppTheme.colors.showersColor
     val snowColor = AppTheme.colors.snowColor
     val (steps, newMax) = remember(max) {
-        val maxTicks = 5
         val leastMax = MixedPrecipitation(
-            rain = Rain(5.0, Precipitation.Unit.Millimeters),
+            rain = Rain(4.0, Precipitation.Unit.Millimeters),
             showers = Showers.ZeroMillimeters,
             snow = Snow.ZeroMillimeters,
             unit = Precipitation.Unit.Millimeters
@@ -84,7 +83,7 @@ fun PrecipitationGraph(
         val niceScale = NiceScale(
             min = 0.0,
             max = (if (max < leastMax) leastMax.convertTo(unit) else max).value,
-            maxTicks = maxTicks
+            maxTicks = 5
         )
         val niceMax = niceScale.max + niceScale.spacing
         val niceSteps = niceScale.steps.toMutableList().apply { add(niceMax) }
