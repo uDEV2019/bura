@@ -1,0 +1,14 @@
+### Added
+- Chinese traditional (#90)
+- Czech (#91)
+
+### Improved
+- Graph y axes now have "nice" numbers
+- Probability of precipitation graph now has weather icons
+
+### Fixed
+- Dutch (#85)
+- Cramped temperature graph when range is small
+- Crash due to out of bounds temperatures
+- Crash due to missing sunrise and sunset near the poles
+- Potential performance issues due to constructing flows during composition
