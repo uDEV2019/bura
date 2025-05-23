@@ -19,6 +19,7 @@ import android.os.Looper
 import android.text.format.DateFormat
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
@@ -38,10 +39,9 @@ private fun is24HourFormatFlow(context: Context): Flow<Boolean> = callbackFlow {
     awaitClose { context.contentResolver.unregisterContentObserver(callback) }
 }.distinctUntilChanged()
 
-val is24HourFormat: Boolean
-    @Composable get() {
-        val context = LocalContext.current
-        return is24HourFormatFlow(context)
-            .collectAsState(initial = DateFormat.is24HourFormat(context))
-            .value
-    }
+@Composable
+fun rememberIs24HourFormat(): Boolean {
+    val context = LocalContext.current
+    val flow = remember(context) { is24HourFormatFlow(context) }
+    return flow.collectAsState(initial = DateFormat.is24HourFormat(context)).value
+}

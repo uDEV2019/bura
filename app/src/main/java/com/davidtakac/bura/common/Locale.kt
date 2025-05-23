@@ -64,19 +64,19 @@ fun rememberDateTimeFormatter(@StringRes ofPattern: Int): DateTimeFormatter {
 
 @Composable
 fun rememberDateTimeHourFormatter(): DateTimeFormatter = rememberDateTimeFormatter(
-    if (is24HourFormat) R.string.date_time_pattern_hour
+    if (rememberIs24HourFormat()) R.string.date_time_pattern_hour
     else R.string.date_time_pattern_hour_ampm
 )
 
 @Composable
 fun rememberDateTimeHourMinuteFormatter(): DateTimeFormatter = rememberDateTimeFormatter(
-    if (is24HourFormat) R.string.date_time_pattern_hour_minute
+    if (rememberIs24HourFormat()) R.string.date_time_pattern_hour_minute
     else R.string.date_time_pattern_hour_minute_ampm
 )
 
 @Composable
 fun rememberDateTimeDayAndTimeFormatter(): DateTimeFormatter = rememberDateTimeFormatter(
-    if (is24HourFormat) R.string.date_time_pattern_dow_hour_minute
+    if (rememberIs24HourFormat()) R.string.date_time_pattern_dow_hour_minute
     else R.string.date_time_pattern_dow_hour_minute_ampm
 )
 
