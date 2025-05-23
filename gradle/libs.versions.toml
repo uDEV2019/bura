@@ -1,12 +1,13 @@
 [versions]
-agp = "8.8.0"
+agp = "8.8.2"
 appCompat = "1.7.0"
-composeBom = "2025.01.01"
-coreKtx = "1.15.0"
+composeBom = "2025.05.01"
+coreKtx = "1.16.0"
 junit = "4.13.2"
-kotlin = "2.1.0"
-kotlinxCoroutinesTest = "1.10.1"
-navigationCompose = "2.8.6"
+kotlin = "2.1.10"
+kotlinxCoroutinesTest = "1.10.2"
+kotlinxSerializationJson = "1.8.1"
+navigationCompose = "2.9.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat" }
@@ -18,8 +19,10 @@ androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
