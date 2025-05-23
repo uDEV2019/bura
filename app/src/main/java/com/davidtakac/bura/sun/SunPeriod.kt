@@ -37,9 +37,8 @@ class SunPeriod(val moments: List<SunMoment>) {
         var previousMoment = moments[0]
         for (i in 1..moments.lastIndex) {
             val nextMoment = moments[i]
-            // TODO: When selecting McMurdo AQ, this crashes because adjacent moments are equal
             require(previousMoment.time < nextMoment.time) {
-                "Moments of SunPeriod must be sorted, but contained ${previousMoment.time} before ${nextMoment.time}."
+                "Moments of SunPeriod must be sorted and unique, but contained ${previousMoment.time} and ${nextMoment.time}."
             }
             previousMoment = nextMoment
         }

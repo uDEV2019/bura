@@ -93,7 +93,7 @@ class ForecastConverter {
 
             // McMurdo Station Pegasus Field returned the following on May 22:
             // sunrise":["2025-05-23T00:00","2025-05-24T00:00","2025-05-25T00:00","2025-05-26T00:00","2025-05-27T00:00","2025-05-28T00:00","2025-05-29T00:00"],"sunset":["2025-05-23T00:00","2025-05-24T00:00","2025-05-25T00:00","2025-05-26T00:00","2025-05-27T00:00","2025-05-28T00:00","2025-05-29T00:00"]}}
-            // This code discards duplicate pairs to address this, and because they don't make sense in general
+            // Sunrise and sunset at the exact same time does not make sense. This code removes such entries.
             val sortedSunMoments = mutableListOf<SunMoment>()
             for (i in data.sunrises.indices) {
                 val sunrise = SunMoment(data.sunrises[i], SunEvent.Sunrise)
