@@ -70,7 +70,7 @@ fun TemperatureGraph(
 ) {
     val unit = absMinTemp.unit
     val (min, max, scale) = remember(absMinTemp, absMaxTemp) {
-        val maxTicks = 7
+        val maxTicks = 5
         // Avoids case where min == max, or where the scale is too small to display nice numbers
         var absMinTempValue = absMinTemp.value
         var absMaxTempValue = absMaxTemp.value
@@ -80,9 +80,9 @@ fun TemperatureGraph(
         }
         val niceScale = NiceScale(absMinTempValue, absMaxTempValue, maxTicks)
         // Avoids case where scale min max are equal to extremes (looks bad)
-        val niceMin = niceScale.min - niceScale.spacing
-        val niceMax = niceScale.max + niceScale.spacing
-        val niceSteps = niceScale.steps.toMutableList().apply {
+        val niceMin = niceScale.niceMin - niceScale.niceSpacing
+        val niceMax = niceScale.niceMax + niceScale.niceSpacing
+        val niceSteps = niceScale.niceSteps.toMutableList().apply {
             add(0, niceMin)
             add(niceMax)
         }

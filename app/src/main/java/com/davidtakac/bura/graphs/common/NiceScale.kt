@@ -23,22 +23,22 @@ class NiceScale(
     max: Double,
     maxTicks: Int
 ) {
-    val min: Double
-    val max: Double
-    val spacing: Double
-    val steps: List<Double>
+    val niceMin: Double
+    val niceMax: Double
+    val niceSpacing: Double
+    val niceSteps: List<Double>
 
     init {
         val range = niceNum(srcNum = max - min, round = false)
-        spacing = niceNum(srcNum = range / (maxTicks - 1), round = true)
-        this.min = floor(min / spacing) * spacing
-        this.max = ceil(max / spacing) * spacing
-        val scale = mutableListOf(min)
+        niceSpacing = niceNum(srcNum = range / (maxTicks - 1), round = true)
+        niceMin = floor(min / niceSpacing) * niceSpacing
+        niceMax = ceil(max / niceSpacing) * niceSpacing
+        val scale = mutableListOf(niceMin)
         do {
-            val tick = scale.last() + spacing
+            val tick = scale.last() + niceSpacing
             scale.add(tick)
-        } while (tick < max)
-        this.steps = scale
+        } while (tick < niceMax)
+        niceSteps = scale
     }
 
     private fun niceNum(srcNum: Double, round: Boolean): Double {

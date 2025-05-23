@@ -85,8 +85,8 @@ fun PrecipitationGraph(
             max = (if (max < leastMax) leastMax.convertTo(unit) else max).value,
             maxTicks = 5
         )
-        val niceMax = niceScale.max + niceScale.spacing
-        val niceSteps = niceScale.steps.toMutableList().apply { add(niceMax) }
+        val niceMax = niceScale.niceMax + niceScale.niceSpacing
+        val niceSteps = niceScale.niceSteps.toMutableList().apply { add(niceMax) }
         niceSteps.map {
             MixedPrecipitation(
                 rain = Rain(it, max.unit),
