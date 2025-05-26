@@ -15,7 +15,7 @@ package com.davidtakac.bura.common
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import com.davidtakac.bura.R
 import java.text.NumberFormat
@@ -43,9 +43,9 @@ private val supportedLocales = listOf(
 
 @Composable
 fun rememberAppLocale(): Locale {
-    val context = LocalContext.current
-    return remember(context) {
-        val defaultLocale = context.resources.configuration.locales[0]
+    val config = LocalConfiguration.current
+    return remember(config) {
+        val defaultLocale = config.locales[0]
         val defaultLocaleSupported = supportedLocales.any { it == defaultLocale || it.language == defaultLocale.language }
         if (defaultLocaleSupported) defaultLocale else fallbackLocale
     }
