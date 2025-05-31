@@ -109,7 +109,7 @@
     <string name="pressure_trend_falling">Daalt</string>
     <string name="pressure_trend_steady">Constant</string>
     <string name="pressure_trend_rising">Stijgt</string>
-    <string name="pressure_value_average">Gemiddeld: %s</string>
+    <string name="pressure_value_average">Gemiddeld %s</string>
     <string name="pressure_unit_hpa">hPa</string>
     <string name="pressure_value_hpa">%s hPa</string>
     <string name="pressure_unit_inhg">inHg</string>
@@ -124,8 +124,8 @@
     <string name="sunset">Zonsondergang</string>
     <string name="sunrise_short">Op</string>
     <string name="sunset_short">Onder</string>
-    <string name="sunrise_value">Zonsopkomst: %s</string>
-    <string name="sunset_value">Zonsondergang: %s</string>
+    <string name="sunrise_value">Zonsopkomst %s</string>
+    <string name="sunset_value">Zonsondergang %s</string>
     <string name="sunrise_not_today">Vandaag geen zonsopkomst</string>
     <string name="sunset_not_today">Vandaag geen zonsondergang</string>
     <string name="sunrise_value_more_than_days_away">&gt; %sd</string>
@@ -137,7 +137,7 @@
     <string name="dew_point_value_right_now">Dauwpunt is nu %s</string>
     <string name="feels_like">Gevoelstemperatuur</string>
     <string name="feels_like_value">Voelt als %s</string>
-    <string name="feels_like_value_actual">Luchttemperatuur: %s</string>
+    <string name="feels_like_value_actual">Luchttemperatuur %s</string>
     <string name="feels_like_cooler_than_actual">Door de wind voelt het koeler aan</string>
     <string name="feels_like_colder_than_actual">Door de wind voelt het kouder aan</string>
     <string name="feels_like_warmer_than_actual">Door de luchtvochtigheid voelt het warmer aan</string>
@@ -185,15 +185,15 @@
     <string name="wind_bft_10">Volwaardige storm</string>
     <string name="wind_bft_11">Hevige storm</string>
     <string name="wind_bft_12">Orkaankracht</string>
-    <string name="wind_value_gusts_at">Windvlagen van %s</string>
+    <string name="wind_value_gusts_at">Windvlagen %s</string>
     <string name="wind_unit_mps">m/s</string>
     <string name="wind_value_mps">%s m/s</string>
-    <string name="wind_unit_kph">km/h</string>
-    <string name="wind_value_kph">%s km/h</string>
+    <string name="wind_unit_kph">km/u</string>
+    <string name="wind_value_kph">%s km/u</string>
     <string name="wind_unit_kn">kn</string>
     <string name="wind_value_kn">%s kn</string>
-    <string name="wind_unit_mph">mi/h</string>
-    <string name="wind_value_mph">%s mi/h</string>
+    <string name="wind_unit_mph">mph</string>
+    <string name="wind_value_mph">%s mph</string>
 
     <string name="wmo_0">Helder</string>
     <string name="wmo_1">Overwegend helder</string>
