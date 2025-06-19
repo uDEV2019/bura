@@ -129,7 +129,7 @@
     <string name="sunrise_value_more_than_days_away">&gt; %sd</string>
     <string name="sunrise_value_more_than_hours_away">&gt; %sh</string>
     <string name="sunset_value_more_than_days_away">&gt; %sd</string>
-    <string name="sunset_value_more_than_hours_away">&gt; %sd</string>
+    <string name="sunset_value_more_than_hours_away">&gt; %sh</string>
 
     <string name="temp_value_degree">%s°</string>
     <string name="dew_point_value_right_now">Punkt rosy %s teraz.</string>
