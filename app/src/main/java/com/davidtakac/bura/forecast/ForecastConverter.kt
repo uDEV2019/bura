@@ -42,6 +42,8 @@ import com.davidtakac.bura.wind.WindMoment
 import com.davidtakac.bura.wind.WindPeriod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 class ForecastConverter {
     suspend fun fromData(data: ForecastData, toUnits: Units): Forecast =
@@ -90,27 +92,7 @@ class ForecastConverter {
             val visibility = VisibilityPeriod(visibilityMoments)
             val humidity = HumidityPeriod(humidityMoments)
             val weatherDescription = ConditionPeriod(conditionMoments)
-
-            // McMurdo Station Pegasus Field returned the following on May 22:
-            // "sunrise":["2025-05-23T00:00","2025-05-24T00:00", ...],
-            // "sunset":["2025-05-23T00:00","2025-05-24T00:00",...],
-            // Sun rising and setting at the exact same time does not make sense. This code drops
-            // such entries and creates sorted SunMoments.
-            val sortedSunMoments = mutableListOf<SunMoment>()
-            for (i in data.sunrises.indices) {
-                val sunrise = SunMoment(data.sunrises[i], SunEvent.Sunrise)
-                val sunset = SunMoment(data.sunsets[i], SunEvent.Sunset)
-                if (sunrise.time == sunset.time) {
-                    continue
-                } else if (sunset.time < sunrise.time) {
-                    sortedSunMoments.add(sunset)
-                    sortedSunMoments.add(sunrise)
-                } else {
-                    sortedSunMoments.add(sunrise)
-                    sortedSunMoments.add(sunset)
-                }
-            }
-            val sun = sortedSunMoments.takeIf { it.isNotEmpty() }?.let { SunPeriod(it) }
+            val sun = createSunPeriod(data.sunrises, data.sunsets)
 
             return@withContext Forecast(
                 temperature = temperature,
@@ -128,4 +110,28 @@ class ForecastConverter {
                 condition = weatherDescription
             )
         }
+}
+
+fun createSunPeriod(
+    sunrises: List<LocalDateTime>,
+    sunsets: List<LocalDateTime>,
+): SunPeriod? {
+    val sortedSunMoments = mutableListOf<SunMoment>()
+    for (i in sunrises.indices) {
+        val sunrise = SunMoment(sunrises[i], SunEvent.Sunrise)
+        val sunset = SunMoment(sunsets[i], SunEvent.Sunset)
+        // https://github.com/davidtakac/bura/issues/97#issuecomment-3001628460
+        val isPolarNight = sunrise.time == sunset.time
+        val isPolarDay = ChronoUnit.HOURS.between(sunrise.time, sunset.time) == 24L
+        if (isPolarNight || isPolarDay) {
+            continue
+        } else if (sunset.time < sunrise.time) {
+            sortedSunMoments.add(sunset)
+            sortedSunMoments.add(sunrise)
+        } else {
+            sortedSunMoments.add(sunrise)
+            sortedSunMoments.add(sunset)
+        }
+    }
+    return sortedSunMoments.takeIf { it.isNotEmpty() }?.let { SunPeriod(it) }
 }
