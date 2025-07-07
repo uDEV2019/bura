@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.pop
 
+import java.util.Locale
 import java.util.Objects
 
 class Pop(val value: Double) : Comparable<Pop> {
@@ -22,5 +23,5 @@ class Pop(val value: Double) : Comparable<Pop> {
 
     override fun hashCode(): Int = Objects.hash(value)
 
-    override fun toString(): String = "${String.format("%.2f", value)}%"
+    override fun toString(): String = "${String.format(Locale.ROOT, "%.2f", value)}%"
 }

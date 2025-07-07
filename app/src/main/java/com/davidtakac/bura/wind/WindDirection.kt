@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.wind
 
+import java.util.Locale
 import java.util.Objects
 import kotlin.math.ceil
 
@@ -31,5 +32,5 @@ class WindDirection(degrees: Double) {
 
     override fun hashCode(): Int = Objects.hash(degrees)
 
-    override fun toString(): String = "${String.format("%.2f", degrees)}° ($compass)"
+    override fun toString(): String = "${String.format(Locale.ROOT, "%.2f", degrees)}° ($compass)"
 }

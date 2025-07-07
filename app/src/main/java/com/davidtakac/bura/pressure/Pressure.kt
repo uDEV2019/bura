@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.pressure
 
+import java.util.Locale
 import java.util.Objects
 
 class Pressure(
@@ -63,7 +64,7 @@ class Pressure(
             Unit.InchesOfMercury -> "inHg"
             Unit.MillimetersOfMercury -> "mmHg"
         }
-        return "${String.format("%.2f", value)} $suffix"
+        return "${String.format(Locale.ROOT, "%.2f", value)} $suffix"
     }
 
     enum class Unit {

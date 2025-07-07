@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.humidity
 
+import java.util.Locale
 import java.util.Objects
 
 class Humidity(val value: Double) : Comparable<Humidity> {
@@ -26,5 +27,5 @@ class Humidity(val value: Double) : Comparable<Humidity> {
 
     override fun hashCode(): Int = Objects.hash(value)
 
-    override fun toString(): String = "${String.format("%.2f", value)}%"
+    override fun toString(): String = "${String.format(Locale.ROOT, "%.2f", value)}%"
 }

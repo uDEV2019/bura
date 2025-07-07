@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.temperature
 
+import java.util.Locale
 import java.util.Objects
 
 class Temperature(
@@ -51,6 +52,6 @@ class Temperature(
             Unit.DegreesCelsius -> "°C"
             Unit.DegreesFahrenheit -> "°F"
         }
-        return "${String.format("%.2f", value)}$suffix"
+        return "${String.format(Locale.ROOT, "%.2f", value)}$suffix"
     }
 }

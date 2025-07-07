@@ -13,6 +13,7 @@
 package com.davidtakac.bura.precipitation
 
 import com.davidtakac.bura.precipitation.Precipitation.Unit
+import java.util.Locale
 import java.util.Objects
 
 sealed class Precipitation(
@@ -31,7 +32,7 @@ sealed class Precipitation(
             Unit.Centimeters -> "cm"
             Unit.Inches -> "in"
         }
-        return "${String.format("%.2f", value)} $unitStr"
+        return "${String.format(Locale.ROOT, "%.2f", value)} $unitStr"
     }
 
     override fun compareTo(other: Precipitation): Int =

@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.uvindex
 
+import java.util.Locale
 import java.util.Objects
 
 class UvIndex(val value: Int) : Comparable<UvIndex> {
@@ -38,5 +39,5 @@ class UvIndex(val value: Int) : Comparable<UvIndex> {
 
     override fun hashCode(): Int = Objects.hash(value)
 
-    override fun toString(): String = "${String.format("%.2f", value)} ($risk)"
+    override fun toString(): String = "${String.format(Locale.ROOT, "%.2f", value)} ($risk)"
 }

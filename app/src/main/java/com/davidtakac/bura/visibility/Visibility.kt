@@ -13,6 +13,7 @@
 package com.davidtakac.bura.visibility
 
 import com.davidtakac.bura.visibility.Visibility.Unit
+import java.util.Locale
 import java.util.Objects
 
 class Visibility(
@@ -83,7 +84,7 @@ class Visibility(
             Unit.Kilometers -> "km"
             Unit.Miles -> "mi"
         }
-        return "${String.format("%.2f", value)} $suffix ($description)"
+        return "${String.format(Locale.ROOT, "%.2f", value)} $suffix ($description)"
     }
 }
 

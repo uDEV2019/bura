@@ -12,6 +12,7 @@
 
 package com.davidtakac.bura.wind
 
+import java.util.Locale
 import java.util.Objects
 
 class WindSpeed(
@@ -77,6 +78,6 @@ class WindSpeed(
             Unit.MilesPerHour -> "mi/h"
             Unit.Knots -> "kn"
         }
-        return "${String.format("%.2f", value)} $suffix ($beaufort bft)"
+        return "${String.format(Locale.ROOT, "%.2f", value)} $suffix ($beaufort bft)"
     }
 }
