@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright 2024 David Takač
  *
@@ -19,16 +21,18 @@ plugins {
 
 android {
     namespace = "com.davidtakac.bura"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.davidtakac.bura"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 18
         versionName = "1.8.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // This is deprecated, but the alternative is incubating
+        @Suppress("DEPRECATION")
         resourceConfigurations.addAll(
             listOf(
                 "en",
@@ -72,14 +76,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
-        // Source: https://developer.android.com/jetpack/compose/performance/stability/fix#configuration-file
-        // Replaced project.absolutePath with rootDir.
-        freeCompilerArgs += listOf(
-            "-P",
-            "plugin:androidx.compose.compiler.plugins.kotlin:stabilityConfigurationPath=$rootDir/compose-stability-conf.txt"
-        )
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
     }
 }
 
