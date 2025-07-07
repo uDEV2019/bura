@@ -1,0 +1,6 @@
+## Improved
+- Dutch (#95)
+- Polish (#98)
+
+## Fixed
+- Crashes due to polar day (#97)
