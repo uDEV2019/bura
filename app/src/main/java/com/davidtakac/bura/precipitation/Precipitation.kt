@@ -170,9 +170,9 @@ class MixedPrecipitation(
 
 private fun millimetersTo(millimeters: Double, unit: Unit): Double =
     millimeters * when (unit) {
-        Precipitation.Unit.Millimeters -> 1.0
-        Precipitation.Unit.Centimeters -> 0.1
-        Precipitation.Unit.Inches -> (1 / 25.4)
+        Unit.Millimeters -> 1.0
+        Unit.Centimeters -> 0.1
+        Unit.Inches -> (1 / 25.4)
     }
 
 private fun toMillimeters(value: Double, unit: Unit): Double =

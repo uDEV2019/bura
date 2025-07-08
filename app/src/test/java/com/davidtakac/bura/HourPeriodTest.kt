@@ -172,6 +172,6 @@ class HourPeriodTest {
     @Test
     fun `get day returns null when no day at time`() {
         val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        assertNull(moments.getDay(LocalDate.MIN.plus(2, ChronoUnit.DAYS),))
+        assertNull(moments.getDay(LocalDate.MIN.plus(2, ChronoUnit.DAYS)))
     }
 }

@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.davidtakac.bura.R
 import com.davidtakac.bura.common.AppTheme
 import com.davidtakac.bura.sun.SunEvent
-import com.davidtakac.bura.common.rememberDateTimeFormatter
 import com.davidtakac.bura.common.rememberDateTimeHourMinuteFormatter
 import java.time.LocalDateTime
 

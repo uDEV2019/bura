@@ -233,7 +233,8 @@ private fun SummaryScreenSkeleton(modifier: Modifier = Modifier) {
     val shimmerColor = animateShimmerColorAsState()
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
     ) {
         item {
             NowSummarySkeleton(

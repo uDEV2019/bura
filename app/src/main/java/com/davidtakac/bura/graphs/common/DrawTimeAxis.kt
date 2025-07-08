@@ -73,7 +73,7 @@ fun DrawScope.drawTimeAxis(
                 )
             }
         }
-        onStepDrawn(i, x,) { percent ->
+        onStepDrawn(i, x) { percent ->
             // Flip is necessary because Canvas coordinate system is top to bottom, while real
             // world graphs are bottom to top
             val percentFromBottom = 1 - percent

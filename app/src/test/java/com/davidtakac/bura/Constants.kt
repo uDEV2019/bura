@@ -12,9 +12,6 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.units.Units
 import java.time.LocalDateTime
 
-val units = Units.Default
-val coords = GMTLocation.coordinates
 val unixEpochStart = LocalDateTime.parse("1970-01-01T00:00")
