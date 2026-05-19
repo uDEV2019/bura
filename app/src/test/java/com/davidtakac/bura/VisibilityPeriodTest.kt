@@ -33,4 +33,18 @@ class VisibilityPeriodTest {
         assertEquals(Visibility(1.0, Visibility.Unit.Meters), period.minimum)
         assertEquals(Visibility(2.0, Visibility.Unit.Meters), period.maximum)
     }
+
+    @Test
+    fun convert() {
+        val firstMoment = unixEpochStart
+        val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
+        val period = VisibilityPeriod(
+            moments = listOf(
+                VisibilityMoment(firstMoment, Visibility(1.0, Visibility.Unit.Meters)),
+                VisibilityMoment(secondMoment, Visibility(2.0, Visibility.Unit.Meters))
+            )
+        )
+        val converted = period.convertTo(Visibility.Unit.Feet)
+        assert(converted.all { it.visibility.unit == Visibility.Unit.Feet })
+    }
 }

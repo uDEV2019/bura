@@ -33,4 +33,18 @@ class TemperaturePeriodTest {
         assertEquals(Temperature(1.0, Temperature.Unit.DegreesCelsius), period.minimum)
         assertEquals(Temperature(2.0, Temperature.Unit.DegreesCelsius), period.maximum)
     }
+
+    @Test
+    fun convert() {
+        val firstMoment = unixEpochStart
+        val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
+        val period = TemperaturePeriod(
+            moments = listOf(
+                TemperatureMoment(firstMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
+                TemperatureMoment(secondMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius)),
+            )
+        )
+        val converted = period.convertTo(Temperature.Unit.DegreesFahrenheit)
+        assert(converted.all { it.temperature.unit == Temperature.Unit.DegreesFahrenheit })
+    }
 }

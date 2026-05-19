@@ -21,6 +21,7 @@ import com.davidtakac.bura.precipitation.Showers
 import com.davidtakac.bura.precipitation.Snow
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.time.temporal.ChronoUnit
 
 class PrecipitationPeriodTest {
     @Test
@@ -46,5 +47,33 @@ class PrecipitationPeriodTest {
                 unit = Precipitation.Unit.Millimeters
             ), period.total
         )
+    }
+
+    @Test
+    fun convert() {
+        val period = PrecipitationPeriod(
+            moments = listOf(
+                PrecipitationMoment(
+                    hour = unixEpochStart,
+                    precipitation = MixedPrecipitation(
+                        rain = Rain(1.0, Precipitation.Unit.Millimeters),
+                        snow = Snow.ZeroMillimeters,
+                        showers = Showers.ZeroMillimeters,
+                        unit = Precipitation.Unit.Millimeters
+                    )
+                ),
+                PrecipitationMoment(
+                    hour = unixEpochStart.plus(1, ChronoUnit.HOURS),
+                    precipitation = MixedPrecipitation(
+                        rain = Rain(1.0, Precipitation.Unit.Millimeters),
+                        snow = Snow.ZeroMillimeters,
+                        showers = Showers.ZeroMillimeters,
+                        unit = Precipitation.Unit.Millimeters
+                    )
+                )
+            )
+        )
+        val converted = period.convertTo(Precipitation.Unit.Inches)
+        assert(converted.all { it.precipitation.unit == Precipitation.Unit.Inches })
     }
 }

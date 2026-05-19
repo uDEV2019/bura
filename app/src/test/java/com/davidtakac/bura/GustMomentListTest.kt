@@ -32,4 +32,18 @@ class GustMomentListTest {
         )
         assertEquals(WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond), period.maximum)
     }
+
+    @Test
+    fun convert() {
+        val firstMoment = unixEpochStart
+        val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
+        val period = GustPeriod(
+            moments = listOf(
+                GustMoment(firstMoment, WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond)),
+                GustMoment(secondMoment, WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond))
+            )
+        )
+        val converted = period.convertTo(WindSpeed.Unit.KilometersPerHour)
+        assert(converted.all { it.speed.unit == WindSpeed.Unit.KilometersPerHour })
+    }
 }

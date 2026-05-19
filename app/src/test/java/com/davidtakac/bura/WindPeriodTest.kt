@@ -41,4 +41,24 @@ class WindPeriodTest {
         assertEquals(WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond), period.minimumSpeed)
         assertEquals(WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond), period.maximumSpeed)
     }
+
+    @Test
+    fun convert() {
+        val firstMoment = unixEpochStart
+        val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
+        val period = WindPeriod(
+            moments = listOf(
+                WindMoment(
+                    firstMoment,
+                    Wind(WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond), WindDirection(0.0))
+                ),
+                WindMoment(
+                    secondMoment,
+                    Wind(WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond), WindDirection(0.0))
+                ),
+            )
+        )
+        val converted = period.convertTo(WindSpeed.Unit.Knots)
+        assert(converted.all { it.wind.speed.unit == WindSpeed.Unit.Knots })
+    }
 }

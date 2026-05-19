@@ -62,7 +62,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 
-suspend fun convertCacheJsonToForecast(json: JSONObject): Forecast =
+suspend fun convertDownloadJsonToForecast(json: JSONObject): Forecast =
     withContext(Dispatchers.Default) {
         val hourly = json.getJSONObject("hourly")
         // Open-Meteo sometimes returns only the first hour of the last day. The app expects

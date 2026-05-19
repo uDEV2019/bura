@@ -45,4 +45,18 @@ class PressurePeriodTest {
         )
         assertEquals(Pressure(1005.0, Pressure.Unit.Hectopascal), period.average)
     }
+
+    @Test
+    fun convert() {
+        val firstMoment = unixEpochStart
+        val secondMoment = firstMoment.plus(1, ChronoUnit.HOURS)
+        val period = PressurePeriod(
+            moments = listOf(
+                PressureMoment(firstMoment, Pressure(1000.0, Pressure.Unit.Hectopascal)),
+                PressureMoment(secondMoment, Pressure(1010.0, Pressure.Unit.Hectopascal))
+            )
+        )
+        val converted = period.convertTo(Pressure.Unit.InchesOfMercury)
+        assert(converted.all { it.pressure.unit == Pressure.Unit.InchesOfMercury })
+    }
 }

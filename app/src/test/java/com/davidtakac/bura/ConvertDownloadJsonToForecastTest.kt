@@ -19,7 +19,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime
 
-class ForecastConverterTest {
+class ConvertDownloadJsonToForecastTest {
     @Test
     fun `constructs sun period from regular data`() {
         val sunrises = listOf(LocalDateTime.parse("2025-01-01T08:00:00"), LocalDateTime.parse("2025-01-02T08:00:00"))

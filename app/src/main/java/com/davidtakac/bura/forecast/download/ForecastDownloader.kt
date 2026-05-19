@@ -26,7 +26,7 @@ import javax.net.ssl.HttpsURLConnection
 class ForecastDownloader(private val userAgent: String) {
     suspend fun get(coords: Coordinates): Forecast? =
         downloadForecastJson(coords)?.let {
-            convertCacheJsonToForecast(it)
+            convertDownloadJsonToForecast(it)
         }
 
     private suspend fun downloadForecastJson(coords: Coordinates): JSONObject? =
