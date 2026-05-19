@@ -18,4 +18,10 @@ class WindPeriod(moments: List<WindMoment>) : HourPeriod<WindMoment>(moments) {
     val minimumSpeed get() = minOf { it.wind.speed }
 
     val maximumSpeed get() = maxOf { it.wind.speed }
+
+    fun convertTo(unit: WindSpeed.Unit): WindPeriod {
+        if (first().wind.speed.unit == unit) return this
+        val convertedMoments = map { WindMoment(it.hour, Wind(it.wind.speed.convertTo(unit), it.wind.from)) }
+        return WindPeriod(convertedMoments)
+    }
 }

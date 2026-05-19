@@ -18,12 +18,31 @@ import org.json.JSONObject
 fun <T : Any> Collection<T>.mapToJSONArray(transform: (T) -> Any = { it }) =
     JSONArray(map(transform))
 
-fun <T> JSONArray.mapToList(transform: (String) -> T): List<T> {
+fun <T> JSONArray.mapJSONObjects(transform: (JSONObject) -> T): List<T> =
+    mapInternal(transform, argProducer = ::getJSONObject)
+
+fun <T> JSONArray.mapStrings(transform: (String) -> T): List<T> =
+    mapInternal(transform, argProducer = ::getString)
+
+fun <T> JSONArray.mapDoubles(transform: (Double) -> T): List<T> =
+    mapInternal(transform, argProducer = ::getDouble)
+
+fun <T> JSONArray.mapInts(transform: (Int) -> T): List<T> =
+    mapInternal(transform, argProducer = ::getInt)
+
+private fun <T, U> JSONArray.mapInternal(
+    transform: (U) -> T,
+    argProducer: (Int) -> U,
+): List<T> {
     val result = mutableListOf<T>()
     for (i in 0 until length()) {
-        result.add(transform(get(i).toString()))
+        result.add(transform(argProducer(i)))
     }
     return result
 }
 
-fun JSONObject.getStringOrNull(name: String): String? = if (isNull(name)) null else getString(name)
+fun JSONObject.getStringOrNull(name: String): String? =
+    if (isNull(name)) null else getString(name)
+
+fun JSONObject.getJSONArrayOrNull(name: String): JSONArray? =
+    if (isNull(name)) null else getJSONArray(name)

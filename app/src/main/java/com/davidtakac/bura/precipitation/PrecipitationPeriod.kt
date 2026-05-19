@@ -28,4 +28,10 @@ class PrecipitationPeriod(moments: List<PrecipitationMoment>) : HourPeriod<Preci
 
     override fun daysFrom(dayInclusive: LocalDate, takeDays: Int?) =
         super.daysFrom(dayInclusive, takeDays)?.map { PrecipitationPeriod(it) }
+
+    fun convertTo(unit: Precipitation.Unit): PrecipitationPeriod {
+        if (first().precipitation.unit == unit) return this
+        val convertedMoments = map { PrecipitationMoment(it.hour, it.precipitation.convertTo(unit)) }
+        return PrecipitationPeriod(convertedMoments)
+    }
 }

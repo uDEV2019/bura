@@ -12,15 +12,15 @@
 
 package com.davidtakac.bura.place.saved
 
-import com.davidtakac.bura.forecast.ForecastDataCacher
+import com.davidtakac.bura.forecast.cache.ForecastCacher
 import com.davidtakac.bura.place.Place
 
 class DeletePlace(
     private val savedPlacesRepository: SavedPlacesRepository,
-    private val forecastDataCacher: ForecastDataCacher
+    private val forecastCacher: ForecastCacher
 ) {
     suspend operator fun invoke(place: Place) {
         savedPlacesRepository.deletePlace(place)
-        forecastDataCacher.delete(place.location.coordinates)
+        forecastCacher.delete(place.location.coordinates)
     }
 }

@@ -12,6 +12,8 @@
 
 package com.davidtakac.bura.forecast
 
+import com.davidtakac.bura.forecast.cache.ForecastCacher
+import com.davidtakac.bura.forecast.download.ForecastDownloader
 import com.davidtakac.bura.place.Coordinates
 import com.davidtakac.bura.units.Units
 import kotlinx.coroutines.sync.Mutex
@@ -20,39 +22,40 @@ import java.time.Duration
 import java.time.Instant
 
 class ForecastRepository(
-    private val cacher: ForecastDataCacher,
-    private val downloader: ForecastDataDownloader,
-    private val converter: ForecastConverter
+    private val cacher: ForecastCacher,
+    private val downloader: ForecastDownloader
 ) {
     private val coordsToMutex = mutableMapOf<Coordinates, Mutex>()
 
-    suspend fun forecast(
+    suspend fun get(
         coords: Coordinates,
         units: Units,
         updatePolicy: UpdatePolicy = UpdatePolicy.Eager
-    ): Forecast? {
-        var data: ForecastData?
+    ): Forecast? =
         coordsToMutex.getOrPut(coords, defaultValue = { Mutex() }).withLock {
             val cached = cacher.get(coords)
-            data = if (shouldUpdate(cached, updatePolicy)) {
-                val newData = downloader.downloadForecast(coords)
-                if (newData == null) cached else {
-                    cacher.save(coords, newData)
-                    newData
+            if (cached == null || shouldUpdate(cached.timestamp, updatePolicy)) {
+                val downloaded = downloader.get(coords)
+                if (downloaded == null) {
+                    cached
+                } else {
+                    cacher.save(coords, downloaded)
+                    downloaded
                 }
             } else {
                 cached
             }
-        }
-        return data?.let { converter.fromData(it, units) }
-    }
+        }?.convertTo(units)
 
-    private fun shouldUpdate(data: ForecastData?, updatePolicy: UpdatePolicy): Boolean =
-        if (updatePolicy == UpdatePolicy.Static) false
-        else data == null || Duration.between(
-            data.timestamp,
-            Instant.now()
-        ) >= Duration.ofHours(if (updatePolicy == UpdatePolicy.Eager) 1 else 6)
+    private fun shouldUpdate(timestamp: Instant, updatePolicy: UpdatePolicy): Boolean =
+        if (updatePolicy == UpdatePolicy.Static) {
+            false
+        } else {
+            Duration.between(
+                timestamp,
+                Instant.now()
+            ) >= Duration.ofHours(if (updatePolicy == UpdatePolicy.Eager) 1 else 6)
+        }
 }
 
 enum class UpdatePolicy {

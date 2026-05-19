@@ -14,11 +14,14 @@ package com.davidtakac.bura.common
 
 import android.content.Context
 
-class UserAgentProvider(private val context: Context) {
-    val userAgent: String get() {
-        val packageName = context.packageName
-        val appVersion = context.packageManager.getPackageInfo(packageName, 0).versionName
-        val source = "https://github.com/davidtakac/bura"
-        return "Bura/$packageName/$appVersion ($source)"
-    }
-}
+fun getPackageName(context: Context): String =
+    context.packageName
+
+fun getAppVersionName(context: Context): String =
+    context.packageManager.getPackageInfo(
+        getPackageName(context),
+        0
+    ).versionName!!
+
+fun getUserAgent(context: Context): String =
+    "Bura/${getPackageName(context)}/${getAppVersionName(context)} (https://github.com/davidtakac/bura)"

@@ -22,9 +22,12 @@ import com.davidtakac.bura.temperature.TemperaturePeriod
 import com.davidtakac.bura.uvindex.UvIndexPeriod
 import com.davidtakac.bura.visibility.VisibilityPeriod
 import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.units.Units
 import com.davidtakac.bura.wind.WindPeriod
+import java.time.Instant
 
-data class Forecast(
+class Forecast(
+    val timestamp: Instant,
     val temperature: TemperaturePeriod,
     val feelsLike: TemperaturePeriod,
     val dewPoint: TemperaturePeriod,
@@ -55,4 +58,22 @@ data class Forecast(
             condition
         )
     }
+
+    fun convertTo(units: Units): Forecast =
+        Forecast(
+            temperature = temperature.convertTo(units.temperature),
+            feelsLike = feelsLike.convertTo(units.temperature),
+            dewPoint = dewPoint.convertTo(units.temperature),
+            precipitation = precipitation.convertTo(units.precipitation),
+            wind = wind.convertTo(units.windSpeed),
+            gust = gust.convertTo(units.windSpeed),
+            pressure = pressure.convertTo(units.pressure),
+            visibility = visibility.convertTo(units.visibility),
+            timestamp = timestamp,
+            sun = sun,
+            pop = pop,
+            uvIndex = uvIndex,
+            humidity = humidity,
+            condition = condition,
+        )
 }

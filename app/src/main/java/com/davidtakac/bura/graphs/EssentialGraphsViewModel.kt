@@ -58,7 +58,7 @@ class EssentialGraphsViewModel(
         val coords = location.coordinates
         val units = unitsRepo.getSelectedUnits()
         val now = Instant.now().atZone(location.timeZone).toLocalDateTime()
-        val forecast = forecastRepo.forecast(coords, units) ?: return EssentialGraphsState.FailedToDownload
+        val forecast = forecastRepo.get(coords, units) ?: return EssentialGraphsState.FailedToDownload
 
         val tempGraphSummaries = getTemperatureGraphSummaries(now, tempPeriod = forecast.temperature, feelsPeriod = forecast.feelsLike, forecast.condition)
         when (tempGraphSummaries) {

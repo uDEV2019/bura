@@ -13,7 +13,14 @@
 package com.davidtakac.bura.gust
 
 import com.davidtakac.bura.forecast.HourPeriod
+import com.davidtakac.bura.wind.WindSpeed
 
 class GustPeriod(moments: List<GustMoment>) : HourPeriod<GustMoment>(moments) {
     val maximum get() = maxOf { it.speed }
+
+    fun convertTo(unit: WindSpeed.Unit): GustPeriod {
+        if (first().speed.unit == unit) return this
+        val convertedMoments = map { GustMoment(it.hour, it.speed.convertTo(unit)) }
+        return GustPeriod(convertedMoments)
+    }
 }

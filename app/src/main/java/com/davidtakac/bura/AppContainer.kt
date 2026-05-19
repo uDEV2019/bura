@@ -14,10 +14,10 @@ package com.davidtakac.bura
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.davidtakac.bura.common.UserAgentProvider
-import com.davidtakac.bura.forecast.ForecastConverter
-import com.davidtakac.bura.forecast.ForecastDataCacher
-import com.davidtakac.bura.forecast.ForecastDataDownloader
+import com.davidtakac.bura.common.getUserAgent
+import com.davidtakac.bura.common.getAppVersionName
+import com.davidtakac.bura.forecast.cache.ForecastCacher
+import com.davidtakac.bura.forecast.download.ForecastDownloader
 import com.davidtakac.bura.forecast.ForecastRepository
 import com.davidtakac.bura.place.saved.DeletePlace
 import com.davidtakac.bura.place.saved.GetSavedPlaces
@@ -30,14 +30,18 @@ import com.davidtakac.bura.units.SelectedUnitsRepository
 class AppContainer(private val appContext: Context) {
     val prefs: SharedPreferences get() = appContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)
     private val root get() = appContext.filesDir
-    private val userAgentProvider get() = UserAgentProvider(appContext)
+    private val userAgent: String get() = getUserAgent(appContext)
 
-    private val forecastCacher by lazy { ForecastDataCacher(root) }
+    private val forecastCacher by lazy {
+        ForecastCacher(
+            root = root,
+            appVersionName = getAppVersionName(appContext),
+        )
+    }
     val forecastRepo by lazy {
         ForecastRepository(
             cacher = forecastCacher,
-            downloader = ForecastDataDownloader(userAgentProvider),
-            converter = ForecastConverter()
+            downloader = ForecastDownloader(userAgent)
         )
     }
 
@@ -46,7 +50,7 @@ class AppContainer(private val appContext: Context) {
 
     private val savedPlacesRepo by lazy { SavedPlacesRepository(root) }
     val getSavedPlaces get() = GetSavedPlaces(selectedUnitsRepo, selectedPlaceRepo, savedPlacesRepo, forecastRepo)
-    val searchPlaces get() = SearchPlaces(userAgentProvider)
+    val searchPlaces get() = SearchPlaces(userAgent)
     val selectPlace get() = SelectPlace(selectedPlaceRepo, savedPlacesRepo)
     val deletePlace get() = DeletePlace(savedPlacesRepo, forecastCacher)
 }

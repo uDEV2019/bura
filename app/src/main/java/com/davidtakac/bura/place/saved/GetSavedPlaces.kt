@@ -32,7 +32,7 @@ class GetSavedPlaces(
         val selectedUnits = selectedUnitsRepo.getSelectedUnits()
         val selectedPlace = selectedPlaceRepo.getSelectedPlace()
         return savedPlacesRepo.getSavedPlaces().map { place ->
-            val forecast = forecastRepo.forecast(
+            val forecast = forecastRepo.get(
                 coords = place.location.coordinates,
                 units = selectedUnits,
                 updatePolicy = UpdatePolicy.Static

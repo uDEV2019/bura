@@ -13,56 +13,54 @@
 package com.davidtakac.bura
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
+import androidx.navigation.navArgument
 import com.davidtakac.bura.common.Theme
 import com.davidtakac.bura.graphs.EssentialGraphsDestination
 import com.davidtakac.bura.settings.SettingsDestination
 import com.davidtakac.bura.summary.SummaryDestination
-import kotlinx.serialization.Serializable
 import java.time.LocalDate
-
-sealed interface AppRoutes {
-    @Serializable
-    data object Summary : AppRoutes
-
-    @Serializable
-    data class EssentialGraphs(val initialDay: String? = null) : AppRoutes
-
-    @Serializable
-    data object Settings : AppRoutes
-}
 
 @Composable
 fun AppNavHost(theme: Theme, onThemeClick: (Theme) -> Unit) {
     val controller = rememberNavController()
-    NavHost(navController = controller, startDestination = AppRoutes.Summary) {
-        composable<AppRoutes.Summary> {
+    NavHost(navController = controller, startDestination = "summary") {
+        composable("summary") {
             SummaryDestination(
                 onHourlySectionClick = {
-                    controller.navigate(AppRoutes.EssentialGraphs())
+                    controller.navigate("essential-graphs")
                 },
                 onDayClick = {
-                    controller.navigate(AppRoutes.EssentialGraphs(initialDay = it.toString()))
+                    controller.navigate("essential-graphs?initialDay=$it")
                 },
                 onSettingsButtonClick = {
-                    controller.navigate(AppRoutes.Settings)
+                    controller.navigate("settings")
                 },
                 onPrecipitationClick = {
-                    controller.navigate(AppRoutes.EssentialGraphs())
+                    controller.navigate("essential-graphs")
                 }
             )
         }
-        composable<AppRoutes.EssentialGraphs> { backStackEntry ->
+        composable(
+            route = "essential-graphs?initialDay={initialDay}",
+            arguments = listOf(
+                navArgument("initialDay") {
+                    nullable = true
+                    defaultValue = null
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
             EssentialGraphsDestination(
-                initialDay = backStackEntry.toRoute<AppRoutes.EssentialGraphs>().initialDay?.let(LocalDate::parse),
+                initialDay = backStackEntry.arguments?.getString("initialDay")?.let(LocalDate::parse),
                 onSelectPlaceClick = controller::navigateUp,
                 onBackClick = controller::navigateUp
             )
         }
-        composable<AppRoutes.Settings> {
+        composable("settings") {
             SettingsDestination(
                 theme = theme,
                 onThemeClick = onThemeClick,

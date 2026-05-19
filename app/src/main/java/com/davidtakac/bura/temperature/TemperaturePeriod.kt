@@ -29,4 +29,10 @@ class TemperaturePeriod(moments: List<TemperatureMoment>) : HourPeriod<Temperatu
 
     override fun daysFrom(dayInclusive: LocalDate, takeDays: Int?) =
         super.daysFrom(dayInclusive, takeDays)?.map { TemperaturePeriod(it) }
+
+    fun convertTo(unit: Temperature.Unit): TemperaturePeriod {
+        if (first().temperature.unit == unit) return this
+        val convertedMoments = map { TemperatureMoment(it.hour, it.temperature.convertTo(unit)) }
+        return TemperaturePeriod(convertedMoments)
+    }
 }

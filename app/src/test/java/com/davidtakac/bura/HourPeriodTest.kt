@@ -14,6 +14,7 @@ package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.HourMoment
 import com.davidtakac.bura.forecast.HourPeriod
+import com.davidtakac.bura.forecast.requireMatching
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -59,21 +60,20 @@ class HourPeriodTest {
     @Test
     fun `two periods do not match if their times do not match`() {
         val first = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        val second =
-            HourPeriod(listOf(HourMoment(unixEpochStart.plus(1, ChronoUnit.HOURS))))
+        val second = HourPeriod(listOf(HourMoment(unixEpochStart.plus(1, ChronoUnit.HOURS))))
         assertFalse(first.matches(second))
     }
 
     @Test
     fun `until returns moments ending with hour exclusive`() {
-        val moments = HourPeriod(
+        val period = HourPeriod(
             listOf(
                 HourMoment(unixEpochStart),
                 HourMoment(unixEpochStart.plus(1, ChronoUnit.HOURS)),
                 HourMoment(unixEpochStart.plus(2, ChronoUnit.HOURS))
             )
         )
-        val until = moments.momentsUntil(
+        val until = period.momentsUntil(
             hourExclusive = unixEpochStart
                 .plus(2, ChronoUnit.HOURS)
                 .plus(10, ChronoUnit.MINUTES),
@@ -85,8 +85,8 @@ class HourPeriodTest {
 
     @Test
     fun `until returns moments ending with hour exclusive when it is an hour after last moment`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        val until = moments.momentsUntil(
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        val until = period.momentsUntil(
             unixEpochStart
                 .plus(1, ChronoUnit.HOURS)
                 .plus(10, ChronoUnit.MINUTES)
@@ -96,8 +96,8 @@ class HourPeriodTest {
 
     @Test
     fun `until is null when no hour directly before hour exclusive`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        val until = moments.momentsUntil(
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        val until = period.momentsUntil(
             unixEpochStart
                 .plus(2, ChronoUnit.HOURS)
                 .plus(10, ChronoUnit.MINUTES)
@@ -107,29 +107,29 @@ class HourPeriodTest {
 
     @Test
     fun `gets moment at hour`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart)))
         assertEquals(
             unixEpochStart,
-            moments[unixEpochStart]?.hour
+            period[unixEpochStart]?.hour
         )
     }
 
     @Test
     fun `moment at hour is null when no such moment`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        assertNull(moments[unixEpochStart.plus(1, ChronoUnit.HOURS)])
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        assertNull(period[unixEpochStart.plus(1, ChronoUnit.HOURS)])
     }
 
     @Test
     fun `from returns moments starting with hour inclusive`() {
-        val moments = HourPeriod(
+        val period = HourPeriod(
             listOf(
                 HourMoment(unixEpochStart),
                 HourMoment(unixEpochStart.plus(1, ChronoUnit.HOURS)),
                 HourMoment(unixEpochStart.plus(2, ChronoUnit.HOURS))
             )
         )
-        val from = moments.momentsFrom(
+        val from = period.momentsFrom(
             hourInclusive = unixEpochStart.plus(10, ChronoUnit.MINUTES),
             takeMoments = 2
         )
@@ -139,39 +139,53 @@ class HourPeriodTest {
 
     @Test
     fun `from returns null when no moment with hour inclusive`() {
-        val moments =
+        val period =
             HourPeriod(listOf(HourMoment(unixEpochStart.plus(1, ChronoUnit.HOURS))))
-        val from = moments.momentsFrom(unixEpochStart.plus(10, ChronoUnit.MINUTES))
+        val from = period.momentsFrom(unixEpochStart.plus(10, ChronoUnit.MINUTES))
         assertNull(from)
     }
 
     @Test
     fun `days from returns days starting at day inclusive`() {
-        val moments = HourPeriod(
+        val period = HourPeriod(
             listOf(
                 HourMoment(unixEpochStart.plus(0, ChronoUnit.DAYS).plus(23, ChronoUnit.HOURS)),
                 HourMoment(unixEpochStart.plus(1, ChronoUnit.DAYS))
             )
         )
-        val days = moments.daysFrom(dayInclusive = unixEpochStart.toLocalDate(), takeDays = 1)
+        val days = period.daysFrom(dayInclusive = unixEpochStart.toLocalDate(), takeDays = 1)
         assertEquals(1, days?.size)
     }
 
     @Test
     fun `days from returns null when no moment with day inclusive`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart.plus(1, ChronoUnit.DAYS))))
-        assertNull(moments.daysFrom(LocalDate.MIN))
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart.plus(1, ChronoUnit.DAYS))))
+        assertNull(period.daysFrom(LocalDate.MIN))
     }
 
     @Test
     fun `gets day at time`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        assertNotNull(moments.getDay(unixEpochStart.toLocalDate()))
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        assertNotNull(period.getDay(unixEpochStart.toLocalDate()))
     }
 
     @Test
     fun `get day returns null when no day at time`() {
-        val moments = HourPeriod(listOf(HourMoment(unixEpochStart)))
-        assertNull(moments.getDay(LocalDate.MIN.plus(2, ChronoUnit.DAYS)))
+        val period = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        assertNull(period.getDay(LocalDate.MIN.plus(2, ChronoUnit.DAYS)))
+    }
+    
+    @Test
+    fun `require matching just runs on matching data`() {
+        val first = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        val second = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        requireMatching(first, second)
+    }
+
+    @Test(expected = Throwable::class)
+    fun `require matching throws on mismatched data`() {
+        val first = HourPeriod(listOf(HourMoment(unixEpochStart)))
+        val second = HourPeriod(listOf(HourMoment(unixEpochStart.plus(1, ChronoUnit.HOURS))))
+        requireMatching(first, second)
     }
 }

@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.place.search
 
-import com.davidtakac.bura.common.UserAgentProvider
 import com.davidtakac.bura.place.Coordinates
 import com.davidtakac.bura.place.Location
 import com.davidtakac.bura.place.Place
@@ -25,7 +24,7 @@ import java.net.URL
 import java.time.ZoneId
 import javax.net.ssl.HttpsURLConnection
 
-class SearchPlaces(private val userAgentProvider: UserAgentProvider) {
+class SearchPlaces(private val userAgent: String) {
     suspend operator fun invoke(query: String, languageCode: String): List<Place>? {
         val jsonString = downloadPlacesJson(query, languageCode) ?: return null
         val json = JSONObject(jsonString)
@@ -74,7 +73,7 @@ class SearchPlaces(private val userAgentProvider: UserAgentProvider) {
             conn.requestMethod = "GET"
             conn.connectTimeout = 10_000
             conn.readTimeout = 10_000
-            conn.setRequestProperty("User-Agent", userAgentProvider.userAgent)
+            conn.setRequestProperty("User-Agent", userAgent)
             if (conn.responseCode != 200) return@withContext null
             BufferedReader(InputStreamReader(conn.inputStream)).use(BufferedReader::readText)
         } catch (_: Exception) {

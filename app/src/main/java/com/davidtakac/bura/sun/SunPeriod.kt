@@ -15,7 +15,7 @@ package com.davidtakac.bura.sun
 import java.time.Duration
 import java.time.LocalDateTime
 
-class SunPeriod(val moments: List<SunMoment>) {
+class SunPeriod(val moments: List<SunMoment>): List<SunMoment> by moments {
     init {
         requireNotEmpty()
         requireAscending()

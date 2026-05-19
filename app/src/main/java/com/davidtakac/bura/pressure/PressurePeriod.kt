@@ -26,4 +26,10 @@ class PressurePeriod(moments: List<PressureMoment>) : HourPeriod<PressureMoment>
 
     override fun getDay(day: LocalDate): PressurePeriod? =
         super.getDay(day)?.let { PressurePeriod(it) }
+
+    fun convertTo(unit: Pressure.Unit): PressurePeriod {
+        if (first().pressure.unit == unit) return this
+        val convertedMoments = map { PressureMoment(it.hour, it.pressure.convertTo(unit)) }
+        return PressurePeriod(convertedMoments)
+    }
 }

@@ -10,18 +10,6 @@
  * You should have received a copy of the GNU General Public License along with Bura. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.davidtakac.bura.visibility
+package com.davidtakac.bura.forecast.cache
 
-import com.davidtakac.bura.forecast.HourPeriod
-
-class VisibilityPeriod(moments: List<VisibilityMoment>) : HourPeriod<VisibilityMoment>(moments) {
-    val minimum get() = minOf { it.visibility }
-
-    val maximum get() = maxOf { it.visibility }
-
-    fun convertTo(unit: Visibility.Unit): VisibilityPeriod {
-        if (first().visibility.unit == unit) return this
-        val convertedMoments = map { VisibilityMoment(it.hour, it.visibility.convertTo(unit)) }
-        return VisibilityPeriod(convertedMoments)
-    }
-}
+class InvalidCacheJsonException : Exception()
