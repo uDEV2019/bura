@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.pop.Pop
-import com.davidtakac.bura.pop.PopMoment
-import com.davidtakac.bura.pop.PopPeriod
+import com.davidtakac.bura.forecast.parameters.pop.Pop
+import com.davidtakac.bura.forecast.parameters.pop.PopMoment
+import com.davidtakac.bura.forecast.parameters.pop.PopPeriod
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

@@ -12,16 +12,16 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionMoment
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.summary.sun.Sunrise
 import com.davidtakac.bura.summary.sun.Sunset
 import com.davidtakac.bura.summary.sun.getSunSummary
-import com.davidtakac.bura.sun.SunEvent
-import com.davidtakac.bura.sun.SunMoment
-import com.davidtakac.bura.sun.SunPeriod
+import com.davidtakac.bura.forecast.parameters.sun.SunEvent
+import com.davidtakac.bura.forecast.parameters.sun.SunMoment
+import com.davidtakac.bura.forecast.parameters.sun.SunPeriod
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

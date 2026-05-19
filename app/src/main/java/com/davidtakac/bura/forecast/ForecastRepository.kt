@@ -14,8 +14,8 @@ package com.davidtakac.bura.forecast
 
 import com.davidtakac.bura.forecast.cache.ForecastCacher
 import com.davidtakac.bura.forecast.download.ForecastDownloader
-import com.davidtakac.bura.place.Coordinates
-import com.davidtakac.bura.units.Units
+import com.davidtakac.bura.places.Coordinates
+import com.davidtakac.bura.forecast.units.Units
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.Duration

@@ -24,10 +24,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.davidtakac.bura.common.AppIcons
-import com.davidtakac.bura.common.AppTheme
-import com.davidtakac.bura.common.rememberDateTimeHourFormatter
-import com.davidtakac.bura.common.rememberNumberFormat
+import com.davidtakac.bura.theme.AppIcons
+import com.davidtakac.bura.theme.AppTheme
+import com.davidtakac.bura.common.compose.rememberDateTimeHourFormatter
+import com.davidtakac.bura.common.compose.rememberNumberFormat
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 

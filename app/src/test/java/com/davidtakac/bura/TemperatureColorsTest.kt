@@ -12,8 +12,8 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.common.AppColors
-import com.davidtakac.bura.temperature.Temperature
+import com.davidtakac.bura.theme.AppColors
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import org.junit.Test
 
 class TemperatureColorsTest {

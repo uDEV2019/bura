@@ -13,8 +13,8 @@
 package com.davidtakac.bura.summary.feelslike
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import java.time.LocalDateTime
 import kotlin.math.absoluteValue
 

@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionMoment
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test

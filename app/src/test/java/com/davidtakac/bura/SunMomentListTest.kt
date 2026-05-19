@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.sun.SunEvent
-import com.davidtakac.bura.sun.SunMoment
-import com.davidtakac.bura.sun.SunPeriod
+import com.davidtakac.bura.forecast.parameters.sun.SunEvent
+import com.davidtakac.bura.forecast.parameters.sun.SunMoment
+import com.davidtakac.bura.forecast.parameters.sun.SunPeriod
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

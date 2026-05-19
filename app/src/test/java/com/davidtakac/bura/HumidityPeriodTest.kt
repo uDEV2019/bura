@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.humidity.Humidity
-import com.davidtakac.bura.humidity.HumidityMoment
-import com.davidtakac.bura.humidity.HumidityPeriod
+import com.davidtakac.bura.forecast.parameters.humidity.Humidity
+import com.davidtakac.bura.forecast.parameters.humidity.HumidityMoment
+import com.davidtakac.bura.forecast.parameters.humidity.HumidityPeriod
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

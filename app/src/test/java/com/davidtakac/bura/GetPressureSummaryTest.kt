@@ -13,9 +13,9 @@
 package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.pressure.Pressure
-import com.davidtakac.bura.pressure.PressureMoment
-import com.davidtakac.bura.pressure.PressurePeriod
+import com.davidtakac.bura.forecast.parameters.pressure.Pressure
+import com.davidtakac.bura.forecast.parameters.pressure.PressureMoment
+import com.davidtakac.bura.forecast.parameters.pressure.PressurePeriod
 import com.davidtakac.bura.summary.pressure.PressureSummary
 import com.davidtakac.bura.summary.pressure.PressureTrend
 import com.davidtakac.bura.summary.pressure.getPressureSummary

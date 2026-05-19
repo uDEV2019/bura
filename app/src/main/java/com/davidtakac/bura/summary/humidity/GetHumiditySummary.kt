@@ -12,11 +12,11 @@
 
 package com.davidtakac.bura.summary.humidity
 
-import com.davidtakac.bura.humidity.Humidity
+import com.davidtakac.bura.forecast.parameters.humidity.Humidity
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.humidity.HumidityPeriod
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.humidity.HumidityPeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import java.time.LocalDateTime
 
 fun getHumiditySummary(

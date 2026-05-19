@@ -13,8 +13,8 @@
 package com.davidtakac.bura.summary.uvindex
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.uvindex.UvIndex
-import com.davidtakac.bura.uvindex.UvIndexPeriod
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndex
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndexPeriod
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit

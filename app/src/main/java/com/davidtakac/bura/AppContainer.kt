@@ -14,18 +14,18 @@ package com.davidtakac.bura
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.davidtakac.bura.common.getUserAgent
-import com.davidtakac.bura.common.getAppVersionName
+import com.davidtakac.bura.common.util.getUserAgent
+import com.davidtakac.bura.common.util.getAppVersionName
 import com.davidtakac.bura.forecast.cache.ForecastCacher
 import com.davidtakac.bura.forecast.download.ForecastDownloader
 import com.davidtakac.bura.forecast.ForecastRepository
-import com.davidtakac.bura.place.saved.DeletePlace
-import com.davidtakac.bura.place.saved.GetSavedPlaces
-import com.davidtakac.bura.place.saved.SavedPlacesRepository
-import com.davidtakac.bura.place.search.SearchPlaces
-import com.davidtakac.bura.place.selected.SelectedPlaceRepository
-import com.davidtakac.bura.place.selected.SelectPlace
-import com.davidtakac.bura.units.SelectedUnitsRepository
+import com.davidtakac.bura.places.saved.DeletePlace
+import com.davidtakac.bura.places.saved.GetSavedPlaces
+import com.davidtakac.bura.places.saved.SavedPlacesRepository
+import com.davidtakac.bura.places.search.SearchPlaces
+import com.davidtakac.bura.places.selected.SelectedPlaceRepository
+import com.davidtakac.bura.places.selected.SelectPlace
+import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
 
 class AppContainer(private val appContext: Context) {
     val prefs: SharedPreferences get() = appContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)

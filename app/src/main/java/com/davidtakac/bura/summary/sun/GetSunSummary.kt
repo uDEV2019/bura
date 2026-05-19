@@ -12,11 +12,11 @@
 
 package com.davidtakac.bura.summary.sun
 
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.sun.SunEvent
-import com.davidtakac.bura.sun.SunMoment
-import com.davidtakac.bura.sun.SunPeriod
+import com.davidtakac.bura.forecast.parameters.sun.SunEvent
+import com.davidtakac.bura.forecast.parameters.sun.SunMoment
+import com.davidtakac.bura.forecast.parameters.sun.SunPeriod
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime

@@ -12,11 +12,11 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.wind.Wind
-import com.davidtakac.bura.wind.WindDirection
-import com.davidtakac.bura.wind.WindMoment
-import com.davidtakac.bura.wind.WindPeriod
-import com.davidtakac.bura.wind.WindSpeed
+import com.davidtakac.bura.forecast.parameters.wind.Wind
+import com.davidtakac.bura.forecast.parameters.wind.WindDirection
+import com.davidtakac.bura.forecast.parameters.wind.WindMoment
+import com.davidtakac.bura.forecast.parameters.wind.WindPeriod
+import com.davidtakac.bura.forecast.parameters.wind.WindSpeed
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

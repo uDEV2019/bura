@@ -13,15 +13,15 @@
 package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.gust.GustMoment
-import com.davidtakac.bura.gust.GustPeriod
-import com.davidtakac.bura.summary.wind.WindSummary
+import com.davidtakac.bura.forecast.parameters.gust.GustMoment
+import com.davidtakac.bura.forecast.parameters.gust.GustPeriod
 import com.davidtakac.bura.summary.wind.getWindSummary
-import com.davidtakac.bura.wind.Wind
-import com.davidtakac.bura.wind.WindDirection
-import com.davidtakac.bura.wind.WindMoment
-import com.davidtakac.bura.wind.WindPeriod
-import com.davidtakac.bura.wind.WindSpeed
+import com.davidtakac.bura.forecast.parameters.wind.Wind
+import com.davidtakac.bura.forecast.parameters.wind.WindDirection
+import com.davidtakac.bura.forecast.parameters.wind.WindMoment
+import com.davidtakac.bura.forecast.parameters.wind.WindPeriod
+import com.davidtakac.bura.forecast.parameters.wind.WindSpeed
+import com.davidtakac.bura.summary.wind.WindSummary
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

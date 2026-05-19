@@ -13,14 +13,14 @@
 package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.humidity.Humidity
-import com.davidtakac.bura.humidity.HumidityMoment
-import com.davidtakac.bura.humidity.HumidityPeriod
-import com.davidtakac.bura.summary.humidity.HumiditySummary
+import com.davidtakac.bura.forecast.parameters.humidity.Humidity
+import com.davidtakac.bura.forecast.parameters.humidity.HumidityMoment
+import com.davidtakac.bura.forecast.parameters.humidity.HumidityPeriod
 import com.davidtakac.bura.summary.humidity.getHumiditySummary
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
+import com.davidtakac.bura.summary.humidity.HumiditySummary
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

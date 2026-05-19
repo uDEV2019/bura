@@ -13,12 +13,12 @@
 package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.summary.feelslike.FeelsLikeSummary
 import com.davidtakac.bura.summary.feelslike.FeelsVsActual
 import com.davidtakac.bura.summary.feelslike.getFeelsLikeSummary
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
+import com.davidtakac.bura.summary.feelslike.FeelsLikeSummary
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test

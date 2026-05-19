@@ -13,8 +13,8 @@
 package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.download.createSunPeriod
-import com.davidtakac.bura.sun.SunEvent
-import com.davidtakac.bura.sun.SunMoment
+import com.davidtakac.bura.forecast.parameters.sun.SunEvent
+import com.davidtakac.bura.forecast.parameters.sun.SunMoment
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime

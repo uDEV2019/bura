@@ -12,10 +12,10 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.uvindex.SunProtectionWindow
-import com.davidtakac.bura.uvindex.UvIndex
-import com.davidtakac.bura.uvindex.UvIndexMoment
-import com.davidtakac.bura.uvindex.UvIndexPeriod
+import com.davidtakac.bura.forecast.parameters.uvindex.SunProtectionWindow
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndex
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndexMoment
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndexPeriod
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

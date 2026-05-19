@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura.forecast.cache
 
-import com.davidtakac.bura.common.getStringOrNull
+import com.davidtakac.bura.common.util.getStringOrNull
 import com.davidtakac.bura.forecast.Forecast
-import com.davidtakac.bura.place.Coordinates
+import com.davidtakac.bura.places.Coordinates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

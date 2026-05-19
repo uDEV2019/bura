@@ -12,19 +12,19 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionMoment
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.pop.Pop
-import com.davidtakac.bura.pop.PopMoment
-import com.davidtakac.bura.pop.PopPeriod
+import com.davidtakac.bura.forecast.parameters.pop.Pop
+import com.davidtakac.bura.forecast.parameters.pop.PopMoment
+import com.davidtakac.bura.forecast.parameters.pop.PopPeriod
 import com.davidtakac.bura.summary.daily.DailySummary
 import com.davidtakac.bura.summary.daily.DaySummary
 import com.davidtakac.bura.summary.daily.getDailySummary
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

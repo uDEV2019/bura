@@ -13,8 +13,8 @@
 package com.davidtakac.bura.summary.precipitation
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.precipitation.Precipitation
-import com.davidtakac.bura.precipitation.PrecipitationPeriod
+import com.davidtakac.bura.forecast.parameters.precipitation.Precipitation
+import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationPeriod
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit

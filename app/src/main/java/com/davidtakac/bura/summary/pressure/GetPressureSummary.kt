@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura.summary.pressure
 
-import com.davidtakac.bura.pressure.Pressure
+import com.davidtakac.bura.forecast.parameters.pressure.Pressure
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.pressure.PressurePeriod
+import com.davidtakac.bura.forecast.parameters.pressure.PressurePeriod
 import java.time.LocalDateTime
 import kotlin.math.absoluteValue
 

@@ -35,19 +35,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.davidtakac.bura.R
-import com.davidtakac.bura.common.TextSkeleton
+import com.davidtakac.bura.common.compose.TextSkeleton
 import com.davidtakac.bura.graphs.common.GraphArgs
-import com.davidtakac.bura.graphs.common.GraphScreenSectionLabel
-import com.davidtakac.bura.graphs.pop.PopGraph
-import com.davidtakac.bura.graphs.precipitation.PrecipitationBullets
-import com.davidtakac.bura.graphs.precipitation.PrecipitationGraph
-import com.davidtakac.bura.graphs.precipitation.TodayPrecipitationBullets
+import com.davidtakac.bura.graphs.common.compose.GraphScreenSectionLabel
+import com.davidtakac.bura.graphs.pop.compose.PopGraph
+import com.davidtakac.bura.graphs.precipitation.compose.PrecipitationBullets
+import com.davidtakac.bura.graphs.precipitation.compose.PrecipitationGraph
+import com.davidtakac.bura.graphs.precipitation.compose.TodayPrecipitationBullets
 import com.davidtakac.bura.graphs.precipitation.PrecipitationTotal
-import com.davidtakac.bura.graphs.temperature.TemperatureGraph
+import com.davidtakac.bura.graphs.temperature.compose.TemperatureGraph
 import com.davidtakac.bura.graphs.temperature.TemperatureGraphSummary
-import com.davidtakac.bura.precipitation.MixedPrecipitation
-import com.davidtakac.bura.summary.now.NowSummarySkeleton
-import com.davidtakac.bura.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.precipitation.MixedPrecipitation
+import com.davidtakac.bura.summary.now.compose.NowSummarySkeleton
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.graphs.pop.PopGraph
+import com.davidtakac.bura.graphs.precipitation.PrecipitationGraph
+import com.davidtakac.bura.graphs.temperature.TemperatureGraph
 
 private const val graphAspectRatio = 4f / 3f
 private val contentPadding = PaddingValues(horizontal = 16.dp, vertical = 24.dp)
@@ -76,7 +79,7 @@ fun EssentialGraphPage(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
-            TemperatureGraphSummary(
+            com.davidtakac.bura.graphs.temperature.compose.TemperatureGraphSummary(
                 state = summary,
                 modifier = Modifier.fillMaxWidth()
             )

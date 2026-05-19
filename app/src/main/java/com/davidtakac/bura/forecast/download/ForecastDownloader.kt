@@ -13,7 +13,7 @@
 package com.davidtakac.bura.forecast.download
 
 import com.davidtakac.bura.forecast.Forecast
-import com.davidtakac.bura.place.Coordinates
+import com.davidtakac.bura.places.Coordinates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

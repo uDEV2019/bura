@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.temporal.ChronoUnit

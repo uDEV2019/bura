@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.wind.WindSpeed
+import com.davidtakac.bura.forecast.parameters.wind.WindSpeed
 import org.junit.Assert.*
 import org.junit.Test
 

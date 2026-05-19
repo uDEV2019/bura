@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import org.junit.Assert.*
 import org.junit.Test
 

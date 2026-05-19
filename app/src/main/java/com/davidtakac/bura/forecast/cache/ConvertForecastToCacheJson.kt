@@ -12,22 +12,22 @@
 
 package com.davidtakac.bura.forecast.cache
 
-import com.davidtakac.bura.common.mapToJSONArray
-import com.davidtakac.bura.condition.ConditionMoment
+import com.davidtakac.bura.common.util.mapToJSONArray
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.Forecast
 import com.davidtakac.bura.forecast.HourMoment
-import com.davidtakac.bura.gust.GustMoment
-import com.davidtakac.bura.humidity.HumidityMoment
-import com.davidtakac.bura.pop.PopMoment
-import com.davidtakac.bura.precipitation.PrecipitationMoment
-import com.davidtakac.bura.pressure.PressureMoment
-import com.davidtakac.bura.sun.SunEvent
-import com.davidtakac.bura.sun.SunMoment
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.uvindex.UvIndexMoment
-import com.davidtakac.bura.visibility.VisibilityMoment
-import com.davidtakac.bura.wind.WindMoment
+import com.davidtakac.bura.forecast.parameters.gust.GustMoment
+import com.davidtakac.bura.forecast.parameters.humidity.HumidityMoment
+import com.davidtakac.bura.forecast.parameters.pop.PopMoment
+import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationMoment
+import com.davidtakac.bura.forecast.parameters.pressure.PressureMoment
+import com.davidtakac.bura.forecast.parameters.sun.SunEvent
+import com.davidtakac.bura.forecast.parameters.sun.SunMoment
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndexMoment
+import com.davidtakac.bura.forecast.parameters.visibility.VisibilityMoment
+import com.davidtakac.bura.forecast.parameters.wind.WindMoment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.humidity.Humidity
+import com.davidtakac.bura.forecast.parameters.humidity.Humidity
 import org.junit.Assert.*
 import org.junit.Test
 

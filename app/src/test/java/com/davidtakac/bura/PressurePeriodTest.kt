@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.pressure.Pressure
-import com.davidtakac.bura.pressure.PressureMoment
-import com.davidtakac.bura.pressure.PressurePeriod
+import com.davidtakac.bura.forecast.parameters.pressure.Pressure
+import com.davidtakac.bura.forecast.parameters.pressure.PressureMoment
+import com.davidtakac.bura.forecast.parameters.pressure.PressurePeriod
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

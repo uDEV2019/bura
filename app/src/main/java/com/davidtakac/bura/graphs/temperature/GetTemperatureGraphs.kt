@@ -13,12 +13,12 @@
 package com.davidtakac.bura.graphs.temperature
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.temperature.TemperaturePeriod
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionMoment
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import com.davidtakac.bura.graphs.common.GraphTime
 import java.time.LocalDate
 import java.time.LocalDateTime

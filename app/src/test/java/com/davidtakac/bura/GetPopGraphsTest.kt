@@ -12,18 +12,18 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionMoment
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.graphs.common.GraphTime
 import com.davidtakac.bura.graphs.pop.GraphPop
-import com.davidtakac.bura.graphs.pop.PopGraph
 import com.davidtakac.bura.graphs.pop.PopGraphPoint
 import com.davidtakac.bura.graphs.pop.getPopGraphs
-import com.davidtakac.bura.pop.Pop
-import com.davidtakac.bura.pop.PopMoment
-import com.davidtakac.bura.pop.PopPeriod
+import com.davidtakac.bura.forecast.parameters.pop.Pop
+import com.davidtakac.bura.forecast.parameters.pop.PopMoment
+import com.davidtakac.bura.forecast.parameters.pop.PopPeriod
+import com.davidtakac.bura.graphs.pop.PopGraph
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

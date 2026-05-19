@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.visibility.Visibility
+import com.davidtakac.bura.forecast.parameters.visibility.Visibility
 import org.junit.Assert.*
 import org.junit.Test
 

@@ -14,9 +14,9 @@ package com.davidtakac.bura
 
 import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.summary.visibility.getVisibilitySummary
-import com.davidtakac.bura.visibility.Visibility
-import com.davidtakac.bura.visibility.VisibilityMoment
-import com.davidtakac.bura.visibility.VisibilityPeriod
+import com.davidtakac.bura.forecast.parameters.visibility.Visibility
+import com.davidtakac.bura.forecast.parameters.visibility.VisibilityMoment
+import com.davidtakac.bura.forecast.parameters.visibility.VisibilityPeriod
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

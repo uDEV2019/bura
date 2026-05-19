@@ -12,17 +12,17 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionMoment
-import com.davidtakac.bura.condition.ConditionPeriod
-import com.davidtakac.bura.place.Coordinates
-import com.davidtakac.bura.place.Location
-import com.davidtakac.bura.place.Place
-import com.davidtakac.bura.place.saved.SavedPlace
-import com.davidtakac.bura.place.saved.getSavedPlace
-import com.davidtakac.bura.temperature.Temperature
-import com.davidtakac.bura.temperature.TemperatureMoment
-import com.davidtakac.bura.temperature.TemperaturePeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
+import com.davidtakac.bura.places.Coordinates
+import com.davidtakac.bura.places.Location
+import com.davidtakac.bura.places.Place
+import com.davidtakac.bura.places.saved.SavedPlace
+import com.davidtakac.bura.places.saved.getSavedPlace
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

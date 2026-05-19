@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.pressure.Pressure
+import com.davidtakac.bura.forecast.parameters.pressure.Pressure
 import org.junit.Assert.*
 import org.junit.Test
 

@@ -13,8 +13,8 @@
 package com.davidtakac.bura.summary.visibility
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.visibility.Visibility
-import com.davidtakac.bura.visibility.VisibilityPeriod
+import com.davidtakac.bura.forecast.parameters.visibility.Visibility
+import com.davidtakac.bura.forecast.parameters.visibility.VisibilityPeriod
 import java.time.LocalDateTime
 
 fun getVisibilitySummary(

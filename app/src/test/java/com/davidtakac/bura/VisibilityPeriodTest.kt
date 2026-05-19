@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.visibility.Visibility
-import com.davidtakac.bura.visibility.VisibilityMoment
-import com.davidtakac.bura.visibility.VisibilityPeriod
+import com.davidtakac.bura.forecast.parameters.visibility.Visibility
+import com.davidtakac.bura.forecast.parameters.visibility.VisibilityMoment
+import com.davidtakac.bura.forecast.parameters.visibility.VisibilityPeriod
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

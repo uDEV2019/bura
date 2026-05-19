@@ -15,9 +15,9 @@ package com.davidtakac.bura
 import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.summary.uvindex.UseProtection
 import com.davidtakac.bura.summary.uvindex.getUvIndexSummary
-import com.davidtakac.bura.uvindex.UvIndex
-import com.davidtakac.bura.uvindex.UvIndexMoment
-import com.davidtakac.bura.uvindex.UvIndexPeriod
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndex
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndexMoment
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndexPeriod
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test

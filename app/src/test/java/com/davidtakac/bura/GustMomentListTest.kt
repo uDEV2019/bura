@@ -12,9 +12,9 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.gust.GustMoment
-import com.davidtakac.bura.gust.GustPeriod
-import com.davidtakac.bura.wind.WindSpeed
+import com.davidtakac.bura.forecast.parameters.gust.GustMoment
+import com.davidtakac.bura.forecast.parameters.gust.GustPeriod
+import com.davidtakac.bura.forecast.parameters.wind.WindSpeed
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.temporal.ChronoUnit

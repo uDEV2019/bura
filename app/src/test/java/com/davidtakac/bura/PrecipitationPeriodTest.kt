@@ -12,13 +12,13 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.precipitation.MixedPrecipitation
-import com.davidtakac.bura.precipitation.Precipitation
-import com.davidtakac.bura.precipitation.PrecipitationMoment
-import com.davidtakac.bura.precipitation.PrecipitationPeriod
-import com.davidtakac.bura.precipitation.Rain
-import com.davidtakac.bura.precipitation.Showers
-import com.davidtakac.bura.precipitation.Snow
+import com.davidtakac.bura.forecast.parameters.precipitation.MixedPrecipitation
+import com.davidtakac.bura.forecast.parameters.precipitation.Precipitation
+import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationMoment
+import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationPeriod
+import com.davidtakac.bura.forecast.parameters.precipitation.Rain
+import com.davidtakac.bura.forecast.parameters.precipitation.Showers
+import com.davidtakac.bura.forecast.parameters.precipitation.Snow
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.temporal.ChronoUnit

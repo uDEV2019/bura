@@ -12,8 +12,8 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.place.Coordinates
-import com.davidtakac.bura.place.Location
+import com.davidtakac.bura.places.Coordinates
+import com.davidtakac.bura.places.Location
 import java.time.ZoneOffset
 
 val GMTLocation = Location(ZoneOffset.UTC, Coordinates(0.0, 0.0))

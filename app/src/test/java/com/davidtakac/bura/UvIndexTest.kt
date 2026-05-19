@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.uvindex.UvIndex
+import com.davidtakac.bura.forecast.parameters.uvindex.UvIndex
 import org.junit.Assert.*
 import org.junit.Test
 

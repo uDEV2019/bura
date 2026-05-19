@@ -12,12 +12,12 @@
 
 package com.davidtakac.bura.graphs.precipitation
 
-import com.davidtakac.bura.condition.Condition
-import com.davidtakac.bura.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.condition.Condition
+import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
 import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.graphs.common.GraphTime
-import com.davidtakac.bura.precipitation.MixedPrecipitation
-import com.davidtakac.bura.precipitation.PrecipitationPeriod
+import com.davidtakac.bura.forecast.parameters.precipitation.MixedPrecipitation
+import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationPeriod
 import java.time.LocalDate
 import java.time.LocalDateTime
 

@@ -19,7 +19,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.davidtakac.bura.App
 import com.davidtakac.bura.forecast.ForecastRepository
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.graphs.pop.PopGraph
 import com.davidtakac.bura.graphs.pop.getPopGraphs
 import com.davidtakac.bura.graphs.precipitation.PrecipitationTotal
 import com.davidtakac.bura.graphs.precipitation.PrecipitationGraphs
@@ -29,8 +28,9 @@ import com.davidtakac.bura.graphs.temperature.TemperatureGraphSummary
 import com.davidtakac.bura.graphs.temperature.TemperatureGraphs
 import com.davidtakac.bura.graphs.temperature.getTemperatureGraphSummaries
 import com.davidtakac.bura.graphs.temperature.getTemperatureGraphs
-import com.davidtakac.bura.place.selected.SelectedPlaceRepository
-import com.davidtakac.bura.units.SelectedUnitsRepository
+import com.davidtakac.bura.places.selected.SelectedPlaceRepository
+import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
+import com.davidtakac.bura.graphs.pop.PopGraph
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

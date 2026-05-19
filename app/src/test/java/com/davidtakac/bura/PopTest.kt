@@ -12,7 +12,7 @@
 
 package com.davidtakac.bura
 
-import com.davidtakac.bura.pop.Pop
+import com.davidtakac.bura.forecast.parameters.pop.Pop
 import org.junit.Assert.*
 import org.junit.Test
 

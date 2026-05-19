@@ -13,10 +13,10 @@
 package com.davidtakac.bura.summary.wind
 
 import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.gust.GustPeriod
-import com.davidtakac.bura.wind.Wind
-import com.davidtakac.bura.wind.WindPeriod
-import com.davidtakac.bura.wind.WindSpeed
+import com.davidtakac.bura.forecast.parameters.gust.GustPeriod
+import com.davidtakac.bura.forecast.parameters.wind.Wind
+import com.davidtakac.bura.forecast.parameters.wind.WindPeriod
+import com.davidtakac.bura.forecast.parameters.wind.WindSpeed
 import java.time.LocalDateTime
 
 fun getWindSummary(
