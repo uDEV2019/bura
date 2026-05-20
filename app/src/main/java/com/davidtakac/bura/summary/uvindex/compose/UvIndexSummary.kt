@@ -95,7 +95,7 @@ private fun UvIndexSummaryPreview() {
             ) {
                 UvIndexSummary(
                     state = UvIndexSummary(
-                        now = UvIndex(0),
+                        now = UvIndex(0.0),
                         useProtection = UseProtection.FromUntil(
                             startInclusive = LocalTime.parse("08:00"),
                             endExclusive = LocalTime.parse("20:00")
@@ -105,7 +105,7 @@ private fun UvIndexSummaryPreview() {
                 )
                 UvIndexSummary(
                     state = UvIndexSummary(
-                        now = UvIndex(12),
+                        now = UvIndex(12.0),
                         useProtection = UseProtection.Until(
                             endExclusive = LocalTime.parse("20:00")
                         )
@@ -114,7 +114,7 @@ private fun UvIndexSummaryPreview() {
                 )
                 UvIndexSummary(
                     state = UvIndexSummary(
-                        now = UvIndex(9),
+                        now = UvIndex(9.0),
                         useProtection = UseProtection.UntilEndOfDay
                     ),
                     modifier = Modifier.fillMaxWidth()

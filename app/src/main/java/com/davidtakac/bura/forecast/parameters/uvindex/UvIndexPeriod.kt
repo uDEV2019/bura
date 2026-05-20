@@ -21,7 +21,7 @@ class UvIndexPeriod(moments: List<UvIndexMoment>) : HourPeriod<UvIndexMoment>(mo
 
     val maximum get() = maxOf { it.uvIndex }
 
-    val protectionWindows get() = protectionWindows(dangerousUvIndex = UvIndex(3))
+    val protectionWindows get() = protectionWindows(dangerousUvIndex = UvIndex(3.0))
 
     override fun momentsFrom(hourInclusive: LocalDateTime, takeMoments: Int?) =
         super.momentsFrom(hourInclusive, takeMoments)?.let { UvIndexPeriod(it) }

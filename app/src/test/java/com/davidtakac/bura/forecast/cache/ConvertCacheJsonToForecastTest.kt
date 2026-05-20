@@ -216,7 +216,7 @@ private fun getForecast() = Forecast(
             )
         )
     ),
-    uvIndex = UvIndexPeriod(listOf(UvIndexMoment(hour, UvIndex(1)))),
+    uvIndex = UvIndexPeriod(listOf(UvIndexMoment(hour, UvIndex(1.0)))),
     wind = WindPeriod(
         listOf(
             WindMoment(

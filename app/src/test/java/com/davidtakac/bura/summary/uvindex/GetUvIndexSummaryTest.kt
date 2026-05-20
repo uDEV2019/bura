@@ -22,17 +22,17 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.temporal.ChronoUnit
 
-private val dangerous = UvIndex(3)
-private val safe = UvIndex(2)
+private val dangerous = UvIndex(3.0)
+private val safe = UvIndex(2.0)
 
 class GetUvIndexSummaryTest {
     @Test
     fun `gets now`() = runTest {
         val firstMoment = unixEpochStart
         val now = firstMoment.plus(10, ChronoUnit.MINUTES)
-        val period = UvIndexPeriod(listOf(UvIndexMoment(firstMoment, UvIndex(0))))
+        val period = UvIndexPeriod(listOf(UvIndexMoment(firstMoment, UvIndex(0.0))))
         assertEquals(
-            UvIndex(0),
+            UvIndex(0.0),
             (getUvIndexSummary(now, period) as ForecastResult.Success).data.now
         )
     }

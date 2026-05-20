@@ -83,7 +83,7 @@ fun AppleUvIndexScale(uvIndexNow: UvIndex, modifier: Modifier = Modifier) {
 @Composable
 private fun AppleUvIndexPreview() {
     AppTheme {
-        AppleUvIndexScale(uvIndexNow = UvIndex(1), modifier = Modifier.width(200.dp))
+        AppleUvIndexScale(uvIndexNow = UvIndex(1.0), modifier = Modifier.width(200.dp))
     }
 }
 
@@ -92,7 +92,7 @@ private fun AppleUvIndexPreview() {
 private fun AppleUvIndexRtlPreview() {
     AppTheme {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-            AppleUvIndexScale(uvIndexNow = UvIndex(1), modifier = Modifier.width(200.dp))
+            AppleUvIndexScale(uvIndexNow = UvIndex(1.0), modifier = Modifier.width(200.dp))
         }
     }
 }
