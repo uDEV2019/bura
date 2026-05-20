@@ -56,14 +56,16 @@ import com.davidtakac.bura.graphs.common.drawing.drawTimeAxis
 import com.davidtakac.bura.graphs.common.drawing.drawVerticalAxis
 import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import com.davidtakac.bura.forecast.parameters.temperature.string
+import com.davidtakac.bura.graphs.temperature.GraphTemperature
 import com.davidtakac.bura.graphs.temperature.TemperatureGraph
+import com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.math.roundToInt
 
 @Composable
 fun TemperatureGraph(
-    state: com.davidtakac.bura.graphs.temperature.TemperatureGraph,
+    state: TemperatureGraph,
     args: GraphArgs,
     absMinTemp: Temperature,
     absMaxTemp: Temperature,
@@ -117,7 +119,7 @@ fun TemperatureGraph(
 }
 
 private fun DrawScope.drawHorizontalAxisAndPlot(
-    state: com.davidtakac.bura.graphs.temperature.TemperatureGraph,
+    state: TemperatureGraph,
     plotColors: List<Color>,
     min: Temperature,
     max: Temperature,
@@ -156,8 +158,8 @@ private fun DrawScope.drawHorizontalAxisAndPlot(
         lastX = x
 
         // Min, max and now indicators are drawn after the plot so they're on top of it
-        if (temp.meta == _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Minimum) minCenter = Offset(x, y) to temp.value
-        if (temp.meta == _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Maximum) maxCenter = Offset(x, y) to temp.value
+        if (temp.meta == GraphTemperature.Meta.Minimum) minCenter = Offset(x, y) to temp.value
+        if (temp.meta == GraphTemperature.Meta.Maximum) maxCenter = Offset(x, y) to temp.value
         if (point.time.meta == GraphTime.Meta.Present) nowCenter = Offset(x, y)
 
         // Condition icons
@@ -347,305 +349,305 @@ private fun ConditionGraphFlatPreview() {
 }
 
 private val previewState =
-    _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraph(
+    TemperatureGraph(
         day = LocalDate.parse("2023-01-01"),
         points = listOf(
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("00:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("01:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-6.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("02:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-6.5, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("03:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("04:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-9.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("05:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-10.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("06:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-10.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Minimum
+                    meta = GraphTemperature.Meta.Minimum
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("07:00"),
                     meta = GraphTime.Meta.Past
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-8.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 0, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("08:00"),
                     meta = GraphTime.Meta.Present
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("09:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-3.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("10:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("11:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("12:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(1.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("13:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(1.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("14:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(2.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Maximum
+                    meta = GraphTemperature.Meta.Maximum
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("15:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("16:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = true),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("17:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-3.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("18:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-2.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("19:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-5.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("20:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-6.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("21:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("22:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("23:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-7.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
 
                 ),
-            _root_ide_package_.com.davidtakac.bura.graphs.temperature.TemperatureGraphPoint(
+            TemperatureGraphPoint(
                 time = GraphTime(
                     value = LocalTime.parse("00:00"),
                     meta = GraphTime.Meta.Future
                 ),
-                temperature = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature(
+                temperature = GraphTemperature(
                     value = Temperature(-8.0, Temperature.Unit.DegreesCelsius),
-                    meta = _root_ide_package_.com.davidtakac.bura.graphs.temperature.GraphTemperature.Meta.Regular
+                    meta = GraphTemperature.Meta.Regular
                 ),
                 condition = Condition(wmoCode = 3, isDay = false),
             )
