@@ -36,8 +36,8 @@ class GetSunSummaryTest {
         val secondMoment = now.plus(2, ChronoUnit.HOURS)
         val sunPeriod = SunPeriod(
             listOf(
-                SunMoment(firstMoment, event = SunEvent.Sunrise),
-                SunMoment(secondMoment, event = SunEvent.Sunset)
+                SunMoment(firstMoment, event = SunEvent.Rise),
+                SunMoment(secondMoment, event = SunEvent.Set)
             )
         )
         val condPeriod = ConditionPeriod(
@@ -63,8 +63,8 @@ class GetSunSummaryTest {
         val secondMoment = now.plus(2, ChronoUnit.HOURS)
         val sunPeriod = SunPeriod(
             listOf(
-                SunMoment(firstMoment, event = SunEvent.Sunset),
-                SunMoment(secondMoment, event = SunEvent.Sunrise)
+                SunMoment(firstMoment, event = SunEvent.Set),
+                SunMoment(secondMoment, event = SunEvent.Rise)
             )
         )
         val condPeriod = ConditionPeriod(
@@ -91,8 +91,8 @@ class GetSunSummaryTest {
         val secondMoment = now.plus(2, ChronoUnit.DAYS)
         val sunPeriod = SunPeriod(
             listOf(
-                SunMoment(firstMoment, event = SunEvent.Sunrise),
-                SunMoment(secondMoment, event = SunEvent.Sunset)
+                SunMoment(firstMoment, event = SunEvent.Rise),
+                SunMoment(secondMoment, event = SunEvent.Set)
             )
         )
 
@@ -118,8 +118,8 @@ class GetSunSummaryTest {
         val secondMoment = now.plus(2, ChronoUnit.DAYS)
         val sunPeriod = SunPeriod(
             listOf(
-                SunMoment(firstMoment, event = SunEvent.Sunset),
-                SunMoment(secondMoment, event = SunEvent.Sunrise)
+                SunMoment(firstMoment, event = SunEvent.Set),
+                SunMoment(secondMoment, event = SunEvent.Rise)
             )
         )
         val condPeriod = ConditionPeriod(
@@ -142,7 +142,7 @@ class GetSunSummaryTest {
         val firstMoment = now.plus(2, ChronoUnit.DAYS)
         val sunPeriod = SunPeriod(
             listOf(
-                SunMoment(firstMoment, event = SunEvent.Sunrise),
+                SunMoment(firstMoment, event = SunEvent.Rise),
             )
         )
         val condPeriod = ConditionPeriod(
@@ -162,7 +162,7 @@ class GetSunSummaryTest {
         val firstMoment = now.plus(2, ChronoUnit.DAYS)
         val sunPeriod = SunPeriod(
             listOf(
-                SunMoment(firstMoment, event = SunEvent.Sunset),
+                SunMoment(firstMoment, event = SunEvent.Set),
             )
         )
         val condPeriod = ConditionPeriod(

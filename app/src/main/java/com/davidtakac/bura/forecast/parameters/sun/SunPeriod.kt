@@ -15,11 +15,17 @@ package com.davidtakac.bura.forecast.parameters.sun
 import java.time.Duration
 import java.time.LocalDateTime
 
-class SunPeriod(val moments: List<SunMoment>): List<SunMoment> by moments {
+class SunPeriod(val moments: List<SunMoment>): AbstractList<SunMoment>() {
     init {
         requireNotEmpty()
         requireAscending()
     }
+
+    override val size: Int
+        get() = moments.size
+
+    override fun get(index: Int): SunMoment =
+        moments[index]
 
     fun momentsFrom(time: LocalDateTime, takeMomentsUpToHoursInFuture: Int? = null): List<SunMoment>? =
         moments.filter {

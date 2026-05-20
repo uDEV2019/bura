@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.wind
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class WindMoment(
     hour: LocalDateTime,
     val wind: Wind
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $wind"
+
+    override fun equals(other: Any?): Boolean =
+        other is WindMoment
+                && other.hour == hour
+                && other.wind == wind
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, wind)
 }

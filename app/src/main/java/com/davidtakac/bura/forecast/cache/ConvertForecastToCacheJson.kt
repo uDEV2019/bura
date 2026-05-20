@@ -21,7 +21,6 @@ import com.davidtakac.bura.forecast.parameters.humidity.HumidityMoment
 import com.davidtakac.bura.forecast.parameters.pop.PopMoment
 import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationMoment
 import com.davidtakac.bura.forecast.parameters.pressure.PressureMoment
-import com.davidtakac.bura.forecast.parameters.sun.SunEvent
 import com.davidtakac.bura.forecast.parameters.sun.SunMoment
 import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
@@ -80,13 +79,7 @@ private fun precipitationMomentToJson(moment: PrecipitationMoment): JSONObject =
 private fun sunMomentToJson(moment: SunMoment): JSONObject {
     val json = JSONObject()
     json.put(CacheJsonSerialNames.SUN_MOMENT_TIME, moment.time.toString())
-    json.put(
-        CacheJsonSerialNames.SUN_EVENT,
-        when (moment.event) {
-            SunEvent.Sunrise -> CacheJsonSerialNames.SUN_RISE
-            SunEvent.Sunset -> CacheJsonSerialNames.SUN_SET
-        }
-    )
+    json.put(CacheJsonSerialNames.SUN_EVENT, moment.event.name)
     return json
 }
 

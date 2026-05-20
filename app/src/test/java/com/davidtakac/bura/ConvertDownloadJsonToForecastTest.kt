@@ -27,10 +27,10 @@ class ConvertDownloadJsonToForecastTest {
         val sunPeriod = createSunPeriod(sunrises, sunsets)
         assertEquals(
             listOf(
-                SunMoment(LocalDateTime.parse("2025-01-01T08:00:00"), SunEvent.Sunrise),
-                SunMoment(LocalDateTime.parse("2025-01-01T20:00:00"), SunEvent.Sunset),
-                SunMoment(LocalDateTime.parse("2025-01-02T08:00:00"), SunEvent.Sunrise),
-                SunMoment(LocalDateTime.parse("2025-01-02T20:00:00"), SunEvent.Sunset)
+                SunMoment(LocalDateTime.parse("2025-01-01T08:00:00"), SunEvent.Rise),
+                SunMoment(LocalDateTime.parse("2025-01-01T20:00:00"), SunEvent.Set),
+                SunMoment(LocalDateTime.parse("2025-01-02T08:00:00"), SunEvent.Rise),
+                SunMoment(LocalDateTime.parse("2025-01-02T20:00:00"), SunEvent.Set)
             ),
             sunPeriod?.moments
         )
@@ -59,10 +59,10 @@ class ConvertDownloadJsonToForecastTest {
         val sunPeriod = createSunPeriod(sunrises, sunsets)
         assertEquals(
             listOf(
-                SunMoment(LocalDateTime.parse("2025-01-01T08:00:00"), SunEvent.Sunrise),
-                SunMoment(LocalDateTime.parse("2025-01-01T20:00:00"), SunEvent.Sunset),
-                SunMoment(LocalDateTime.parse("2025-01-03T08:00:00"), SunEvent.Sunrise),
-                SunMoment(LocalDateTime.parse("2025-01-03T20:00:00"), SunEvent.Sunset),
+                SunMoment(LocalDateTime.parse("2025-01-01T08:00:00"), SunEvent.Rise),
+                SunMoment(LocalDateTime.parse("2025-01-01T20:00:00"), SunEvent.Set),
+                SunMoment(LocalDateTime.parse("2025-01-03T08:00:00"), SunEvent.Rise),
+                SunMoment(LocalDateTime.parse("2025-01-03T20:00:00"), SunEvent.Set),
             ),
             sunPeriod?.moments
         )
@@ -76,10 +76,10 @@ class ConvertDownloadJsonToForecastTest {
         val sunPeriod = createSunPeriod(sunrises, sunsets)
         assertEquals(
             listOf(
-                SunMoment(LocalDateTime.parse("2025-01-01T08:00:00"), SunEvent.Sunrise),
-                SunMoment(LocalDateTime.parse("2025-01-01T20:00:00"), SunEvent.Sunset),
-                SunMoment(LocalDateTime.parse("2025-01-03T08:00:00"), SunEvent.Sunrise),
-                SunMoment(LocalDateTime.parse("2025-01-03T20:00:00"), SunEvent.Sunset),
+                SunMoment(LocalDateTime.parse("2025-01-01T08:00:00"), SunEvent.Rise),
+                SunMoment(LocalDateTime.parse("2025-01-01T20:00:00"), SunEvent.Set),
+                SunMoment(LocalDateTime.parse("2025-01-03T08:00:00"), SunEvent.Rise),
+                SunMoment(LocalDateTime.parse("2025-01-03T20:00:00"), SunEvent.Set),
             ),
             sunPeriod?.moments
         )

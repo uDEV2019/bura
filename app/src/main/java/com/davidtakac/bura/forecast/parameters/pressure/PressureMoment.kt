@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.pressure
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class PressureMoment(
     hour: LocalDateTime,
     val pressure: Pressure
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $pressure"
+
+    override fun equals(other: Any?): Boolean =
+        other is PressureMoment
+                && other.hour == hour
+                && other.pressure == pressure
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, pressure)
 }

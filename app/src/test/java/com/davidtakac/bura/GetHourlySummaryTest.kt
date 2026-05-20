@@ -76,9 +76,9 @@ class GetHourlySummaryTest {
         )
         val sunPeriod = SunPeriod(
             moments = listOf(
-                SunMoment(pastSunsetMoment, SunEvent.Sunset),
-                SunMoment(sunriseMoment, SunEvent.Sunrise),
-                SunMoment(sunsetMoment, SunEvent.Sunset)
+                SunMoment(pastSunsetMoment, SunEvent.Set),
+                SunMoment(sunriseMoment, SunEvent.Rise),
+                SunMoment(sunsetMoment, SunEvent.Set)
             )
         )
         val summary = getHourlySummary(now, temperaturePeriod, popPeriod, conditionPeriod, sunPeriod)
@@ -94,7 +94,7 @@ class GetHourlySummaryTest {
                     ),
                     HourSummary.Sun(
                         time = sunriseMoment,
-                        event = SunEvent.Sunrise
+                        event = SunEvent.Rise
                     ),
                     HourSummary.Weather(
                         time = secondMoment,
@@ -105,7 +105,7 @@ class GetHourlySummaryTest {
                     ),
                     HourSummary.Sun(
                         time = sunsetMoment,
-                        event = SunEvent.Sunset
+                        event = SunEvent.Set
                     ),
                     HourSummary.Weather(
                         time = thirdMoment,
@@ -185,8 +185,8 @@ class GetHourlySummaryTest {
         )
         val sunPeriod = SunPeriod(
             moments = listOf(
-                SunMoment(time = pastSunrise, event = SunEvent.Sunrise),
-                SunMoment(time = pastSunset, event = SunEvent.Sunset)
+                SunMoment(time = pastSunrise, event = SunEvent.Rise),
+                SunMoment(time = pastSunset, event = SunEvent.Set)
             )
         )
         val summary = getHourlySummary(now, temperaturePeriod, popPeriod, conditionPeriod, sunPeriod)

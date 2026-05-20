@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.humidity
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class HumidityMoment(
     hour: LocalDateTime,
     val humidity: Humidity,
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $humidity"
+
+    override fun equals(other: Any?): Boolean =
+        other is HumidityMoment
+                && other.hour == hour
+                && other.humidity == humidity
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, humidity)
 }

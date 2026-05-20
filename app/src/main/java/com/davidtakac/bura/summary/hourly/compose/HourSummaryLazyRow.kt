@@ -116,7 +116,7 @@ private fun HourlySummaryPreview() {
                     ),
                     HourSummary.Sun(
                         time = LocalDateTime.parse("2023-01-01T19:31"),
-                        event = SunEvent.Sunset
+                        event = SunEvent.Set
                     ),
                     HourSummary.Weather(
                         time = LocalDateTime.parse("2023-01-01T20:00"),

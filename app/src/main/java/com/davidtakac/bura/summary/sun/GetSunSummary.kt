@@ -33,7 +33,7 @@ fun getSunSummary(
     val firstSun = futureSun?.firstOrNull()
     return when {
         firstSun == null -> outOfSight(now, condPeriod)
-        firstSun.event == SunEvent.Sunrise -> ForecastResult.Success(sunrise(now, futureSun, firstSun))
+        firstSun.event == SunEvent.Rise -> ForecastResult.Success(sunrise(now, futureSun, firstSun))
         else -> ForecastResult.Success(sunset(now, futureSun, firstSun))
     }
 }

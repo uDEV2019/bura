@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.visibility
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class VisibilityMoment(
     hour: LocalDateTime,
     val visibility: Visibility,
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $visibility"
+
+    override fun equals(other: Any?): Boolean =
+        other is VisibilityMoment
+                && other.hour == hour
+                && other.visibility == visibility
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, visibility)
 }

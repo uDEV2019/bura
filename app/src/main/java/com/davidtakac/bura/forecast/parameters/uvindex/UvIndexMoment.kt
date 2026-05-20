@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.uvindex
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class UvIndexMoment(
     hour: LocalDateTime,
     val uvIndex: UvIndex
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $uvIndex"
+
+    override fun equals(other: Any?): Boolean =
+        other is UvIndexMoment
+                && other.hour == hour
+                && other.uvIndex == uvIndex
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, uvIndex)
 }

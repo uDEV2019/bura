@@ -17,11 +17,17 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
-open class HourPeriod<T : HourMoment>(private val moments: List<T>) : List<T> by moments {
+open class HourPeriod<T : HourMoment>(protected val moments: List<T>) : AbstractList<T>() {
     init {
         requireNotEmpty()
         requireAscendingAndComplete()
     }
+
+    override val size: Int
+        get() = moments.size
+
+    override fun get(index: Int): T =
+        moments[index]
 
     operator fun get(time: LocalDateTime): T? = momentsFrom(time, takeMoments = 1)?.firstOrNull()
 

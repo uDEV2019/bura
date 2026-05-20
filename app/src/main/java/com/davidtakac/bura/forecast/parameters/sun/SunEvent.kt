@@ -13,5 +13,5 @@
 package com.davidtakac.bura.forecast.parameters.sun
 
 enum class SunEvent {
-    Sunrise, Sunset
+    Rise, Set
 }

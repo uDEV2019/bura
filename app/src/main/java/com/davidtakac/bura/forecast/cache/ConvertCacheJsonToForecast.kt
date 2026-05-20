@@ -136,7 +136,7 @@ private fun jsonToTemperatureMoment(jsonObject: JSONObject): TemperatureMoment =
         TemperatureMoment(
             hour = it,
             temperature = Temperature(
-                jsonObject.getString(CacheJsonSerialNames.TEMPERATURE_VALUE).toDouble(),
+                jsonObject.getDouble(CacheJsonSerialNames.TEMPERATURE_VALUE),
                 Temperature.Unit.valueOf(jsonObject.getString(CacheJsonSerialNames.TEMPERATURE_UNIT))
             )
         )
@@ -146,7 +146,7 @@ private fun jsonToPopMoment(jsonObject: JSONObject): PopMoment =
     convertJsonToMoment(jsonObject) {
         PopMoment(
             hour = it,
-            pop = Pop(jsonObject.getString(CacheJsonSerialNames.POP_VALUE).toDouble())
+            pop = Pop(jsonObject.getDouble(CacheJsonSerialNames.POP_VALUE))
         )
     }
 
@@ -156,15 +156,15 @@ private fun jsonToPrecipitationMoment(jsonObject: JSONObject): PrecipitationMome
             hour = it,
             precipitation = MixedPrecipitation(
                 rain = Rain(
-                    value = jsonObject.getString(CacheJsonSerialNames.RAIN_VALUE).toDouble(),
+                    value = jsonObject.getDouble(CacheJsonSerialNames.RAIN_VALUE),
                     unit = Precipitation.Unit.valueOf(jsonObject.getString(CacheJsonSerialNames.RAIN_UNIT))
                 ),
                 showers = Showers(
-                    value = jsonObject.getString(CacheJsonSerialNames.SHOWERS_VALUE).toDouble(),
+                    value = jsonObject.getDouble(CacheJsonSerialNames.SHOWERS_VALUE),
                     unit = Precipitation.Unit.valueOf(jsonObject.getString(CacheJsonSerialNames.SHOWERS_UNIT))
                 ),
                 snow = Snow(
-                    value = jsonObject.getString(CacheJsonSerialNames.SNOW_VALUE).toDouble(),
+                    value = jsonObject.getDouble(CacheJsonSerialNames.SNOW_VALUE),
                     unit = Precipitation.Unit.valueOf(jsonObject.getString(CacheJsonSerialNames.SNOW_UNIT))
                 ),
                 unit = Precipitation.Unit.valueOf(jsonObject.getString(CacheJsonSerialNames.PRECIPITATION_UNIT))
@@ -174,11 +174,7 @@ private fun jsonToPrecipitationMoment(jsonObject: JSONObject): PrecipitationMome
 
 private fun jsonToSunMoment(jsonObject: JSONObject): SunMoment = SunMoment(
     time = LocalDateTime.parse(jsonObject.getString(CacheJsonSerialNames.SUN_MOMENT_TIME)),
-    event = when (jsonObject.getString(CacheJsonSerialNames.SUN_EVENT)) {
-        CacheJsonSerialNames.SUN_RISE -> SunEvent.Sunrise
-        CacheJsonSerialNames.SUN_SET -> SunEvent.Sunset
-        else -> throw InvalidCacheJsonException()
-    }
+    event = SunEvent.valueOf(jsonObject.getString(CacheJsonSerialNames.SUN_EVENT))
 )
 
 private fun jsonToUvIndexMoment(jsonObject: JSONObject): UvIndexMoment =

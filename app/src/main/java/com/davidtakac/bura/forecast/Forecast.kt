@@ -26,7 +26,7 @@ import com.davidtakac.bura.forecast.units.Units
 import com.davidtakac.bura.forecast.parameters.wind.WindPeriod
 import java.time.Instant
 
-class Forecast(
+data class Forecast(
     val timestamp: Instant,
     val temperature: TemperaturePeriod,
     val feelsLike: TemperaturePeriod,
@@ -60,7 +60,7 @@ class Forecast(
     }
 
     fun convertTo(units: Units): Forecast =
-        Forecast(
+        copy(
             temperature = temperature.convertTo(units.temperature),
             feelsLike = feelsLike.convertTo(units.temperature),
             dewPoint = dewPoint.convertTo(units.temperature),
@@ -68,12 +68,6 @@ class Forecast(
             wind = wind.convertTo(units.windSpeed),
             gust = gust.convertTo(units.windSpeed),
             pressure = pressure.convertTo(units.pressure),
-            visibility = visibility.convertTo(units.visibility),
-            timestamp = timestamp,
-            sun = sun,
-            pop = pop,
-            uvIndex = uvIndex,
-            humidity = humidity,
-            condition = condition,
+            visibility = visibility.convertTo(units.visibility)
         )
 }

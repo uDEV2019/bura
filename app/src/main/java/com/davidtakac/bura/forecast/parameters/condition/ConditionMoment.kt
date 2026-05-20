@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.condition
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class ConditionMoment(
     hour: LocalDateTime,
     val condition: Condition
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $condition"
+
+    override fun equals(other: Any?): Boolean =
+        other is ConditionMoment
+                && other.hour == hour
+                && other.condition == condition
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, condition)
 }

@@ -41,13 +41,13 @@ fun SunHourSummary(state: HourSummary.Sun, modifier: Modifier = Modifier) {
         time = { Text(state.time.format(formatter)) },
         icon = {
             Image(
-                painter = painterResource(id = if (state.event == SunEvent.Sunrise) AppTheme.icons.sunrise else AppTheme.icons.sunset),
+                painter = painterResource(id = if (state.event == SunEvent.Rise) AppTheme.icons.sunrise else AppTheme.icons.sunset),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()
             )
         },
         pop = null,
-        temperature = { Text(stringResource(if (state.event == SunEvent.Sunrise) R.string.sunrise_short else R.string.sunset_short)) },
+        temperature = { Text(stringResource(if (state.event == SunEvent.Rise) R.string.sunrise_short else R.string.sunset_short)) },
         modifier = modifier
     )
 }
@@ -66,13 +66,13 @@ private fun SunHourSummaryPreview() {
             SunHourSummary(
                 state = HourSummary.Sun(
                     time = LocalDateTime.parse("2023-01-01T06:23"),
-                    event = SunEvent.Sunrise
+                    event = SunEvent.Rise
                 )
             )
             SunHourSummary(
                 state = HourSummary.Sun(
                     time = LocalDateTime.parse("2023-01-01T17:10"),
-                    event = SunEvent.Sunset
+                    event = SunEvent.Set
                 )
             )
         }

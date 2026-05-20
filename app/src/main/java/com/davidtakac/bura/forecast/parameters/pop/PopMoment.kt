@@ -14,10 +14,19 @@ package com.davidtakac.bura.forecast.parameters.pop
 
 import com.davidtakac.bura.forecast.HourMoment
 import java.time.LocalDateTime
+import java.util.Objects
 
 class PopMoment(
     hour: LocalDateTime,
     val pop: Pop
 ) : HourMoment(hour) {
     override fun toString(): String = "$hour: $pop"
+
+    override fun equals(other: Any?): Boolean =
+        other is PopMoment
+                && other.hour == hour
+                && other.pop == pop
+
+    override fun hashCode(): Int =
+        Objects.hash(hour, pop)
 }

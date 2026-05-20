@@ -150,8 +150,8 @@ fun createSunPeriod(
 ): SunPeriod? {
     val sortedSunMoments = mutableListOf<SunMoment>()
     for (i in sunrises.indices) {
-        val sunrise = SunMoment(sunrises[i], SunEvent.Sunrise)
-        val sunset = SunMoment(sunsets[i], SunEvent.Sunset)
+        val sunrise = SunMoment(sunrises[i], SunEvent.Rise)
+        val sunset = SunMoment(sunsets[i], SunEvent.Set)
         // https://github.com/davidtakac/bura/issues/97#issuecomment-3001628460
         val isPolarNight = sunrise.time == sunset.time
         val isPolarDay = ChronoUnit.HOURS.between(sunrise.time, sunset.time) == 24L
