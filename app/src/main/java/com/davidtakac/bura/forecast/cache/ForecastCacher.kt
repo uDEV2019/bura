@@ -30,14 +30,11 @@ class ForecastCacher(
         val fromMemory = coordsToData[coords]
         if (fromMemory != null) return fromMemory
 
-        val file = findForecastFile(coords) ?: return null
-        val fromFile = try {
-            fileToForecast(file)
-        } catch (_: InvalidCacheJsonException) {
-            delete(coords)
-            return null
-        }
+        val fromFile = findForecastFile(coords)
+            ?.let { fileToForecast(it) }
+            ?: return null
         coordsToData[coords] = fromFile
+
         return fromFile
     }
 
@@ -63,16 +60,17 @@ class ForecastCacher(
             getDir().listFiles()
         }?.firstOrNull { it.name == coords.id }
 
-    private suspend fun fileToForecast(file: File): Forecast {
+    private suspend fun fileToForecast(file: File): Forecast? {
         val json = JSONObject(
             withContext(Dispatchers.IO) {
                 file.readText()
             }
         )
-        if (json.getStringOrNull(CacheJsonSerialNames.APP_VERSION_NAME) == null) {
-            throw InvalidCacheJsonException()
+        return if (json.getStringOrNull(CacheJsonSerialNames.APP_VERSION_NAME) == null) {
+            null
+        } else {
+            convertCacheJsonToForecast(json)
         }
-        return convertCacheJsonToForecast(json)
     }
 
     private suspend fun forecastToJsonString(data: Forecast): String =
