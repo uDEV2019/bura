@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.precipitation
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.precipitation.MixedPrecipitation
 import com.davidtakac.bura.forecast.parameters.precipitation.Precipitation
 import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationMoment
@@ -42,8 +41,8 @@ class GetPrecipitationSummaryTest {
                         millimetersPerHour,
                         Precipitation.Unit.Millimeters
                     ),
-                    snow = Snow.Companion.ZeroMillimeters,
-                    showers = Showers.Companion.ZeroMillimeters,
+                    snow = Snow.ZeroMillimeters,
+                    showers = Showers.ZeroMillimeters,
                     unit = Precipitation.Unit.Millimeters
                 )
             )
@@ -56,16 +55,14 @@ class GetPrecipitationSummaryTest {
         val middle = startTime.plus(8, ChronoUnit.HOURS).plus(10, ChronoUnit.MINUTES)
         val summary = getPrecipitationSummary(now = middle, precipPeriod = period)
         Assert.assertEquals(
-            ForecastResult.Success(
-                PrecipitationSummary(
-                    past = PastPrecipitation(
-                        inHours = 8,
-                        total = Rain(8.0, Precipitation.Unit.Millimeters)
-                    ),
-                    future = FuturePrecipitation.InHours(
-                        inHours = 16,
-                        total = Rain(16.0, Precipitation.Unit.Millimeters)
-                    )
+            PrecipitationSummary(
+                past = PastPrecipitation(
+                    inHours = 8,
+                    total = Rain(8.0, Precipitation.Unit.Millimeters)
+                ),
+                future = FuturePrecipitation.InHours(
+                    inHours = 16,
+                    total = Rain(16.0, Precipitation.Unit.Millimeters)
                 )
             ),
             summary
@@ -78,7 +75,7 @@ class GetPrecipitationSummaryTest {
         val period = PrecipitationPeriod(dayOfPrecipitation(startTime, 1.0))
         val start = startTime.plus(10, ChronoUnit.MINUTES)
         val summary = getPrecipitationSummary(now = start, precipPeriod = period)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        Assert.assertNull(summary)
     }
 
     @Test
@@ -87,7 +84,7 @@ class GetPrecipitationSummaryTest {
         val period = PrecipitationPeriod(dayOfPrecipitation(startTime, 1.0))
         val end = startTime.plus(24, ChronoUnit.HOURS).plus(10, ChronoUnit.MINUTES)
         val summary = getPrecipitationSummary(now = end, precipPeriod = period)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        Assert.assertNull(summary)
     }
 
     @Test
@@ -96,7 +93,7 @@ class GetPrecipitationSummaryTest {
         val period = PrecipitationPeriod(dayOfPrecipitation(startTime, 1.0))
         val afterEnd = startTime.plus(3, ChronoUnit.DAYS).plus(10, ChronoUnit.MINUTES)
         val summary = getPrecipitationSummary(now = afterEnd, precipPeriod = period)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        Assert.assertNull(summary)
     }
 
     @Test
@@ -128,7 +125,7 @@ class GetPrecipitationSummaryTest {
                         .atZone(ZoneId.of("GMT")).toLocalDate(),
                     total = Rain(23.0, Precipitation.Unit.Millimeters)
                 ),
-                (summary as ForecastResult.Success).data.future
+                summary?.future
             )
         }
 
@@ -146,7 +143,7 @@ class GetPrecipitationSummaryTest {
         val summary = getPrecipitationSummary(now, period)
         Assert.assertEquals(
             FuturePrecipitation.None(inDays = 1),
-            (summary as ForecastResult.Success).data.future
+            summary?.future
         )
     }
 
@@ -171,13 +168,13 @@ class GetPrecipitationSummaryTest {
                 FuturePrecipitation.InHours(
                     inHours = 24,
                     total = MixedPrecipitation(
-                        rain = Rain.Companion.ZeroMillimeters,
-                        snow = Snow.Companion.ZeroMillimeters,
-                        showers = Showers.Companion.ZeroMillimeters,
+                        rain = Rain.ZeroMillimeters,
+                        snow = Snow.ZeroMillimeters,
+                        showers = Showers.ZeroMillimeters,
                         unit = Precipitation.Unit.Millimeters
                     )
                 ),
-                (summary as ForecastResult.Success).data.future
+                summary?.future
             )
         }
 
@@ -198,7 +195,7 @@ class GetPrecipitationSummaryTest {
                 inHours = 24,
                 total = Rain(24.0, Precipitation.Unit.Millimeters)
             ),
-            (summary as ForecastResult.Success).data.future
+            summary?.future
         )
     }
 }

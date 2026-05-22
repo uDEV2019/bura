@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.wind
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.gust.GustMoment
 import com.davidtakac.bura.forecast.parameters.gust.GustPeriod
 import com.davidtakac.bura.forecast.parameters.wind.Wind
@@ -49,14 +48,12 @@ class GetWindSummaryTest {
         )
         val summary = getWindSummary(now, windPeriod, gustPeriod)
         Assert.assertEquals(
-            ForecastResult.Success(
-                WindSummary(
-                    windNow = Wind(
-                        WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond),
-                        WindDirection(0.0)
-                    ),
-                    gustNow = WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
-                )
+            WindSummary(
+                windNow = Wind(
+                    WindSpeed(0.0, WindSpeed.Unit.MetersPerSecond),
+                    WindDirection(0.0)
+                ),
+                gustNow = WindSpeed(1.0, WindSpeed.Unit.MetersPerSecond)
             ),
             summary
         )
@@ -83,6 +80,6 @@ class GetWindSummaryTest {
             )
         )
         val summary = getWindSummary(now, windPeriod, gustPeriod)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        Assert.assertNull(summary)
     }
 }

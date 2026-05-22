@@ -13,7 +13,6 @@
 package com.davidtakac.bura.summary.humidity
 
 import com.davidtakac.bura.forecast.parameters.humidity.Humidity
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.humidity.HumidityPeriod
 import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
@@ -23,12 +22,10 @@ fun getHumiditySummary(
     now: LocalDateTime,
     humidityPeriod: HumidityPeriod,
     dewPointPeriod: TemperaturePeriod
-): ForecastResult<HumiditySummary> {
-    return ForecastResult.Success(
-        HumiditySummary(
-            humidityNow = humidityPeriod[now]?.humidity ?: return ForecastResult.Outdated,
-            dewPointNow = dewPointPeriod[now]?.temperature ?: return ForecastResult.Outdated
-        ),
+): HumiditySummary? {
+    return HumiditySummary(
+        humidityNow = humidityPeriod[now]?.humidity ?: return null,
+        dewPointNow = dewPointPeriod[now]?.temperature ?: return null
     )
 }
 

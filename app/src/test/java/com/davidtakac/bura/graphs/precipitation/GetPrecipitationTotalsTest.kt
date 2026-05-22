@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.graphs.precipitation
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.precipitation.MixedPrecipitation
 import com.davidtakac.bura.forecast.parameters.precipitation.Precipitation
 import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationMoment
@@ -60,10 +59,10 @@ class GetPrecipitationTotalsTest {
                 )
             }
         })
-        val totals = (getPrecipitationTotals(
+        val totals = getPrecipitationTotals(
             startOfFirstDay.plus(8, ChronoUnit.HOURS),
             period
-        ) as ForecastResult.Success).data
+        )
         Assert.assertEquals(
             listOf(
                 PrecipitationTotal.Today(

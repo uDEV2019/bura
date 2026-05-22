@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.visibility
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.visibility.Visibility
 import com.davidtakac.bura.forecast.parameters.visibility.VisibilityPeriod
 import java.time.LocalDateTime
@@ -20,11 +19,9 @@ import java.time.LocalDateTime
 fun getVisibilitySummary(
     now: LocalDateTime,
     visPeriod: VisibilityPeriod
-): ForecastResult<VisibilitySummary> {
-    return ForecastResult.Success(
-        VisibilitySummary(
-            now = visPeriod[now]?.visibility ?: return ForecastResult.Outdated
-        )
+): VisibilitySummary? {
+    return VisibilitySummary(
+        now = visPeriod[now]?.visibility ?: return null
     )
 }
 

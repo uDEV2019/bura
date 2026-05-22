@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.pressure
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.pressure.Pressure
 import com.davidtakac.bura.forecast.parameters.pressure.PressureMoment
 import com.davidtakac.bura.forecast.parameters.pressure.PressurePeriod
@@ -42,12 +41,10 @@ class GetPressureSummaryTest {
         val now = secondMoment.plus(10, ChronoUnit.MINUTES)
         val summary = getPressureSummary(now, period)
         Assert.assertEquals(
-            ForecastResult.Success(
-                PressureSummary(
-                    now = Pressure(1.0, Pressure.Unit.Hectopascal),
-                    average = Pressure(0.5, Pressure.Unit.Hectopascal),
-                    trend = PressureTrend.Rising
-                )
+            PressureSummary(
+                now = Pressure(1.0, Pressure.Unit.Hectopascal),
+                average = Pressure(0.5, Pressure.Unit.Hectopascal),
+                trend = PressureTrend.Rising
             ),
             summary
         )
@@ -65,10 +62,7 @@ class GetPressureSummaryTest {
             )
         )
         val now = firstMoment.plus(1, ChronoUnit.HOURS)
-        Assert.assertEquals(
-            ForecastResult.Outdated,
-            getPressureSummary(now, period)
-        )
+        Assert.assertNull(getPressureSummary(now, period))
     }
 
     @Test
@@ -84,6 +78,6 @@ class GetPressureSummaryTest {
         )
         val now = firstMoment
         val summary = getPressureSummary(now, period)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        Assert.assertNull(summary)
     }
 }

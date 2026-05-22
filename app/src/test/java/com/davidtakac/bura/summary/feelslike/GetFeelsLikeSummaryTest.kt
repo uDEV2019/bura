@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.feelslike
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
 import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
@@ -44,12 +43,10 @@ class GetFeelsLikeSummaryTest {
             )
         )
         Assert.assertEquals(
-            ForecastResult.Success(
-                FeelsLikeSummary(
-                    feelsLikeNow = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
-                    actualNow = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                    vsActual = FeelsVsActual.Colder
-                )
+            FeelsLikeSummary(
+                feelsLikeNow = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
+                actualNow = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                vsActual = FeelsVsActual.Colder
             ),
             getFeelsLikeSummary(now, tempPeriod = temperaturePeriod, feelsPeriod = feelsLikePeriod)
         )
@@ -76,12 +73,10 @@ class GetFeelsLikeSummaryTest {
             )
         )
         Assert.assertEquals(
-            ForecastResult.Success(
-                FeelsLikeSummary(
-                    feelsLikeNow = Temperature(-0.5, Temperature.Unit.DegreesCelsius),
-                    actualNow = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                    vsActual = FeelsVsActual.Similar
-                )
+            FeelsLikeSummary(
+                feelsLikeNow = Temperature(-0.5, Temperature.Unit.DegreesCelsius),
+                actualNow = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                vsActual = FeelsVsActual.Similar
             ),
             getFeelsLikeSummary(now, tempPeriod = temperaturePeriod, feelsPeriod = feelsLikePeriod)
         )
@@ -107,9 +102,10 @@ class GetFeelsLikeSummaryTest {
                 )
             )
         )
-        Assert.assertEquals(
-            ForecastResult.Outdated,
-            getFeelsLikeSummary(now, tempPeriod = temperaturePeriod, feelsPeriod = feelsLikePeriod)
-        )
+        Assert.assertNull(getFeelsLikeSummary(
+            now = now,
+            tempPeriod = temperaturePeriod,
+            feelsPeriod = feelsLikePeriod
+        ))
     }
 }

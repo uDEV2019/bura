@@ -14,7 +14,6 @@ package com.davidtakac.bura.summary.hourly
 
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.pop.Pop
 import com.davidtakac.bura.forecast.parameters.pop.PopPeriod
 import com.davidtakac.bura.forecast.parameters.sun.SunEvent
@@ -29,10 +28,10 @@ fun getHourlySummary(
     popPeriod: PopPeriod,
     condPeriod: ConditionPeriod,
     sunPeriod: SunPeriod?
-): ForecastResult<List<HourSummary>> {
-    val futureTemps = tempPeriod.momentsFrom(now, takeMoments = 24) ?: return ForecastResult.Outdated
-    val futurePops = popPeriod.momentsFrom(now, takeMoments = 24) ?: return ForecastResult.Outdated
-    val futureDesc = condPeriod.momentsFrom(now, takeMoments = 24) ?: return ForecastResult.Outdated
+): List<HourSummary>? {
+    val futureTemps = tempPeriod.momentsFrom(now, takeMoments = 24) ?: return null
+    val futurePops = popPeriod.momentsFrom(now, takeMoments = 24) ?: return null
+    val futureDesc = condPeriod.momentsFrom(now, takeMoments = 24) ?: return null
     val combinedWeatherData = buildList {
         for (i in futureTemps.indices) {
             add(
@@ -56,7 +55,7 @@ fun getHourlySummary(
         }
         ?: listOf()
 
-    return ForecastResult.Success((combinedWeatherData + combinedSunData).sortedBy { it.time })
+    return (combinedWeatherData + combinedSunData).sortedBy { it.time }
 }
 
 sealed interface HourSummary {

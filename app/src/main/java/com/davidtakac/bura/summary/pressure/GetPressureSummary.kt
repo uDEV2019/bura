@@ -13,7 +13,6 @@
 package com.davidtakac.bura.summary.pressure
 
 import com.davidtakac.bura.forecast.parameters.pressure.Pressure
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.pressure.PressurePeriod
 import java.time.LocalDateTime
 import kotlin.math.absoluteValue
@@ -21,14 +20,14 @@ import kotlin.math.absoluteValue
 fun getPressureSummary(
     now: LocalDateTime,
     pressurePeriod: PressurePeriod
-): ForecastResult<PressureSummary> {
-    val pressureToday = pressurePeriod.getDay(now.toLocalDate()) ?: return ForecastResult.Outdated
-    val pressureNow = pressurePeriod[now]?.pressure ?: return ForecastResult.Outdated
+): PressureSummary? {
+    val pressureToday = pressurePeriod.getDay(now.toLocalDate()) ?: return null
+    val pressureNow = pressurePeriod[now]?.pressure ?: return null
 
     val nowHpa = pressureNow.convertTo(Pressure.Unit.Hectopascal).value
     val pastHpa = pressurePeriod.momentsUntil(now, takeMoments = 2)?.firstOrNull()
         ?.pressure?.convertTo(Pressure.Unit.Hectopascal)?.value
-        ?: return ForecastResult.Outdated
+        ?: return null
     val diffHpa = (nowHpa - pastHpa).absoluteValue
     val trend = when {
         diffHpa < 1 -> PressureTrend.Stable
@@ -36,12 +35,10 @@ fun getPressureSummary(
         else -> PressureTrend.Falling
     }
 
-    return ForecastResult.Success(
-        PressureSummary(
-            now = pressureNow,
-            average = pressureToday.average,
-            trend = trend
-        ),
+    return PressureSummary(
+        now = pressureNow,
+        average = pressureToday.average,
+        trend = trend
     )
 }
 

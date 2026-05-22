@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.graphs.pop
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
@@ -49,7 +48,7 @@ class GetPopGraphsTest {
                 ConditionMoment(hour = thirdMoment, condition = Condition(2, true))
             )
         )
-        val graphs = (getPopGraphs(now, popPeriod, conditionPeriod) as ForecastResult.Success).data
+        val graphs = getPopGraphs(now, popPeriod, conditionPeriod)
         Assert.assertEquals(
             listOf(
                 PopGraph(

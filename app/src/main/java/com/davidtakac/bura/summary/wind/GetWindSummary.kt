@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.wind
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.gust.GustPeriod
 import com.davidtakac.bura.forecast.parameters.wind.Wind
 import com.davidtakac.bura.forecast.parameters.wind.WindPeriod
@@ -23,12 +22,10 @@ fun getWindSummary(
     now: LocalDateTime,
     windPeriod: WindPeriod,
     gustPeriod: GustPeriod
-): ForecastResult<WindSummary> {
-    return ForecastResult.Success(
-        WindSummary(
-            windNow = windPeriod[now]?.wind ?: return ForecastResult.Outdated,
-            gustNow = gustPeriod[now]?.speed ?: return ForecastResult.Outdated
-        )
+): WindSummary? {
+    return WindSummary(
+        windNow = windPeriod[now]?.wind ?: return null,
+        gustNow = gustPeriod[now]?.speed ?: return null
     )
 }
 

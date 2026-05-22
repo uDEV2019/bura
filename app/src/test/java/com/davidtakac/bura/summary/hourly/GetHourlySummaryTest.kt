@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.hourly
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
@@ -80,41 +79,44 @@ class GetHourlySummaryTest {
                 SunMoment(sunsetMoment, SunEvent.Set)
             )
         )
-        val summary =
-            getHourlySummary(now, temperaturePeriod, popPeriod, conditionPeriod, sunPeriod)
+        val summary = getHourlySummary(
+            now = now,
+            tempPeriod = temperaturePeriod,
+            popPeriod = popPeriod,
+            condPeriod = conditionPeriod,
+            sunPeriod = sunPeriod
+        )
         Assert.assertEquals(
-            ForecastResult.Success(
-                listOf(
-                    HourSummary.Weather(
-                        time = firstMoment,
-                        isNow = true,
-                        temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                        desc = Condition(wmoCode = 1, isDay = false),
-                        pop = null
-                    ),
-                    HourSummary.Sun(
-                        time = sunriseMoment,
-                        event = SunEvent.Rise
-                    ),
-                    HourSummary.Weather(
-                        time = secondMoment,
-                        isNow = false,
-                        temp = Temperature(1.0, Temperature.Unit.DegreesCelsius),
-                        desc = Condition(wmoCode = 1, isDay = true),
-                        pop = Pop(10.0)
-                    ),
-                    HourSummary.Sun(
-                        time = sunsetMoment,
-                        event = SunEvent.Set
-                    ),
-                    HourSummary.Weather(
-                        time = thirdMoment,
-                        isNow = false,
-                        temp = Temperature(2.0, Temperature.Unit.DegreesCelsius),
-                        desc = Condition(wmoCode = 1, isDay = false),
-                        pop = Pop(10.0)
-                    ),
-                )
+            listOf(
+                HourSummary.Weather(
+                    time = firstMoment,
+                    isNow = true,
+                    temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                    desc = Condition(wmoCode = 1, isDay = false),
+                    pop = null
+                ),
+                HourSummary.Sun(
+                    time = sunriseMoment,
+                    event = SunEvent.Rise
+                ),
+                HourSummary.Weather(
+                    time = secondMoment,
+                    isNow = false,
+                    temp = Temperature(1.0, Temperature.Unit.DegreesCelsius),
+                    desc = Condition(wmoCode = 1, isDay = true),
+                    pop = Pop(10.0)
+                ),
+                HourSummary.Sun(
+                    time = sunsetMoment,
+                    event = SunEvent.Set
+                ),
+                HourSummary.Weather(
+                    time = thirdMoment,
+                    isNow = false,
+                    temp = Temperature(2.0, Temperature.Unit.DegreesCelsius),
+                    desc = Condition(wmoCode = 1, isDay = false),
+                    pop = Pop(10.0)
+                ),
             ),
             summary
         )
@@ -148,8 +150,14 @@ class GetHourlySummaryTest {
                 )
             )
         )
-        val summary = getHourlySummary(now, temperaturePeriod, popPeriod, conditionPeriod, null)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        val summary = getHourlySummary(
+            now = now,
+            tempPeriod = temperaturePeriod,
+            popPeriod = popPeriod,
+            condPeriod = conditionPeriod,
+            sunPeriod = null
+        )
+        Assert.assertNull(summary)
     }
 
     @Test
@@ -189,18 +197,21 @@ class GetHourlySummaryTest {
                 SunMoment(time = pastSunset, event = SunEvent.Set)
             )
         )
-        val summary =
-            getHourlySummary(now, temperaturePeriod, popPeriod, conditionPeriod, sunPeriod)
+        val summary = getHourlySummary(
+            now = now,
+            tempPeriod = temperaturePeriod,
+            popPeriod = popPeriod,
+            condPeriod = conditionPeriod,
+            sunPeriod = sunPeriod
+        )
         Assert.assertEquals(
-            ForecastResult.Success(
-                listOf(
-                    HourSummary.Weather(
-                        time = firstMoment.atZone(ZoneId.of("GMT")).toLocalDateTime(),
-                        isNow = true,
-                        temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                        desc = Condition(wmoCode = 1, isDay = false),
-                        pop = null
-                    ),
+            listOf(
+                HourSummary.Weather(
+                    time = firstMoment.atZone(ZoneId.of("GMT")).toLocalDateTime(),
+                    isNow = true,
+                    temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                    desc = Condition(wmoCode = 1, isDay = false),
+                    pop = null
                 ),
             ),
             summary

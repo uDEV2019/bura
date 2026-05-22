@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.graphs.temperature
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
@@ -49,11 +48,11 @@ class GetTemperatureGraphsTest {
                 TemperatureMoment(thirdMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius))
             )
         )
-        val result = (getTemperatureGraphs(
+        val result = getTemperatureGraphs(
             now,
             tempPeriod,
             condPeriod
-        ) as ForecastResult.Success).data.graphs.first()
+        )?.graphs?.first()
         Assert.assertEquals(
             TemperatureGraph(
                 day = LocalDate.parse("1970-01-01"),
@@ -120,12 +119,12 @@ class GetTemperatureGraphsTest {
                 TemperatureMoment(thirdMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius))
             )
         )
-        val result = (getTemperatureGraphs(
+        val result = getTemperatureGraphs(
             now,
             tempPeriod,
             condPeriod
-        ) as ForecastResult.Success).data.graphs.first()
-        assert(result.points.all { it.temperature.meta == GraphTemperature.Meta.Regular })
+        )?.graphs?.first()
+        assert(result?.points?.all { it.temperature.meta == GraphTemperature.Meta.Regular } == true)
     }
 
     @Test
@@ -148,14 +147,14 @@ class GetTemperatureGraphsTest {
                 TemperatureMoment(thirdMoment, Temperature(2.0, Temperature.Unit.DegreesCelsius))
             )
         )
-        val result = (getTemperatureGraphs(
+        val result = getTemperatureGraphs(
             now,
             tempPeriod,
             condPeriod
-        ) as ForecastResult.Success).data.graphs.first()
+        )?.graphs?.first()
         Assert.assertEquals(
             LocalTime.parse("01:00"),
-            result.points.first { it.temperature.meta == GraphTemperature.Meta.Minimum }.time.value
+            result?.points?.first { it.temperature.meta == GraphTemperature.Meta.Minimum }?.time?.value
         )
     }
 
@@ -176,11 +175,11 @@ class GetTemperatureGraphsTest {
                 TemperatureMoment(secondMoment, Temperature(1.0, Temperature.Unit.DegreesCelsius)),
             )
         )
-        val result = (getTemperatureGraphs(
+        val result = getTemperatureGraphs(
             now,
             tempPeriod,
             condPeriod
-        ) as ForecastResult.Success).data.graphs.first()
+        )?.graphs?.first()
         Assert.assertEquals(
             TemperatureGraph(
                 day = LocalDate.parse("1970-01-01"),

@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.now
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
@@ -74,14 +73,12 @@ class GetNowSummaryTest {
             )
             val summary = getNowSummary(now, temperaturePeriod, feelsLikePeriod, conditionPeriod)
             Assert.assertEquals(
-                ForecastResult.Success(
-                    NowSummary(
-                        temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                        feelsLike = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
-                        minTemp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
-                        maxTemp = Temperature(1.0, Temperature.Unit.DegreesCelsius),
-                        cond = Condition(1, false)
-                    )
+                NowSummary(
+                    temp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                    feelsLike = Temperature(-1.0, Temperature.Unit.DegreesCelsius),
+                    minTemp = Temperature(0.0, Temperature.Unit.DegreesCelsius),
+                    maxTemp = Temperature(1.0, Temperature.Unit.DegreesCelsius),
+                    cond = Condition(1, false)
                 ),
                 summary
             )
@@ -107,9 +104,13 @@ class GetNowSummaryTest {
                 ConditionMoment(firstMoment, Condition(wmoCode = 1, isDay = false)),
             )
         )
-        Assert.assertEquals(
-            ForecastResult.Outdated,
-            getNowSummary(now, temperaturePeriod, feelsLikePeriod, conditionPeriod)
+        Assert.assertNull(
+            getNowSummary(
+                now = now,
+                tempPeriod = temperaturePeriod,
+                feelsPeriod = feelsLikePeriod,
+                condPeriod = conditionPeriod
+            )
         )
     }
 }

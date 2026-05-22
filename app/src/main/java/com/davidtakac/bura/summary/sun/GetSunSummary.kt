@@ -13,7 +13,6 @@
 package com.davidtakac.bura.summary.sun
 
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.sun.SunEvent
 import com.davidtakac.bura.forecast.parameters.sun.SunMoment
 import com.davidtakac.bura.forecast.parameters.sun.SunPeriod
@@ -28,28 +27,29 @@ fun getSunSummary(
     now: LocalDateTime,
     sunPeriod: SunPeriod?,
     condPeriod: ConditionPeriod
-): ForecastResult<SunSummary> {
+): SunSummary? {
     val futureSun = sunPeriod?.momentsFrom(now)
     val firstSun = futureSun?.firstOrNull()
     return when {
         firstSun == null -> outOfSight(now, condPeriod)
-        firstSun.event == SunEvent.Rise -> ForecastResult.Success(sunrise(now, futureSun, firstSun))
-        else -> ForecastResult.Success(sunset(now, futureSun, firstSun))
+        firstSun.event == SunEvent.Rise -> sunrise(now, futureSun, firstSun)
+        else -> sunset(now, futureSun, firstSun)
     }
 }
 
 private fun outOfSight(
     now: LocalDateTime,
     condPeriod: ConditionPeriod
-): ForecastResult<SunSummary> {
-    val futureDesc = condPeriod.momentsFrom(now) ?: return ForecastResult.Outdated
+): SunSummary? {
+    val futureDesc = condPeriod.momentsFrom(now) ?: return null
     val isDayNow = futureDesc[now]!!.condition.isDay
     val lastMoment = futureDesc.last().hour
     val duration = Duration.between(now, lastMoment).plusHours(1)
-    return ForecastResult.Success(
-        if (isDayNow) Sunset.OutOfSight(duration)
-        else Sunrise.OutOfSight(duration)
-    )
+    return if (isDayNow) {
+        Sunset.OutOfSight(duration)
+    } else {
+        Sunrise.OutOfSight(duration)
+    }
 }
 
 private fun sunrise(

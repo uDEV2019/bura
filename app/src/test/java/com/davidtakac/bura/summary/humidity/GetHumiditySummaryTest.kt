@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.humidity
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.humidity.Humidity
 import com.davidtakac.bura.forecast.parameters.humidity.HumidityMoment
 import com.davidtakac.bura.forecast.parameters.humidity.HumidityPeriod
@@ -40,11 +39,9 @@ class GetHumiditySummaryTest {
             )
         )
         Assert.assertEquals(
-            ForecastResult.Success(
-                HumiditySummary(
-                    humidityNow = Humidity(0.0),
-                    dewPointNow = Temperature(0.0, Temperature.Unit.DegreesCelsius)
-                )
+            HumiditySummary(
+                humidityNow = Humidity(0.0),
+                dewPointNow = Temperature(0.0, Temperature.Unit.DegreesCelsius)
             ),
             getHumiditySummary(now, humidityPeriod, dewPointPeriod)
         )
@@ -63,9 +60,6 @@ class GetHumiditySummaryTest {
                 )
             )
         )
-        Assert.assertEquals(
-            ForecastResult.Outdated,
-            getHumiditySummary(now, humidityPeriod, dewPointPeriod)
-        )
+        Assert.assertNull(getHumiditySummary(now, humidityPeriod, dewPointPeriod))
     }
 }

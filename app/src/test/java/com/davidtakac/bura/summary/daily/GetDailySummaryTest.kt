@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.daily
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
@@ -97,20 +96,18 @@ class GetDailySummaryTest {
         )
         val summary = getDailySummary(now, temperaturePeriod, conditionPeriod, popPeriod)
         Assert.assertEquals(
-            ForecastResult.Success(
-                DailySummary(
-                    minTemp = Temperature(3.0, Temperature.Unit.DegreesCelsius),
-                    maxTemp = Temperature(4.0, Temperature.Unit.DegreesCelsius),
-                    days = listOf(
-                        DaySummary(
-                            isToday = true,
-                            time = secondDayFirstMoment.atZone(ZoneId.of("GMT")).toLocalDate(),
-                            tempNow = Temperature(3.0, Temperature.Unit.DegreesCelsius),
-                            min = Temperature(3.0, Temperature.Unit.DegreesCelsius),
-                            max = Temperature(4.0, Temperature.Unit.DegreesCelsius),
-                            desc = Condition(wmoCode = 5, isDay = false),
-                            pop = Pop(5.0)
-                        )
+            DailySummary(
+                minTemp = Temperature(3.0, Temperature.Unit.DegreesCelsius),
+                maxTemp = Temperature(4.0, Temperature.Unit.DegreesCelsius),
+                days = listOf(
+                    DaySummary(
+                        isToday = true,
+                        time = secondDayFirstMoment.atZone(ZoneId.of("GMT")).toLocalDate(),
+                        tempNow = Temperature(3.0, Temperature.Unit.DegreesCelsius),
+                        min = Temperature(3.0, Temperature.Unit.DegreesCelsius),
+                        max = Temperature(4.0, Temperature.Unit.DegreesCelsius),
+                        desc = Condition(wmoCode = 5, isDay = false),
+                        pop = Pop(5.0)
                     )
                 )
             ),
@@ -147,6 +144,6 @@ class GetDailySummaryTest {
             )
         )
         val summary = getDailySummary(now, temperaturePeriod, conditionPeriod, popPeriod)
-        Assert.assertEquals(ForecastResult.Outdated, summary)
+        Assert.assertNull(summary)
     }
 }

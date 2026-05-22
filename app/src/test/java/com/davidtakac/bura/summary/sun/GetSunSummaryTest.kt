@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.sun
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
@@ -50,7 +49,7 @@ class GetSunSummaryTest {
                 time = firstMoment.toLocalTime(),
                 sunset = secondMoment.toLocalTime()
             ),
-            (summary as ForecastResult.Success).data
+            summary
         )
     }
 
@@ -78,7 +77,7 @@ class GetSunSummaryTest {
                 time = firstMoment.toLocalTime(),
                 sunrise = secondMoment.toLocalTime()
             ),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -105,7 +104,7 @@ class GetSunSummaryTest {
                 time = firstMoment.toLocalTime(),
                 sunset = secondMoment
             ),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -130,7 +129,7 @@ class GetSunSummaryTest {
                 time = firstMoment.toLocalTime(),
                 sunrise = secondMoment
             ),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -150,7 +149,7 @@ class GetSunSummaryTest {
         )
         Assert.assertEquals(
             Sunrise.Later(firstMoment),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -170,7 +169,7 @@ class GetSunSummaryTest {
         )
         Assert.assertEquals(
             Sunset.Later(firstMoment),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -186,7 +185,7 @@ class GetSunSummaryTest {
         })
         Assert.assertEquals(
             Sunrise.OutOfSight(Duration.ofHours(48)),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -202,7 +201,7 @@ class GetSunSummaryTest {
         })
         Assert.assertEquals(
             Sunset.OutOfSight(Duration.ofHours(48)),
-            (getSunSummary(now, sunPeriod, condPeriod) as ForecastResult.Success).data
+            getSunSummary(now, sunPeriod, condPeriod)
         )
     }
 
@@ -217,6 +216,6 @@ class GetSunSummaryTest {
             )
         })
         val now = start.plus(48.toLong(), ChronoUnit.HOURS)
-        Assert.assertEquals(ForecastResult.Outdated, getSunSummary(now, sunPeriod, condPeriod))
+        Assert.assertNull(getSunSummary(now, sunPeriod, condPeriod))
     }
 }

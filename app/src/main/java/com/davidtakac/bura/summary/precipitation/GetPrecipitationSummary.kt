@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.precipitation
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.precipitation.Precipitation
 import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationPeriod
 import java.time.LocalDate
@@ -25,10 +24,10 @@ private const val FUTURE_HOURS = 24
 fun getPrecipitationSummary(
     now: LocalDateTime,
     precipPeriod: PrecipitationPeriod
-): ForecastResult<PrecipitationSummary> {
-    val past = calculatePast(now, precipPeriod) ?: return ForecastResult.Outdated
-    val future = calculateFuture(now, precipPeriod) ?: return ForecastResult.Outdated
-    return ForecastResult.Success(PrecipitationSummary(past, future))
+): PrecipitationSummary? {
+    val past = calculatePast(now, precipPeriod) ?: return null
+    val future = calculateFuture(now, precipPeriod) ?: return null
+    return PrecipitationSummary(past, future)
 }
 
 private fun calculatePast(

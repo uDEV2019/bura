@@ -15,11 +15,10 @@ package com.davidtakac.bura.graphs.pop
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
-import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.graphs.common.GraphTime
 import com.davidtakac.bura.forecast.parameters.pop.Pop
 import com.davidtakac.bura.forecast.parameters.pop.PopMoment
 import com.davidtakac.bura.forecast.parameters.pop.PopPeriod
+import com.davidtakac.bura.graphs.common.GraphTime
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -27,17 +26,15 @@ fun getPopGraphs(
     now: LocalDateTime,
     popPeriod: PopPeriod,
     conditionPeriod: ConditionPeriod,
-): ForecastResult<List<PopGraph>> {
-    val popDays = popPeriod.daysFrom(now.toLocalDate()) ?: return ForecastResult.Outdated
-    val conditionDays = conditionPeriod.daysFrom(now.toLocalDate()) ?: return ForecastResult.Outdated
-    return ForecastResult.Success(
-        data = popDays.mapIndexed { idx, popDay ->
-            val conditionDay = conditionDays[idx]
-            val popTomorrow = popDays.getOrNull(idx + 1)
-            val conditionTomorrow = conditionDays.getOrNull(idx + 1)
-            getPopGraph(now, popDay, conditionDay, popTomorrow, conditionTomorrow)
-        }
-    )
+): List<PopGraph>? {
+    val popDays = popPeriod.daysFrom(now.toLocalDate()) ?: return null
+    val conditionDays = conditionPeriod.daysFrom(now.toLocalDate()) ?: return null
+    return popDays.mapIndexed { idx, popDay ->
+        val conditionDay = conditionDays[idx]
+        val popTomorrow = popDays.getOrNull(idx + 1)
+        val conditionTomorrow = conditionDays.getOrNull(idx + 1)
+        getPopGraph(now, popDay, conditionDay, popTomorrow, conditionTomorrow)
+    }
 }
 
 private fun getPopGraph(

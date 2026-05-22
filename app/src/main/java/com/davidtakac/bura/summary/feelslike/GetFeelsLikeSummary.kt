@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.feelslike
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import java.time.LocalDateTime
@@ -22,18 +21,16 @@ fun getFeelsLikeSummary(
     now: LocalDateTime,
     tempPeriod: TemperaturePeriod,
     feelsPeriod: TemperaturePeriod
-): ForecastResult<FeelsLikeSummary> {
-    val feelsNow = feelsPeriod[now]?.temperature ?: return ForecastResult.Outdated
-    val actualNow = tempPeriod[now]?.temperature ?: return ForecastResult.Outdated
-    return ForecastResult.Success(
-        FeelsLikeSummary(
-            feelsLikeNow = feelsNow,
-            actualNow = actualNow,
-            vsActual = calculateComparedToActual(
-                actualTemp = actualNow,
-                feelsLikeTemp = feelsNow
-            )
-        ),
+): FeelsLikeSummary? {
+    val feelsNow = feelsPeriod[now]?.temperature ?: return null
+    val actualNow = tempPeriod[now]?.temperature ?: return null
+    return FeelsLikeSummary(
+        feelsLikeNow = feelsNow,
+        actualNow = actualNow,
+        vsActual = calculateComparedToActual(
+            actualTemp = actualNow,
+            feelsLikeTemp = feelsNow
+        )
     )
 }
 

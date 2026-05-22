@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.graphs.precipitation
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.precipitation.Precipitation
 import com.davidtakac.bura.forecast.parameters.precipitation.PrecipitationPeriod
 import java.time.LocalDate
@@ -24,23 +23,21 @@ private const val FUTURE_HOURS = 24
 fun getPrecipitationTotals(
     now: LocalDateTime,
     precipPeriod: PrecipitationPeriod
-): ForecastResult<List<PrecipitationTotal>> {
-    val today = getToday(precipPeriod, now) ?: return ForecastResult.Outdated
-    val days = precipPeriod.daysFrom(now.toLocalDate()) ?: return ForecastResult.Outdated
+): List<PrecipitationTotal>? {
+    val today = getToday(precipPeriod, now) ?: return null
+    val days = precipPeriod.daysFrom(now.toLocalDate()) ?: return null
     val daysAfterToday = days.subList(1, days.size)
-    return ForecastResult.Success(
-        data = buildList {
-            add(today)
-            addAll(
-                daysAfterToday.map { day ->
-                    PrecipitationTotal.OtherDay(
-                        day = day.first().hour.toLocalDate(),
-                        total = day.total.reduce()
-                    )
-                }
-            )
-        }
-    )
+    return buildList {
+        add(today)
+        addAll(
+            daysAfterToday.map { day ->
+                PrecipitationTotal.OtherDay(
+                    day = day.first().hour.toLocalDate(),
+                    total = day.total.reduce()
+                )
+            }
+        )
+    }
 }
 
 private fun getToday(period: PrecipitationPeriod, now: LocalDateTime): PrecipitationTotal.Today? {

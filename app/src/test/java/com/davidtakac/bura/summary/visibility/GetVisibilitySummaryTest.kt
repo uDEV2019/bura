@@ -12,7 +12,6 @@
 
 package com.davidtakac.bura.summary.visibility
 
-import com.davidtakac.bura.forecast.ForecastResult
 import com.davidtakac.bura.forecast.parameters.visibility.Visibility
 import com.davidtakac.bura.forecast.parameters.visibility.VisibilityMoment
 import com.davidtakac.bura.forecast.parameters.visibility.VisibilityPeriod
@@ -42,13 +41,13 @@ class GetVisibilitySummaryTest {
         val now = unixEpochStart.plus(1, ChronoUnit.HOURS).plus(10, ChronoUnit.MINUTES)
         Assert.assertEquals(
             Visibility(2.0, Visibility.Unit.Meters),
-            (getVisibilitySummary(now, period) as ForecastResult.Success).data.now
+            getVisibilitySummary(now, period)?.now
         )
     }
 
     @Test
     fun `summary is outdated when no now`() = runTest {
         val now = unixEpochStart.plus(3, ChronoUnit.HOURS).plus(10, ChronoUnit.MINUTES)
-        Assert.assertEquals(ForecastResult.Outdated, getVisibilitySummary(now, period))
+        Assert.assertNull(getVisibilitySummary(now, period))
     }
 }

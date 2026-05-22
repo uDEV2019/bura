@@ -18,10 +18,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.davidtakac.bura.App
 import com.davidtakac.bura.forecast.ForecastRepository
-import com.davidtakac.bura.forecast.ForecastResult
+import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
+import com.davidtakac.bura.graphs.pop.PopGraph
 import com.davidtakac.bura.graphs.pop.getPopGraphs
-import com.davidtakac.bura.graphs.precipitation.PrecipitationTotal
 import com.davidtakac.bura.graphs.precipitation.PrecipitationGraphs
+import com.davidtakac.bura.graphs.precipitation.PrecipitationTotal
 import com.davidtakac.bura.graphs.precipitation.getPrecipitationGraphs
 import com.davidtakac.bura.graphs.precipitation.getPrecipitationTotals
 import com.davidtakac.bura.graphs.temperature.TemperatureGraphSummary
@@ -29,8 +30,6 @@ import com.davidtakac.bura.graphs.temperature.TemperatureGraphs
 import com.davidtakac.bura.graphs.temperature.getTemperatureGraphSummaries
 import com.davidtakac.bura.graphs.temperature.getTemperatureGraphs
 import com.davidtakac.bura.places.selected.SelectedPlaceRepository
-import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
-import com.davidtakac.bura.graphs.pop.PopGraph
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -60,47 +59,42 @@ class EssentialGraphsViewModel(
         val now = Instant.now().atZone(location.timeZone).toLocalDateTime()
         val forecast = forecastRepo.get(coords, units) ?: return EssentialGraphsState.FailedToDownload
 
-        val tempGraphSummaries = getTemperatureGraphSummaries(now, tempPeriod = forecast.temperature, feelsPeriod = forecast.feelsLike, forecast.condition)
-        when (tempGraphSummaries) {
-            ForecastResult.FailedToDownload -> return EssentialGraphsState.FailedToDownload
-            ForecastResult.Outdated -> return EssentialGraphsState.Outdated
-            is ForecastResult.Success -> Unit
-        }
+        val tempGraphSummaries = getTemperatureGraphSummaries(
+            now = now,
+            tempPeriod = forecast.temperature,
+            feelsPeriod = forecast.feelsLike,
+            condPeriod = forecast.condition
+        ) ?: return EssentialGraphsState.Outdated
 
-        val tempGraphs = getTemperatureGraphs(now, forecast.temperature, forecast.condition)
-        when (tempGraphs) {
-            ForecastResult.FailedToDownload -> return EssentialGraphsState.FailedToDownload
-            ForecastResult.Outdated -> return EssentialGraphsState.Outdated
-            is ForecastResult.Success -> Unit
-        }
+        val tempGraphs = getTemperatureGraphs(
+            now = now,
+            tempPeriod = forecast.temperature,
+            condPeriod = forecast.condition
+        ) ?: return EssentialGraphsState.Outdated
 
-        val popGraphs = getPopGraphs(now, forecast.pop, forecast.condition)
-        when (popGraphs) {
-            ForecastResult.FailedToDownload -> return EssentialGraphsState.FailedToDownload
-            ForecastResult.Outdated -> return EssentialGraphsState.Outdated
-            is ForecastResult.Success -> Unit
-        }
+        val popGraphs = getPopGraphs(
+            now = now,
+            popPeriod = forecast.pop,
+            conditionPeriod = forecast.condition
+        ) ?: return EssentialGraphsState.Outdated
 
-        val precipGraphs = getPrecipitationGraphs(now, forecast.precipitation, forecast.condition)
-        when (precipGraphs) {
-            ForecastResult.FailedToDownload -> return EssentialGraphsState.FailedToDownload
-            ForecastResult.Outdated -> return EssentialGraphsState.Outdated
-            is ForecastResult.Success -> Unit
-        }
+        val precipGraphs = getPrecipitationGraphs(
+            now = now,
+            precipPeriod = forecast.precipitation,
+            condPeriod = forecast.condition
+        ) ?: return EssentialGraphsState.Outdated
 
-        val precipTotals = getPrecipitationTotals(now, forecast.precipitation)
-        when (precipTotals) {
-            ForecastResult.FailedToDownload -> return EssentialGraphsState.FailedToDownload
-            ForecastResult.Outdated -> return EssentialGraphsState.Outdated
-            is ForecastResult.Success -> Unit
-        }
+        val precipTotals = getPrecipitationTotals(
+            now = now,
+            precipPeriod = forecast.precipitation
+        ) ?: return EssentialGraphsState.Outdated
 
         return EssentialGraphsState.Success(
-            tempGraphSummaries = tempGraphSummaries.data,
-            tempGraphs = tempGraphs.data,
-            popGraphs = popGraphs.data,
-            precipGraphs = precipGraphs.data,
-            precipTotals = precipTotals.data
+            tempGraphSummaries = tempGraphSummaries,
+            tempGraphs = tempGraphs,
+            popGraphs = popGraphs,
+            precipGraphs = precipGraphs,
+            precipTotals = precipTotals
         )
     }
 

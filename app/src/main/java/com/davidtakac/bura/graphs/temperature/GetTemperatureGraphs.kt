@@ -12,13 +12,12 @@
 
 package com.davidtakac.bura.graphs.temperature
 
-import com.davidtakac.bura.forecast.ForecastResult
-import com.davidtakac.bura.forecast.parameters.temperature.Temperature
-import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
-import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.ConditionMoment
 import com.davidtakac.bura.forecast.parameters.condition.ConditionPeriod
+import com.davidtakac.bura.forecast.parameters.temperature.Temperature
+import com.davidtakac.bura.forecast.parameters.temperature.TemperatureMoment
+import com.davidtakac.bura.forecast.parameters.temperature.TemperaturePeriod
 import com.davidtakac.bura.graphs.common.GraphTime
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -27,18 +26,16 @@ fun getTemperatureGraphs(
     now: LocalDateTime,
     tempPeriod: TemperaturePeriod,
     condPeriod: ConditionPeriod
-): ForecastResult<TemperatureGraphs> {
-    val tempDays = tempPeriod.daysFrom(now.toLocalDate()) ?: return ForecastResult.Outdated
-    val conditionDays = condPeriod.daysFrom(now.toLocalDate()) ?: return ForecastResult.Outdated
-    return ForecastResult.Success(
-        data = TemperatureGraphs(
-            minTemp = tempPeriod.minimum,
-            maxTemp = tempPeriod.maximum,
-            graphs = getGraphs(
-                now = now,
-                tempDays = tempDays,
-                conditionDays = conditionDays
-            )
+): TemperatureGraphs? {
+    val tempDays = tempPeriod.daysFrom(now.toLocalDate()) ?: return null
+    val conditionDays = condPeriod.daysFrom(now.toLocalDate()) ?: return null
+    return TemperatureGraphs(
+        minTemp = tempPeriod.minimum,
+        maxTemp = tempPeriod.maximum,
+        graphs = getGraphs(
+            now = now,
+            tempDays = tempDays,
+            conditionDays = conditionDays
         )
     )
 }
