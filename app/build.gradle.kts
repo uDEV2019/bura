@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 /*
  * Copyright 2024 David Takač
  *
@@ -14,7 +12,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -25,12 +22,11 @@ android {
     defaultConfig {
         applicationId = "com.davidtakac.bura"
         minSdk = 28
-        targetSdk = 36
         versionCode = 18
         versionName = "1.8.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        // This is deprecated, but the alternative is incubating
+        // This is deprecated, but the alternative (androidResources.localeFilters) is incubating
         @Suppress("DEPRECATION")
         resourceConfigurations.addAll(
             listOf(
@@ -73,12 +69,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
     }
 }
 
