@@ -147,21 +147,21 @@ private fun SummaryGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         columns = StaggeredGridCells.Fixed(2)
     ) {
-        item(span = StaggeredGridItemSpan.Companion.FullLine) {}
-        item(span = StaggeredGridItemSpan.Companion.FullLine) {
+        item(span = StaggeredGridItemSpan.FullLine) {}
+        item(span = StaggeredGridItemSpan.FullLine) {
             NowSummary(
                 state = state.now,
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        item(span = StaggeredGridItemSpan.Companion.FullLine) {
+        item(span = StaggeredGridItemSpan.FullLine) {
             HourSummaryLazyRow(
                 state = state.hourly,
                 onClick = onHourlyClick,
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        item(span = StaggeredGridItemSpan.Companion.FullLine) {
+        item(span = StaggeredGridItemSpan.FullLine) {
             DailySummaryColumn(
                 state = state.daily,
                 onDayClick = onDayClick,
@@ -217,14 +217,14 @@ private fun SummaryGrid(
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        item(span = StaggeredGridItemSpan.Companion.FullLine) {
+        item(span = StaggeredGridItemSpan.FullLine) {
             Text(
                 text = stringResource(id = R.string.credit_weather),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        item(span = StaggeredGridItemSpan.Companion.FullLine) {}
+        item(span = StaggeredGridItemSpan.FullLine) {}
     }
 }
 

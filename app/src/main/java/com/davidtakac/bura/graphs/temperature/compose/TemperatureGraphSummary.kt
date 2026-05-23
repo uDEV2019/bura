@@ -27,19 +27,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.davidtakac.bura.R
-import com.davidtakac.bura.theme.AppTheme
 import com.davidtakac.bura.common.compose.HighLowText
 import com.davidtakac.bura.forecast.parameters.condition.Condition
 import com.davidtakac.bura.forecast.parameters.condition.image
 import com.davidtakac.bura.forecast.parameters.condition.string
-import com.davidtakac.bura.summary.now.compose.NowSummary
 import com.davidtakac.bura.forecast.parameters.temperature.Temperature
 import com.davidtakac.bura.forecast.parameters.temperature.string
 import com.davidtakac.bura.graphs.temperature.TemperatureGraphSummary
+import com.davidtakac.bura.summary.now.compose.NowSummary
+import com.davidtakac.bura.theme.AppTheme
 import java.time.LocalDate
 
 @Composable
-fun TemperatureGraphSummary(state: com.davidtakac.bura.graphs.temperature.TemperatureGraphSummary, modifier: Modifier = Modifier) {
+fun TemperatureGraphSummary(state: TemperatureGraphSummary, modifier: Modifier = Modifier) {
     val now = state.now
     NowSummary(
         temperature = {
