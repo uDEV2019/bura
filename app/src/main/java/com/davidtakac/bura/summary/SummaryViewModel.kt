@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.davidtakac.bura.App
+import com.davidtakac.bura.common.util.launchCatching
 import com.davidtakac.bura.forecast.ForecastRepository
 import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
 import com.davidtakac.bura.places.selected.SelectedPlaceRepository
@@ -42,21 +43,25 @@ import com.davidtakac.bura.summary.visibility.VisibilitySummary
 import com.davidtakac.bura.summary.visibility.getVisibilitySummary
 import com.davidtakac.bura.summary.wind.WindSummary
 import com.davidtakac.bura.summary.wind.getWindSummary
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorSetter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import java.time.Instant
 
 class SummaryViewModel(
     private val placeRepo: SelectedPlaceRepository,
     private val unitsRepo: SelectedUnitsRepository,
-    private val forecastRepo: ForecastRepository
+    private val forecastRepo: ForecastRepository,
+    private val unexpectedErrorSetter: UnexpectedErrorSetter
 ) : ViewModel() {
-    private val _state = MutableStateFlow<SummaryState>(SummaryState.Loading)
+    private val _state = MutableStateFlow<SummaryState>(SummaryState.Initial)
     val state = _state.asStateFlow()
 
     fun getSummary() {
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
+            if (_state.value == SummaryState.Loading) {
+                return@launchCatching
+            }
             if (_state.value !is SummaryState.Success) {
                 _state.value = SummaryState.Loading
             }
@@ -160,7 +165,8 @@ class SummaryViewModel(
                 return SummaryViewModel(
                     container.selectedPlaceRepo,
                     container.selectedUnitsRepo,
-                    container.forecastRepo
+                    container.forecastRepo,
+                    container.unexpectedErrorSetter
                 ) as T
             }
         }
@@ -186,4 +192,5 @@ sealed interface SummaryState {
     data object FailedToDownload : SummaryState
     data object Outdated : SummaryState
     data object NoSelectedPlace : SummaryState
+    data object Initial : SummaryState
 }

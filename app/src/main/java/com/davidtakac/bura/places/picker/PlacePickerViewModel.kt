@@ -17,16 +17,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.davidtakac.bura.App
+import com.davidtakac.bura.common.util.launchCatching
 import com.davidtakac.bura.places.Place
 import com.davidtakac.bura.places.saved.DeletePlace
-import com.davidtakac.bura.places.saved.SavedPlace
 import com.davidtakac.bura.places.saved.GetSavedPlaces
+import com.davidtakac.bura.places.saved.SavedPlace
 import com.davidtakac.bura.places.search.SearchPlaces
 import com.davidtakac.bura.places.selected.SelectPlace
 import com.davidtakac.bura.places.selected.SelectedPlaceRepository
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorSetter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import java.time.Instant
 
 class PlacePickerViewModel(
@@ -34,7 +35,8 @@ class PlacePickerViewModel(
     private val selectPlace: SelectPlace,
     private val getSavedPlaces: GetSavedPlaces,
     private val searchPlaces: SearchPlaces,
-    private val deletePlace: DeletePlace
+    private val deletePlace: DeletePlace,
+    private val unexpectedErrorSetter: UnexpectedErrorSetter,
 ) : ViewModel() {
     private val _state = MutableStateFlow(
         PlacePickerState(
@@ -46,7 +48,7 @@ class PlacePickerViewModel(
     val state get() = _state.asStateFlow()
 
     fun getSelectedPlace() {
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
             _state.value = _state.value.copy(loading = true)
             val place = selectedPlaceRepo.getSelectedPlace()
             _state.value = _state.value.copy(
@@ -57,7 +59,7 @@ class PlacePickerViewModel(
     }
 
     fun selectPlace(place: Place) {
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
             selectPlace.invoke(place)
             _state.value = _state.value.copy(
                 loading = false,
@@ -67,7 +69,7 @@ class PlacePickerViewModel(
     }
 
     fun getSavedPlaces() {
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
             _state.value = _state.value.copy(loading = true)
             _state.value = _state.value.copy(
                 results = PlacePickerResults.SavedPlaces(getSavedPlaces.invoke(Instant.now())),
@@ -78,7 +80,7 @@ class PlacePickerViewModel(
 
     fun searchPlaces(query: String, languageCode: String) {
         val trimmedQuery = query.trim()
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
             _state.value = _state.value.copy(loading = true)
             val results = searchPlaces.invoke(trimmedQuery, languageCode)
             _state.value = _state.value.copy(
@@ -89,7 +91,7 @@ class PlacePickerViewModel(
     }
 
     fun deletePlace(place: Place) {
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
             _state.value = _state.value.copy(loading = true)
             deletePlace.invoke(place)
             _state.value = _state.value.copy(
@@ -110,7 +112,8 @@ class PlacePickerViewModel(
                     container.selectPlace,
                     container.getSavedPlaces,
                     container.searchPlaces,
-                    container.deletePlace
+                    container.deletePlace,
+                    container.unexpectedErrorSetter
                 ) as T
             }
         }

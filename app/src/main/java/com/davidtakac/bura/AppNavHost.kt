@@ -13,20 +13,38 @@
 package com.davidtakac.bura
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.davidtakac.bura.theme.Theme
 import com.davidtakac.bura.graphs.EssentialGraphsDestination
 import com.davidtakac.bura.settings.SettingsDestination
 import com.davidtakac.bura.summary.SummaryDestination
+import com.davidtakac.bura.theme.Theme
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorScreen
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorUiState
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorViewModel
 import java.time.LocalDate
 
 @Composable
 fun AppNavHost(theme: Theme, onThemeClick: (Theme) -> Unit) {
     val controller = rememberNavController()
+    val unexpectedErrorVM = viewModel<UnexpectedErrorViewModel>(factory = UnexpectedErrorViewModel.Factory)
+    val unexpectedErrorState = unexpectedErrorVM.state.collectAsStateWithLifecycle().value
+    LaunchedEffect(unexpectedErrorState) {
+        if (unexpectedErrorState is UnexpectedErrorUiState.Ongoing) {
+            controller.navigate("unexpected-error/${unexpectedErrorState.cause}") {
+                popUpTo(controller.graph.startDestinationId) {
+                    inclusive = true
+                }
+            }
+        }
+    }
+
     NavHost(navController = controller, startDestination = "summary") {
         composable("summary") {
             SummaryDestination(
@@ -65,6 +83,28 @@ fun AppNavHost(theme: Theme, onThemeClick: (Theme) -> Unit) {
                 theme = theme,
                 onThemeClick = onThemeClick,
                 onBackClick = controller::navigateUp
+            )
+        }
+        composable(
+            route = "unexpected-error/{cause}",
+            arguments = listOf(
+                navArgument("cause") {
+                    nullable = false
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+            val cause = backStackEntry.arguments?.getString("cause")!!
+            UnexpectedErrorScreen(
+                cause = cause,
+                onGoHomeClick = {
+                    unexpectedErrorVM.consumeError()
+                    controller.navigate("summary") {
+                        popUpTo(controller.graph.id) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

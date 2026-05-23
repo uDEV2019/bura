@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.davidtakac.bura.App
+import com.davidtakac.bura.common.util.launchCatching
 import com.davidtakac.bura.forecast.ForecastRepository
 import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
 import com.davidtakac.bura.graphs.pop.PopGraph
@@ -30,21 +31,25 @@ import com.davidtakac.bura.graphs.temperature.TemperatureGraphs
 import com.davidtakac.bura.graphs.temperature.getTemperatureGraphSummaries
 import com.davidtakac.bura.graphs.temperature.getTemperatureGraphs
 import com.davidtakac.bura.places.selected.SelectedPlaceRepository
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorSetter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import java.time.Instant
 
 class EssentialGraphsViewModel(
     private val placeRepo: SelectedPlaceRepository,
     private val unitsRepo: SelectedUnitsRepository,
-    private val forecastRepo: ForecastRepository
+    private val forecastRepo: ForecastRepository,
+    private val unexpectedErrorSetter: UnexpectedErrorSetter
 ) : ViewModel() {
-    private val _state = MutableStateFlow<EssentialGraphsState>(EssentialGraphsState.Loading)
+    private val _state = MutableStateFlow<EssentialGraphsState>(EssentialGraphsState.Initial)
     val state = _state.asStateFlow()
 
     fun getGraphs() {
-        viewModelScope.launch {
+        viewModelScope.launchCatching(unexpectedErrorSetter) {
+            if (_state.value == EssentialGraphsState.Loading) {
+                return@launchCatching
+            }
             if (_state.value !is EssentialGraphsState.Success) {
                 _state.value = EssentialGraphsState.Loading
             }
@@ -107,6 +112,7 @@ class EssentialGraphsViewModel(
                     container.selectedPlaceRepo,
                     container.selectedUnitsRepo,
                     container.forecastRepo,
+                    container.unexpectedErrorSetter
                 ) as T
             }
         }
@@ -126,4 +132,5 @@ sealed interface EssentialGraphsState {
     data object FailedToDownload : EssentialGraphsState
     data object Outdated : EssentialGraphsState
     data object NoSelectedPlace : EssentialGraphsState
+    data object Initial : EssentialGraphsState
 }

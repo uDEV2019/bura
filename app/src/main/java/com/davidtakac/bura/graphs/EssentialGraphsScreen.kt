@@ -87,7 +87,7 @@ fun EssentialGraphsScreen(
                     modifier = Modifier.fillMaxSize()
                 )
 
-                EssentialGraphsState.Loading -> EssentialGraphsLoadingIndicator(
+                EssentialGraphsState.Loading, EssentialGraphsState.Initial -> EssentialGraphsLoadingIndicator(
                     modifier = Modifier.fillMaxSize()
                 )
 

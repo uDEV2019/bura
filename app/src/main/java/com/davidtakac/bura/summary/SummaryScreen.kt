@@ -107,7 +107,7 @@ fun SummaryScreen(
                     modifier = Modifier.fillMaxSize()
                 )
 
-                SummaryState.Loading -> SummaryScreenSkeleton(
+                SummaryState.Loading, SummaryState.Initial -> SummaryScreenSkeleton(
                     modifier = Modifier.fillMaxSize()
                 )
 

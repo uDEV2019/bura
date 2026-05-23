@@ -14,18 +14,21 @@ package com.davidtakac.bura
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.davidtakac.bura.common.util.getUserAgent
 import com.davidtakac.bura.common.util.getAppVersionName
+import com.davidtakac.bura.common.util.getUserAgent
+import com.davidtakac.bura.forecast.ForecastRepository
 import com.davidtakac.bura.forecast.cache.ForecastCacher
 import com.davidtakac.bura.forecast.download.ForecastDownloader
-import com.davidtakac.bura.forecast.ForecastRepository
+import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
 import com.davidtakac.bura.places.saved.DeletePlace
 import com.davidtakac.bura.places.saved.GetSavedPlaces
 import com.davidtakac.bura.places.saved.SavedPlacesRepository
 import com.davidtakac.bura.places.search.SearchPlaces
-import com.davidtakac.bura.places.selected.SelectedPlaceRepository
 import com.davidtakac.bura.places.selected.SelectPlace
-import com.davidtakac.bura.forecast.units.SelectedUnitsRepository
+import com.davidtakac.bura.places.selected.SelectedPlaceRepository
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorConsumer
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorRepository
+import com.davidtakac.bura.unexpectederror.UnexpectedErrorSetter
 
 class AppContainer(private val appContext: Context) {
     val prefs: SharedPreferences get() = appContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)
@@ -38,6 +41,11 @@ class AppContainer(private val appContext: Context) {
             appVersionName = getAppVersionName(appContext),
         )
     }
+
+    private val unexpectedErrorRepository by lazy { UnexpectedErrorRepository() }
+    val unexpectedErrorSetter: UnexpectedErrorSetter = unexpectedErrorRepository
+    val unexpectedErrorConsumer: UnexpectedErrorConsumer = unexpectedErrorRepository
+
     val forecastRepo by lazy {
         ForecastRepository(
             cacher = forecastCacher,

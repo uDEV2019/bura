@@ -40,6 +40,12 @@
     <string name="cond_screen_precip_value_in_last_hours">Last %s hours</string>
     <string name="cond_screen_precip_value_in_next_hours">Next %s hours</string>
 
+    <string name="unexpected_error_screen_title">Unexpected error</string>
+    <string name="unexpected_error_screen_description">An unexpected error has occurred. To continue, go to the home screen and try again. If you want to help, create an issue on GitHub and paste the following error report.</string>
+    <string name="unexpected_error_screen_label_clip_entry">Error report</string>
+    <string name="unexpected_error_screen_btn_copy_logs">Copy all</string>
+    <string name="unexpected_error_screen_btn_go_home">Home screen</string>
+
     <string name="settings_screen_title">Settings</string>
     <string name="settings_screen_title_units">Units</string>
     <string name="settings_screen_title_temp_unit">Temperature</string>

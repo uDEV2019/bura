@@ -208,4 +208,9 @@
     <string name="wmo_99">Oluja s jakom tučom</string>
     <string name="general_btn_dialog_confirm">OK</string>
     <string name="general_btn_dialog_cancel">Odustani</string>
+    <string name="unexpected_error_screen_title">Neočekivana pogreška</string>
+    <string name="unexpected_error_screen_description">Dogodila se neočekivana pogreška. Za nastavak, odi na početnu stranicu i pokušaj ponovno. Ako želiš pomoći, napravi “issue“ na GitHubu i zalijepi sljedeće izvješće o pogrešci.</string>
+    <string name="unexpected_error_screen_label_clip_entry">Izvješće o pogrešci</string>
+    <string name="unexpected_error_screen_btn_copy_logs">Kopiraj sve</string>
+    <string name="unexpected_error_screen_btn_go_home">Početna stranica</string>
 </resources>
